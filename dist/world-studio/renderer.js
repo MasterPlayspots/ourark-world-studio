@@ -52,6 +52,7 @@ function textTexture(record) {
   const ctx=canvas.getContext('2d');ctx.clearRect(0,0,1024,320);ctx.fillStyle=record.color||'#f2f2f2';ctx.font='600 72px system-ui';wrappedText(ctx,record.page.title||record.name,20,100,980,90,3);
   const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;return texture;
 }
+const textureContentKey=record=>JSON.stringify([record.page.title||record.name,record.page.body,record.color]);
 export class WorldEditorRenderer {
   constructor(canvas,callbacks={}) {
     this.canvas=canvas;this.callbacks=callbacks;this.frame=0;this.playing=false;this.reduced=false;this.preview=false;this.mode='translate';this.motionTime=0;this.items=new Map();this.available=true;
@@ -119,7 +120,7 @@ export class WorldEditorRenderer {
       }else if(geometry)visual.add(new THREE.Mesh(geometry,mat));
     }
     const originalMaterials=new Map();visual.traverse(o=>{if(o.isMesh){const mats=Array.isArray(o.material)?o.material:[o.material];for(const m of mats)if(m.color&&!originalMaterials.has(m))originalMaterials.set(m,m.color.clone());}});
-    this.content.add(group);this.items.set(record.id,{group,visual,originalMaterials,record,textureKey:record.page.title+'\n'+record.page.body+'\n'+record.color});
+    this.content.add(group);this.items.set(record.id,{group,visual,originalMaterials,record,textureKey:textureContentKey(record)});
     this.applyObject(record);
   }
   load(doc,resetCamera=false) {
@@ -231,7 +232,7 @@ export class WorldEditorRenderer {
       else if(record.kind==='landmark')material.color.copy(original);
       else material.color.set('#4ade80');
     }
-    const key=record.page.title+'\n'+record.page.body+'\n'+record.color;
+    const key=textureContentKey(record);
     if(['panel','text'].includes(record.kind)&&item.textureKey!==key){const face=visual.children[0];face.material.map.dispose();face.material.map=record.kind==='panel'?panelTexture(record):textTexture(record);face.material.needsUpdate=true;item.textureKey=key;}
     if(record.animation==='none'){visual.rotation.set(0,0,0);visual.position.set(0,0,0);}
     this.updateSelectionBox();this.request();

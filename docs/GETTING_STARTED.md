@@ -23,7 +23,7 @@ From the repository root:
 npm run dev
 ```
 
-Leave that terminal running and open **[http://127.0.0.1:8080/map-studio/](http://127.0.0.1:8080/map-studio/)**. The server may print a World Studio URL; use the Map Studio URL for this exercise. It binds to your own computer by default and has no login.
+Leave that terminal running and open **[http://127.0.0.1:8080/map-studio/](http://127.0.0.1:8080/map-studio/)**, the Map Studio URL printed by the server. It binds to your own computer by default and has no login.
 
 Do not double-click an HTML file. A `file://` URL does not provide the HTTP module, API and storage environment this application expects.
 
@@ -86,7 +86,7 @@ You now have a local working copy and a file backup. A map export is not a compl
 
 **Lokal speichern is explicit browser storage, not automatic cloud sync.** Projects live in IndexedDB for the exact origin and browser profile. `http://127.0.0.1:8080`, `http://localhost:8080`, another port, another browser profile and a hosted domain have separate stores. Use the same URL consistently. Clearing site data or removing the profile can remove local projects; keep exported files separately.
 
-- The most recently saved/opened local project is restored on load. Other stored projects appear under **Importieren** → **IN DIESEM BROWSER GESPEICHERT**. The current project is omitted from that list.
+- The most recently **saved** local project is restored on load. Opening another stored project does not update that restore choice until you save it. For example, save A, save B, then open A without saving: a reload opens B again. Other stored projects appear under **Importieren** → **IN DIESEM BROWSER GESPEICHERT**; the current project is omitted from that list.
 - Importing the same world ID replaces its map as an undoable edit. It does not create an independent project. Changing only **Projektname** also does not create a new world ID.
 - Importing another world ID opens a separate project with fresh undo history. Unsaved edits block that switch. Save first, or export a backup and reload before switching if saving is unavailable. **Exportieren does not clear the unsaved-edit state.**
 - The undo history has 35 steps and is not a durable version archive. Export dated checkpoints for work you need to recover later.
@@ -170,19 +170,23 @@ npm run docs:architecture
 npm run verify
 ```
 
-The public verification suite covers the files and synthetic fixtures shipped here. Original private asset-only fixture checks are outside this release's suite; a passing result does not validate excluded scans or terrain. Node checks do not launch real browsers, certify device performance, or verify a production deployment. Browser harness requirements and contribution expectations are in [CONTRIBUTING](../CONTRIBUTING.md).
+The public verification suite covers the shipped source and test inputs. These include generated/synthetic cases and the CSV source/filter fixture `tests/fixtures/leonida-sample.csv`. That CSV contains source labels, credit strings, placeholder localhost URLs and media path strings used to test conversion and exclusion rules; no referenced media is included, and the values do not establish real-world ownership or permission. Original private asset-only fixture checks are outside this release's suite; a passing result does not validate excluded scans or terrain.
+
+Node checks do not launch real browsers, certify device performance, or verify a production deployment. After installing the separate tooling in [CONTRIBUTING](../CONTRIBUTING.md), run `npm run test:browser` for the required public smoke and audit regressions. Missing Playwright or Chromium makes it fail. `npm run test:browser:public` runs only the smoke, while `npm run test:browser:extended` selects the older integration suites, some of which need omitted datasets or separately chosen workload budgets.
 
 ## Which application should I open?
 
 | Route | Purpose and release boundary |
 | --- | --- |
 | `/map-studio/` | Start here: map editing, attached data, local projects and walking with the redistributable starter example |
-| `/studio/` or local `/` | DOM/CSS layer editor; its CSS 3D view is a layout preview |
+| `/studio/` or local `/` | DOM/CSS layer editor; CSS 3D layout preview with temporary page-session edits and JSON export only |
 | `/world-studio/` | Separate Three.js scene editor and world JSON format; optional image/scan content needs available, licensed assets |
 | `/kart/` | Vehicle and terrain integration code; original terrain datasets are not part of the asset-free starter exercise |
 | `/globe/` | Cesium integration; imagery, terrain, tiles and related services have their own data, connectivity and configuration requirements |
 
 Map Studio's **2D Karte** and **3D Raum** share one model. World Studio's JSON is a different format; selecting another navigation item does not transfer your current project between editors. Complete asset-inclusive world packages and a stable general plugin SDK are not implemented.
+
+The layer editor has no local save/restore store and no UI importer. Reloading it or navigating away resets its edits. Its **Export** downloads layers and view settings as JSON for inspection or developer reuse; that file cannot be reopened through this editor's UI. The Map Studio save and recovery steps above apply only to Map Studio.
 
 Optional image enhancement needs a configured external renderboost service. Hosting and multiplayer require their own setup; Map Studio has no connected shared editor persistence or map multiplayer. The public release excludes assets whose redistribution has not been cleared. Follow the [architecture](architecture/README.md), [license scope](../LICENSE_SCOPE.md) and [third-party notices](../THIRD_PARTY_NOTICES.md) before adding data or services.
 

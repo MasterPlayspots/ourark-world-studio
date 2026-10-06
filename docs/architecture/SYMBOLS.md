@@ -1,7 +1,7 @@
 <!-- GENERIERT von scripts/architecture-index.mjs — nicht von Hand bearbeiten. Neu erzeugen: npm run docs:architecture -->
 # Symbolregister — jede Variable, Funktion, Klasse und Eigenschaft
 
-Basis: Commit `a627709` plus Arbeitsbaum. Ablageregel und Deutung: [README.md](README.md).
+Basis: Commit `8ea9e35` plus Arbeitsbaum. Ablageregel und Deutung: [README.md](README.md).
 
 Erfasst werden alle Deklarationen auf Modulebene (`const`/`let`/`var`/`function`/`class`, auch destrukturiert), jede Klassenmethode, jedes Instanzfeld (`this.x=`), alle Imports und Exporte, jede DOM-ID, die ein Skript anspricht, jede Event-Bindung sowie Speicher-Schlüssel. Lokale Variablen innerhalb von Funktionsrümpfen sind absichtlich nicht aufgeführt, weil sie nicht über die Funktion hinaus wirken.
 
@@ -12,7 +12,7 @@ Nicht analysiert: Bibliotheken unter `vendor/` (Drittanbieter).
 | Skript | Seite | Angesprochene IDs (davon dynamische Präfixe) | IDs in HTML | Im Skript benutzt, im HTML fehlend | Im HTML, vom Skript nie direkt angesprochen |
 |---|---|---:|---:|---|---|
 | `dist/map-studio/editor.js` | `dist/map-studio/index.html` | 63 (`point-*`, `map-*`, `*-file`) | 90 | keine | `oaGlow`, `oaBg`, `walk-enter`, `stage`, `runtime-hud`, `runtime-state`, `runtime-fullscreen`, `runtime-pause`, `runtime-exit`, `runtime-hint`, `runtime-info`, `runtime-info-type`, `runtime-info-name`, `runtime-info-data`, `runtime-info-empty`, `runtime-info-close`, `runtime-perf`, `runtime-position`, `runtime-paused`, `runtime-pause-reason`, `runtime-resume` |
-| `dist/world-studio/editor.js` | `dist/world-studio/index.html` | 83 (—) | 130 | keine | `oaGlow`, `oaBg`, `stage`, `runtime-hud`, `runtime-state`, `runtime-modes`, `runtime-fullscreen`, `runtime-pause`, `runtime-exit`, `runtime-hint`, `runtime-stick`, `runtime-info`, `runtime-info-type`, `runtime-info-name`, `runtime-info-data`, `runtime-info-empty`, `runtime-info-close`, `runtime-perf`, `runtime-position`, `runtime-paused`, `runtime-pause-reason`, `runtime-resume`, `position-x`, `position-y`, `position-z`, `rotation-x`, `rotation-y`, `rotation-z`, `scale-x`, `scale-y`, `scale-z`, `device-check-title` |
+| `dist/world-studio/editor.js` | `dist/world-studio/index.html` | 84 (—) | 132 | keine | `oaGlow`, `oaBg`, `stage`, `runtime-hud`, `runtime-state`, `runtime-modes`, `runtime-fullscreen`, `runtime-pause`, `runtime-exit`, `runtime-hint`, `runtime-stick`, `runtime-info`, `runtime-info-type`, `runtime-info-name`, `runtime-info-data`, `runtime-info-empty`, `runtime-info-close`, `runtime-perf`, `runtime-position`, `runtime-paused`, `runtime-pause-reason`, `runtime-resume`, `position-unit`, `position-x`, `position-y`, `position-z`, `rotation-x`, `rotation-y`, `rotation-z`, `scale-x`, `scale-y`, `scale-z`, `device-check-title` |
 | `dist/app.js` | `dist/index.html` | 45 (`prop-*`) | 77 | keine | `oaGlow`, `oaBg`, `workspace`, `spread`, `spread-value`, `orbit`, `orbit-value`, `tilt`, `tilt-value`, `selected-icon`, `position-unit` |
 
 Die rechte Spalte ist kein Fehler an sich: viele IDs dienen nur Labels (`for=`), ARIA-Verweisen oder CSS.
@@ -117,7 +117,7 @@ Die rechte Spalte ist kein Fehler an sich: viele IDs dienen nur Labels (`for=`),
 
 ## `dist/globe/car.js`
 
-4.590 Bytes · 78 Zeilen · Globus
+4.568 Bytes · 78 Zeilen · Globus
 
 **Exporte:** `CAR`, `Car`
 
@@ -426,7 +426,7 @@ Titel: Kart — Ourark World Studio · Skripte: `/runtime/perf-meter.js`, `./mai
 
 ## `dist/kart/kart.js`
 
-7.365 Bytes · 136 Zeilen · Kart und Gelände
+7.591 Bytes · 141 Zeilen · Kart und Gelände
 
 **Imports**
 
@@ -434,7 +434,7 @@ Titel: Kart — Ourark World Studio · Skripte: `/runtime/perf-meter.js`, `./mai
 |---:|---|---|
 | 4 | `../runtime/sim/snapshot.js` | `StateLayout`, `saveOptional`, `loadOptional` |
 
-**Exporte:** `KART`, `KART_STATE`, `MAX_LAPS`, `Kart`, `Race`
+**Exporte:** `KART`, `KART_STATE`, `MAX_LAPS`, `isForwardOnTrack`, `Kart`, `Race`
 
 **Modulebene**
 
@@ -446,57 +446,58 @@ Titel: Kart — Ourark World Studio · Skripte: `/runtime/perf-meter.js`, `./mai
 | 28 | const | `MAX_LAPS` | ✓ | `16` |
 | 30 | const | `clamp` |  | `(v,a,b)=>Math.min(b,Math.max(a,v))` |
 | 31 | const | `wrap` |  | `a=>{const t=Math.PI*2;return((a+Math.PI)%t+t)%t-Math.PI;}` |
-| 33 | class | `Kart` | ✓ |  |
-| 101 | class | `Race` | ✓ |  |
+| 34 | function | `isForwardOnTrack` | ✓ | `({heading,speed},{tx,tz})` |
+| 38 | class | `Kart` | ✓ |  |
+| 106 | class | `Race` | ✓ |  |
 
-**Klasse `Kart`** (Zeile 33)
-
-| Zeile | Methode | Modifikatoren | Parameter |
-|---:|---|---|---|
-| 34 | `constructor` |  | `({track,start=0,lane=0,params=KART})` |
-| 38 | `reset` |  | `(s=0,lane=0)` |
-| 44 | `stateSize` | get | `()` |
-| 45 | `saveState` |  | `(buf,offset)` |
-| 46 | `loadState` |  | `(buf,offset)` |
-| 48 | `step` |  | `(dt,{throttle=0,steer=0}={})` |
-
-| Zeile | Instanzfeld | Erster Wert |
-|---:|---|---|
-| 35 | `track` | `track` |
-| 35 | `p` | `params` |
-| 35 | `proj` | `{}` |
-| 41 | `state` | `{x,z,y:t.heightAt(sample.s),heading:Math.atan2(sample.tx,-sample.tz),speed:0,vy:0,steer:0…` |
-| 42 | `previous` | `{...this.state}` |
-
-**Klasse `Race`** (Zeile 101)
+**Klasse `Kart`** (Zeile 38)
 
 | Zeile | Methode | Modifikatoren | Parameter |
 |---:|---|---|---|
-| 102 | `constructor` |  | `({length,sectors=4,laps=3})` |
-| 103 | `reset` |  | `()` |
-| 105 | `stateSize` | get | `()` |
-| 106 | `saveState` |  | `(buf,offset)` |
-| 111 | `loadState` |  | `(buf,offset)` |
-| 117 | `update` |  | `(dt,s,forward=true)` |
+| 39 | `constructor` |  | `({track,start=0,lane=0,params=KART})` |
+| 43 | `reset` |  | `(s=0,lane=0)` |
+| 49 | `stateSize` | get | `()` |
+| 50 | `saveState` |  | `(buf,offset)` |
+| 51 | `loadState` |  | `(buf,offset)` |
+| 53 | `step` |  | `(dt,{throttle=0,steer=0}={})` |
 
 | Zeile | Instanzfeld | Erster Wert |
 |---:|---|---|
-| 102 | `length` | `(Konstruktor-Option)` |
-| 102 | `sectors` | `(Konstruktor-Option)` |
-| 102 | `laps` | `(Konstruktor-Option)` |
-| 103 | `lap` | `1` |
-| 103 | `sector` | `0` |
-| 103 | `time` | `0` |
-| 103 | `lapStart` | `0` |
-| 103 | `lapTimes` | `[]` |
-| 103 | `best` | `null` |
-| 103 | `finished` | `false` |
-| 103 | `lastSector` | `0` |
-| 103 | `wrongWay` | `false` |
+| 40 | `track` | `track` |
+| 40 | `p` | `params` |
+| 40 | `proj` | `{}` |
+| 46 | `state` | `{x,z,y:t.heightAt(sample.s),heading:Math.atan2(sample.tx,-sample.tz),speed:0,vy:0,steer:0…` |
+| 47 | `previous` | `{...this.state}` |
+
+**Klasse `Race`** (Zeile 106)
+
+| Zeile | Methode | Modifikatoren | Parameter |
+|---:|---|---|---|
+| 107 | `constructor` |  | `({length,sectors=4,laps=3})` |
+| 108 | `reset` |  | `()` |
+| 110 | `stateSize` | get | `()` |
+| 111 | `saveState` |  | `(buf,offset)` |
+| 116 | `loadState` |  | `(buf,offset)` |
+| 122 | `update` |  | `(dt,s,forward=true)` |
+
+| Zeile | Instanzfeld | Erster Wert |
+|---:|---|---|
+| 107 | `length` | `(Konstruktor-Option)` |
+| 107 | `sectors` | `(Konstruktor-Option)` |
+| 107 | `laps` | `(Konstruktor-Option)` |
+| 108 | `lap` | `1` |
+| 108 | `sector` | `0` |
+| 108 | `time` | `0` |
+| 108 | `lapStart` | `0` |
+| 108 | `lapTimes` | `[]` |
+| 108 | `best` | `null` |
+| 108 | `finished` | `false` |
+| 108 | `lastSector` | `0` |
+| 108 | `wrongWay` | `false` |
 
 ## `dist/kart/main.js`
 
-43.853 Bytes · 634 Zeilen · Kart und Gelände
+43.815 Bytes · 634 Zeilen · Kart und Gelände
 
 **Imports**
 
@@ -504,7 +505,7 @@ Titel: Kart — Ourark World Studio · Skripte: `/runtime/perf-meter.js`, `./mai
 |---:|---|---|
 | 3 | `../worlds/vendor/three.module.js` | `THREE` |
 | 4 | `./track.js` | `Track` |
-| 5 | `./kart.js` | `Kart`, `Race` |
+| 5 | `./kart.js` | `Kart`, `Race`, `isForwardOnTrack` |
 | 6 | `./plane.js` | `Plane` |
 | 7 | `./pedestrian.js` | `Pedestrian`, `FOOT` |
 | 8 | `./insights.js` | `KartInsights` |
@@ -611,7 +612,7 @@ Titel: Kart — Ourark World Studio · Skripte: `/runtime/perf-meter.js`, `./mai
 
 ## `dist/kart/plane.js`
 
-5.633 Bytes · 87 Zeilen · Kart und Gelände
+5.621 Bytes · 87 Zeilen · Kart und Gelände
 
 **Imports**
 
@@ -731,80 +732,81 @@ Titel: Kart — Ourark World Studio · Skripte: `/runtime/perf-meter.js`, `./mai
 
 ## `dist/map-studio/editor.js`
 
-27.454 Bytes · 268 Zeilen · Map Studio
+27.797 Bytes · 269 Zeilen · Map Studio
 
 **Imports**
 
 | Zeile | Quelle | Namen |
 |---:|---|---|
-| 1 | `./model.js` | `demoDocument`, `validateDocument`, `newPoint`, `copy`, `editableShell`, `History`, `categories`, `MAX_POINTS`, `MAX_MAP_METRES`, `resizePoint`, `MAX_IMAGE_BYTES`, `MAX_UPLOAD_BYTES`, `movePoint`, `withType`, `enhanceTarget`, `enhancedName` |
-| 2 | `./storage.js` | `loadLocal`, `saveLocal`, `listLocal`, `loadProject`, `SaveConflict` |
-| 3 | `./project.js` | `readProject`, `serializeProject`, `projectBytes`, `checkEditBudget`, `newWorldId`, `MAX_PROJECT_BYTES`, `budgetText`, `mb` |
-| 4 | `../runtime/map-adapter.js` | `prepareWalk` |
-| 5 | `../runtime/net/protocol.js` | `mapFitsNetwork`, `ROOM_BOUND` |
-| 6 | `../runtime/frozen.js` | `isValidated` |
-| 7 | `../runtime/walk-host.js` | `createWalkMode`, `LABELS_DE` |
-| 241 | `./renderer.js` | `(dynamisch)` |
+| 1 | `./model.js` | `demoDocument`, `validateDocument`, `newPoint`, `copy`, `editableShell`, `categories`, `MAX_POINTS`, `MAX_MAP_METRES`, `resizePoint`, `MAX_IMAGE_BYTES`, `MAX_UPLOAD_BYTES`, `movePoint`, `withType`, `enhanceTarget`, `enhancedName` |
+| 2 | `./history.js` | `ProjectHistory` |
+| 3 | `./storage.js` | `loadLocal`, `saveLocal`, `listLocal`, `loadProject`, `SaveConflict`, `SaveRevisionLimit` |
+| 4 | `./project.js` | `readProject`, `serializeProject`, `projectBytes`, `checkEditBudget`, `newWorldId`, `MAX_PROJECT_BYTES`, `budgetText`, `mb` |
+| 5 | `../runtime/map-adapter.js` | `prepareWalk` |
+| 6 | `../runtime/net/protocol.js` | `mapFitsNetwork`, `ROOM_BOUND` |
+| 7 | `../runtime/frozen.js` | `isValidated` |
+| 8 | `../runtime/walk-host.js` | `createWalkMode`, `LABELS_DE` |
+| 242 | `./renderer.js` | `(dynamisch)` |
 
 **Modulebene**
 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
-| 9 | const | `$` |  | `id=>document.getElementById(id)` |
-| 11 | let | `dragPoints` |  | `null` |
-| 11 | let | `dragIndex` |  | `-1` |
-| 12 | let | `doc` |  | `demoDocument()` |
-| 12 | let | `meta` |  | `{worldId:newWorldId(),revision:0}` |
-| 12 | let | `docBytes` |  | `projectBytes(doc,meta)` |
-| 12 | let | `selected` |  | `doc.points[0].id` |
-| 12 | let | `mode` |  | `"2d"` |
-| 12 | let | `renderer` |  | `null` |
-| 12 | let | `dirty` |  | `false` |
-| 12 | let | `revision` |  | `0` |
-| 12 | let | `placing` |  | `false` |
-| 12 | let | `dragBefore` |  | `null` |
-| 12 | let | `noticeTimer` |  |  |
-| 12 | let | `importing` |  | `false` |
-| 13 | const | `history` |  | `new History()` |
-| 13 | const | `labelPool` |  | `[]` |
-| 13 | const | `rows` |  | `new Map()` |
-| 16 | const | `MAX_LABELS` |  | `60` |
-| 16 | let | `pointById` |  | `new Map()` |
-| 16 | let | `rowOrder` |  | `""` |
-| 16 | let | `pressedRow` |  | `null` |
-| 17 | const | `current` |  | `()=>pointById.get(selected)??doc.points.find(p=>p.id===selected)` |
-| 18 | function | `notice` |  | `(message)` |
-| 19 | function | `setStatus` |  | `(message)` |
-| 20 | function | `networkHint` |  | `(map)` |
-| 21 | function | `historyControls` |  | `()` |
-| 22 | function | `markChanged` |  | `()` |
-| 23 | const | `editing` |  | `()=>session.state==="editing"` |
-| 25 | function | `assertEditing` |  | `()` |
-| 28 | const | `dragging` |  | `()=>dragBefore!==null` |
-| 29 | const | `DRAG_BUSY` |  | `"Bitte zuerst den gezogenen Punkt ablegen."` |
-| 30 | function | `mutate` |  | `(action,message)` |
-| 38 | function | `editPoint` |  | `(key,value)` |
-| 39 | function | `select` |  | `(id)` |
-| 40 | function | `renderList` |  | `()` |
-| 63 | function | `renderInspector` |  | `()` |
-| 74 | function | `renderLabels` |  | `()` |
-| 80 | function | `placeLabels` |  | `(positions)` |
-| 92 | function | `updateLabelSelection` |  | `()` |
-| 93 | function | `render` |  | `()` |
-| 100 | function | `add` |  | `(x=0,z=0)` |
-| 104 | function | `setPlacing` |  | `(value)` |
-| 105 | function | `setMode` |  | `(value)` |
-| 106 | function | `stepHistory` |  | `(direction)` |
-| 110 | function | `openProject` |  | `(next,nextMeta,message,{saved=false}={})` |
-| 124 | async function | `showLocalProjects` |  | `()` |
-| 139 | function | `fileData` |  | `(file)` |
-| 140 | async function | `decodeImage` |  | `(dataUrl)` |
-| 141 | async function | `withImport` |  | `(input,action)` |
-| 151 | let | `enhancing` |  | `false` |
-| 152 | const | `decimal` |  | `n=>n.toLocaleString("de-DE",{maximumFractionDigits:1})` |
-| 198 | const | `choose` |  | `kind=>{$("import-dialog").close();$(ˋ${kind}-fileˋ).click();}` |
-| 229 | const | `session` |  | `createWalkMode({$,getRenderer:()=>renderer,getDocument:()=>doc,notice,labels:LABELS_DE,ed…` |
-| 267 | const | `restoreRevision` |  | `0` |
+| 10 | const | `$` |  | `id=>document.getElementById(id)` |
+| 12 | let | `dragPoints` |  | `null` |
+| 12 | let | `dragIndex` |  | `-1` |
+| 13 | let | `doc` |  | `demoDocument()` |
+| 13 | let | `meta` |  | `{worldId:newWorldId(),revision:0}` |
+| 13 | let | `docBytes` |  | `projectBytes(doc,meta)` |
+| 13 | let | `selected` |  | `doc.points[0].id` |
+| 13 | let | `mode` |  | `"2d"` |
+| 13 | let | `renderer` |  | `null` |
+| 13 | let | `dirty` |  | `false` |
+| 13 | let | `revision` |  | `0` |
+| 13 | let | `placing` |  | `false` |
+| 13 | let | `dragBefore` |  | `null` |
+| 13 | let | `noticeTimer` |  |  |
+| 13 | let | `importing` |  | `false` |
+| 14 | const | `history` |  | `new ProjectHistory()` |
+| 14 | const | `labelPool` |  | `[]` |
+| 14 | const | `rows` |  | `new Map()` |
+| 17 | const | `MAX_LABELS` |  | `60` |
+| 17 | let | `pointById` |  | `new Map()` |
+| 17 | let | `rowOrder` |  | `""` |
+| 17 | let | `pressedRow` |  | `null` |
+| 18 | const | `current` |  | `()=>pointById.get(selected)??doc.points.find(p=>p.id===selected)` |
+| 19 | function | `notice` |  | `(message)` |
+| 20 | function | `setStatus` |  | `(message)` |
+| 21 | function | `networkHint` |  | `(map)` |
+| 22 | function | `historyControls` |  | `()` |
+| 23 | function | `markChanged` |  | `()` |
+| 24 | const | `editing` |  | `()=>session.state==="editing"` |
+| 26 | function | `assertEditing` |  | `()` |
+| 29 | const | `dragging` |  | `()=>dragBefore!==null` |
+| 30 | const | `DRAG_BUSY` |  | `"Bitte zuerst den gezogenen Punkt ablegen."` |
+| 31 | function | `mutate` |  | `(action,message)` |
+| 39 | function | `editPoint` |  | `(key,value)` |
+| 40 | function | `select` |  | `(id)` |
+| 41 | function | `renderList` |  | `()` |
+| 64 | function | `renderInspector` |  | `()` |
+| 75 | function | `renderLabels` |  | `()` |
+| 81 | function | `placeLabels` |  | `(positions)` |
+| 93 | function | `updateLabelSelection` |  | `()` |
+| 94 | function | `render` |  | `()` |
+| 101 | function | `add` |  | `(x=0,z=0)` |
+| 105 | function | `setPlacing` |  | `(value)` |
+| 106 | function | `setMode` |  | `(value)` |
+| 107 | function | `stepHistory` |  | `(direction)` |
+| 111 | function | `openProject` |  | `(next,nextMeta,message,{saved=false}={})` |
+| 125 | async function | `showLocalProjects` |  | `()` |
+| 140 | function | `fileData` |  | `(file)` |
+| 141 | async function | `decodeImage` |  | `(dataUrl)` |
+| 142 | async function | `withImport` |  | `(input,action)` |
+| 152 | let | `enhancing` |  | `false` |
+| 153 | const | `decimal` |  | `n=>n.toLocaleString("de-DE",{maximumFractionDigits:1})` |
+| 199 | const | `choose` |  | `kind=>{$("import-dialog").close();$(ˋ${kind}-fileˋ).click();}` |
+| 230 | const | `session` |  | `createWalkMode({$,getRenderer:()=>renderer,getDocument:()=>doc,notice,labels:LABELS_DE,ed…` |
+| 268 | const | `restoreRevision` |  | `0` |
 
 **DOM-IDs, die dieses Skript anspricht (63):** `notice`, `status`, `undo`, `redo`, `count`, `point-list`, `add`, `place`, `properties`, `no-selection`, `type-badge`, `focus`, `selection-info`, `selected-name`, `point-id`, `point-*`, `point-visible`, `point-locked`, `geometry`, `point-data`, `data-apply`, `delete`, `duplicate`, `data-error`, `labels`, `project-name`, `title`, `map-width`, `map-depth`, `map-color`, `map-name`, `map-detail`, `image-remove`, `image-enhance`, `attribution`, `snap`, `controls`, `view-2d`, `view-3d`, `projection`, `local-projects`, `local-list`, `import-dialog`, `map-*`, `overview`, `save`, `export`, `import`, `help`, `help-dialog`, `*-file`, `image-import`, `choose-image`, `choose-points`, `choose-project`, `image-file`, `project-file`, `points-file`, `canvas`, `point-x`, `point-z`, `fallback-text`, `fallback`
 
@@ -812,43 +814,69 @@ Titel: Kart — Ourark World Studio · Skripte: `/runtime/perf-meter.js`, `./mai
 
 | Zeile | Ereignis | Ziel |
 |---:|---|---|
-| 48 | `click` | `row` |
-| 75 | `click` | `button` |
-| 130 | `click` | `button` |
-| 146 | `change` | `$("project-name")` |
-| 147 | `change` | `$(ˋmap-${key}ˋ)` |
-| 148 | `change` | `$("map-color")` |
-| 153 | `click` | `$("image-enhance")` |
-| 171 | `click` | `$("image-remove")` |
-| 172 | `change` | `$(ˋpoint-${key}ˋ)` |
+| 49 | `click` | `row` |
+| 76 | `click` | `button` |
+| 131 | `click` | `button` |
+| 147 | `change` | `$("project-name")` |
+| 148 | `change` | `$(ˋmap-${key}ˋ)` |
+| 149 | `change` | `$("map-color")` |
+| 154 | `click` | `$("image-enhance")` |
+| 172 | `click` | `$("image-remove")` |
 | 173 | `change` | `$(ˋpoint-${key}ˋ)` |
-| 174 | `click` | `b` |
-| 175 | `click` | `$("data-apply")` |
-| 176 | `click` | `$("add")` |
-| 176 | `click` | `$("place")` |
-| 176 | `click` | `$("view-2d")` |
-| 176 | `click` | `$("view-3d")` |
-| 176 | `click` | `$("overview")` |
-| 176 | `click` | `$("focus")` |
-| 176 | `change` | `$("snap")` |
-| 177 | `click` | `$("undo")` |
-| 177 | `click` | `$("redo")` |
-| 178 | `click` | `$("delete")` |
-| 179 | `click` | `$("duplicate")` |
-| 180 | `click` | `$("save")` |
-| 192 | `click` | `$("export")` |
-| 197 | `click` | `$("import")` |
-| 197 | `click` | `$("help")` |
-| 197 | `click` | `b` |
-| 198 | `click` | `$("image-import")` |
-| 198 | `click` | `$("choose-image")` |
-| 198 | `click` | `$("choose-points")` |
-| 198 | `click` | `$("choose-project")` |
-| 199 | `change` | `$("image-file")` |
-| 204 | `change` | `$("project-file")` |
-| 210 | `change` | `$("points-file")` |
-| 216 | `keydown` | `window` |
-| 238 | `beforeunload` | `window` |
+| 174 | `change` | `$(ˋpoint-${key}ˋ)` |
+| 175 | `click` | `b` |
+| 176 | `click` | `$("data-apply")` |
+| 177 | `click` | `$("add")` |
+| 177 | `click` | `$("place")` |
+| 177 | `click` | `$("view-2d")` |
+| 177 | `click` | `$("view-3d")` |
+| 177 | `click` | `$("overview")` |
+| 177 | `click` | `$("focus")` |
+| 177 | `change` | `$("snap")` |
+| 178 | `click` | `$("undo")` |
+| 178 | `click` | `$("redo")` |
+| 179 | `click` | `$("delete")` |
+| 180 | `click` | `$("duplicate")` |
+| 181 | `click` | `$("save")` |
+| 193 | `click` | `$("export")` |
+| 198 | `click` | `$("import")` |
+| 198 | `click` | `$("help")` |
+| 198 | `click` | `b` |
+| 199 | `click` | `$("image-import")` |
+| 199 | `click` | `$("choose-image")` |
+| 199 | `click` | `$("choose-points")` |
+| 199 | `click` | `$("choose-project")` |
+| 200 | `change` | `$("image-file")` |
+| 205 | `change` | `$("project-file")` |
+| 211 | `change` | `$("points-file")` |
+| 217 | `keydown` | `window` |
+| 239 | `beforeunload` | `window` |
+
+## `dist/map-studio/history.js`
+
+922 Bytes · 21 Zeilen · Map Studio
+
+**Imports**
+
+| Zeile | Quelle | Namen |
+|---:|---|---|
+| 1 | `./model.js` | `History` |
+
+**Exporte:** `ProjectHistory`
+
+**Modulebene**
+
+| Zeile | Art | Name | Export | Wert / Signatur |
+|---:|---|---|:---:|---|
+| 6 | class | `ProjectHistory` | ✓ |  |
+
+**Klasse `ProjectHistory`** extends `History` (Zeile 6)
+
+| Zeile | Methode | Modifikatoren | Parameter |
+|---:|---|---|---|
+| 7 | `pack` |  | `({doc,meta})` |
+| 12 | `unpack` |  | `(entry)` |
+| 15 | `step` |  | `(from,to,current)` |
 
 ## `dist/map-studio/index.html`
 
@@ -1104,15 +1132,15 @@ Titel: Map Studio — Ourark World Studio · Skripte: `/map-studio/editor.js`, `
 
 ## `dist/map-studio/storage.js`
 
-5.021 Bytes · 81 Zeilen · Map Studio
+5.563 Bytes · 87 Zeilen · Map Studio
 
 **Imports**
 
 | Zeile | Quelle | Namen |
 |---:|---|---|
-| 4 | `./project.js` | `envelope`, `readProject` |
+| 4 | `./project.js` | `envelope`, `readProject`, `validateMeta` |
 
-**Exporte:** `LEGACY_WORLD_ID`, `projectKey`, `SaveConflict`, `openStore`, `loadLocal`, `listLocal`, `loadProject`, `saveLocal`
+**Exporte:** `LEGACY_WORLD_ID`, `projectKey`, `SaveConflict`, `SaveRevisionLimit`, `openStore`, `loadLocal`, `listLocal`, `loadProject`, `saveLocal`
 
 **Modulebene**
 
@@ -1125,16 +1153,19 @@ Titel: Map Studio — Ourark World Studio · Skripte: `/map-studio/editor.js`, `
 | 8 | const | `LEGACY_WORLD_ID` | ✓ | `"lokal-altbestand"` |
 | 9 | const | `projectKey` | ✓ | `worldId=>ˋproject:${worldId}ˋ` |
 | 10 | class | `SaveConflict` | ✓ |  |
-| 12 | async function | `openStore` | ✓ | `(idb=globalThis.indexedDB)` |
-| 23 | async function | `transact` |  | `(idb,mode,work)` |
-| 32 | const | `read` |  | `(idb,key)=>transact(idb,"readonly",store=>{const request=store.get(key);return()=>request…` |
-| 35 | async function | `loadLocal` | ✓ | `({idb}={})` |
-| 48 | async function | `migrate` |  | `(idb,{meta,doc})` |
-| 58 | async function | `listLocal` | ✓ | `({idb}={})` |
-| 66 | async function | `loadProject` | ✓ | `(worldId,{idb}={})` |
-| 70 | async function | `saveLocal` | ✓ | `(doc,meta,{idb}={})` |
+| 11 | class | `SaveRevisionLimit` | ✓ |  |
+| 13 | async function | `openStore` | ✓ | `(idb=globalThis.indexedDB)` |
+| 24 | async function | `transact` |  | `(idb,mode,work)` |
+| 33 | const | `read` |  | `(idb,key)=>transact(idb,"readonly",store=>{const request=store.get(key);return()=>request…` |
+| 36 | async function | `loadLocal` | ✓ | `({idb}={})` |
+| 49 | async function | `migrate` |  | `(idb,{meta,doc})` |
+| 59 | async function | `listLocal` | ✓ | `({idb}={})` |
+| 67 | async function | `loadProject` | ✓ | `(worldId,{idb}={})` |
+| 71 | async function | `saveLocal` | ✓ | `(doc,meta,{idb}={})` |
 
 **Klasse `SaveConflict`** extends `Error` (Zeile 10)
+
+**Klasse `SaveRevisionLimit`** extends `Error` (Zeile 11)
 
 ## `dist/map-studio/studio.css`
 
@@ -2145,7 +2176,7 @@ struct Camera {
 
 ## `dist/runtime/sim/wasm.js`
 
-3.881 Bytes · 59 Zeilen · Runtime (Begehmodus)
+4.478 Bytes · 64 Zeilen · Runtime (Begehmodus)
 
 **Imports**
 
@@ -2173,12 +2204,12 @@ struct Camera {
 | 32 | `check` |  | `()` |
 | 34 | `entityBytes` |  | `(count=this.capacity)` |
 | 35 | `setTerrain` |  | `(heights,width,depth,cell=1,scale=.01)` |
-| 40 | `ground` |  | `(x,z)` |
-| 41 | `spawn` |  | `(slot,{id=slot+1,mode,x=0,z=0,heading=0,height=80})` |
-| 44 | `despawn` |  | `(slot)` |
-| 46 | `setInput` |  | `(slot,input={})` |
-| 52 | `step` |  | `(dt,steps=1,count=this.capacity)` |
-| 53 | `read` |  | `(slot)` |
+| 45 | `ground` |  | `(x,z)` |
+| 46 | `spawn` |  | `(slot,{id=slot+1,mode,x=0,z=0,heading=0,height=80})` |
+| 49 | `despawn` |  | `(slot)` |
+| 51 | `setInput` |  | `(slot,input={})` |
+| 57 | `step` |  | `(dt,steps=1,count=this.capacity)` |
+| 58 | `read` |  | `(slot)` |
 
 | Zeile | Instanzfeld | Erster Wert |
 |---:|---|---|
@@ -2342,16 +2373,16 @@ Titel: Layer Studio — Ourark World Studio · Skripte: `/app.js`, `/runtime/per
 
 ## `dist/world-studio/editor.js`
 
-39.027 Bytes · 355 Zeilen · World Studio
+38.961 Bytes · 356 Zeilen · World Studio
 
 **Imports**
 
 | Zeile | Quelle | Namen |
 |---:|---|---|
 | 1 | `../worlds/data.js` | `worlds` |
-| 2 | `./model.js` | `createDocument`, `createObject`, `validateDocument`, `History`, `clone`, `clamp`, `worldById` |
+| 2 | `./model.js` | `createDocument`, `createObject`, `validateDocument`, `readImport`, `History`, `clone`, `clamp`, `worldById` |
 | 3 | `./renderer.js` | `WorldEditorRenderer` |
-| 4 | `./walk.js` | `groundLevel`, `sceneColliders`, `prepareWorldWalk` |
+| 4 | `./walk.js` | `groundLevel`, `sceneColliders`, `prepareWorldWalk`, `WORLD_METRES` |
 | 5 | `../runtime/walk-host.js` | `createWalkMode`, `LABELS_EN` |
 | 6 | `../map-studio/model.js` | `validateMap` |
 | 7 | `../runtime/map-adapter.js` | `prepareWalk` |
@@ -2409,156 +2440,158 @@ Titel: Layer Studio — Ourark World Studio · Skripte: `/app.js`, `/runtime/per
 | 66 | function | `renderBuilding` |  | `()` |
 | 76 | function | `selectBuilding` |  | `(id)` |
 | 81 | function | `enterCity` |  | `({writeUrl=true}={})` |
-| 90 | function | `leaveScanUi` |  | `()` |
-| 94 | function | `renderScan` |  | `()` |
-| 105 | async function | `enterScan` |  | `(id,{writeUrl=true}={})` |
-| 121 | function | `renderObjects` |  | `()` |
-| 126 | function | `setInputValue` |  | `(id,value)` |
-| 127 | function | `syncInspector` |  | `()` |
-| 148 | function | `renderPins` |  | `()` |
-| 154 | function | `render` |  | `()` |
-| 155 | function | `record` |  | `(before)` |
-| 156 | function | `commit` |  | `(action,{rebuild=false}={})` |
-| 161 | function | `changeObject` |  | `(updates)` |
-| 162 | function | `selectObject` |  | `(id,{focus=false,visit=preview}={})` |
-| 169 | function | `setWorld` |  | `(id,{writeUrl=true}={})` |
-| 180 | function | `setPreview` |  | `(value)` |
-| 186 | function | `showDestination` |  | `()` |
-| 192 | function | `nextDestination` |  | `(direction)` |
-| 193 | function | `setTool` |  | `(value)` |
-| 194 | function | `syncMotion` |  | `()` |
-| 195 | function | `undo` |  | `(redo=false)` |
-| 196 | function | `duplicate` |  | `()` |
-| 197 | function | `remove` |  | `()` |
-| 198 | function | `addObject` |  | `(kind)` |
-| 204 | function | `save` |  | `()` |
-| 205 | function | `exportScene` |  | `()` |
-| 206 | function | `unavailable` |  | `()` |
-| 255 | async function | `uploadWorld` |  | `(input)` |
-| 291 | const | `walk` |  | `createWalkMode({$:id=>document.getElementById(id),getRenderer:()=>engine,getDocument:()=>…` |
-| 314 | let | `frameListener` |  | `null` |
-| 314 | let | `checkRunning` |  | `false` |
-| 315 | const | `sleep` |  | `ms=>new Promise(r=>setTimeout(r,ms))` |
-| 316 | async function | `deviceCheck` |  | `()` |
+| 91 | function | `leaveScanUi` |  | `()` |
+| 95 | function | `renderScan` |  | `()` |
+| 106 | async function | `enterScan` |  | `(id,{writeUrl=true}={})` |
+| 123 | function | `renderObjects` |  | `()` |
+| 128 | function | `setInputValue` |  | `(id,value)` |
+| 129 | function | `syncInspector` |  | `()` |
+| 150 | function | `renderPins` |  | `()` |
+| 156 | function | `render` |  | `()` |
+| 157 | function | `record` |  | `(before)` |
+| 158 | function | `commit` |  | `(action,{rebuild=false}={})` |
+| 163 | function | `changeObject` |  | `(updates)` |
+| 164 | function | `selectObject` |  | `(id,{focus=false,visit=preview}={})` |
+| 171 | function | `setWorld` |  | `(id,{writeUrl=true}={})` |
+| 183 | function | `setPreview` |  | `(value)` |
+| 189 | function | `showDestination` |  | `()` |
+| 195 | function | `nextDestination` |  | `(direction)` |
+| 196 | function | `setTool` |  | `(value)` |
+| 197 | function | `syncMotion` |  | `()` |
+| 198 | function | `undo` |  | `(redo=false)` |
+| 199 | function | `duplicate` |  | `()` |
+| 200 | function | `remove` |  | `()` |
+| 201 | function | `addObject` |  | `(kind)` |
+| 207 | function | `save` |  | `()` |
+| 208 | function | `exportScene` |  | `()` |
+| 209 | function | `unavailable` |  | `()` |
+| 258 | async function | `uploadWorld` |  | `(input)` |
+| 292 | const | `walk` |  | `createWalkMode({$:id=>document.getElementById(id),getRenderer:()=>engine,getDocument:()=>…` |
+| 315 | let | `frameListener` |  | `null` |
+| 315 | let | `checkRunning` |  | `false` |
+| 316 | const | `sleep` |  | `ms=>new Promise(r=>setTimeout(r,ms))` |
+| 317 | async function | `deviceCheck` |  | `()` |
 
-**DOM-IDs, die dieses Skript anspricht (84):** `notice`, `save-status`, `world-library`, `object-count`, `pins`, `destinations`, `object-list`, `scene-status`, `city-summary`, `object-kind`, `selection-status`, `city-building-name`, `city-building-meta`, `city-building-data`, `focus`, `world-title`, `destination`, `city-info`, `canvas-help`, `scene-label`, `attribution`, `scan-info`, `walk-enter`, `camera-view`, `scan-name`, `scan-meta`, `scan-data`, `properties`, `empty-selection`, `selected-name`, `object-name`, `*-*`, `visible`, `locked`, `page-enabled`, `object-color`, `animation`, `page-title`, `page-body`, `lock-note`, `duplicate`, `delete`, `original-color`, `visit-destination`, `landscape-toggle`, `grid-toggle`, `exposure`, `exposure-value`, `undo`, `redo`, `snap`, `landscape`, `edit-mode`, `preview-mode`, `destination-kind`, `destination-title`, `destination-body`, `reduce-motion`, `play`, `add-dialog`, `fallback`, `canvas`, `close-destination`, `next-destination`, `previous-destination`, `overview`, `add-object`, `help`, `help-dialog`, `reset-world`, `reset-dialog`, `confirm-reset`, `save`, `export`, `import`, `import-file`, `city-remove`, `scan-quality`, `scan-device-check`, `device-check-result`, `device-check-verdict`, `device-check-stored`, `device-check-dialog`, `device-check-copy`
+**DOM-IDs, die dieses Skript anspricht (85):** `notice`, `save-status`, `world-library`, `object-count`, `pins`, `destinations`, `object-list`, `scene-status`, `city-summary`, `object-kind`, `selection-status`, `city-building-name`, `city-building-meta`, `city-building-data`, `focus`, `world-title`, `destination`, `city-info`, `canvas-help`, `scene-label`, `add-object`, `world-units`, `attribution`, `scan-info`, `walk-enter`, `camera-view`, `scan-name`, `scan-meta`, `scan-data`, `properties`, `empty-selection`, `selected-name`, `object-name`, `*-*`, `visible`, `locked`, `page-enabled`, `object-color`, `animation`, `page-title`, `page-body`, `lock-note`, `duplicate`, `delete`, `original-color`, `visit-destination`, `landscape-toggle`, `grid-toggle`, `exposure`, `exposure-value`, `undo`, `redo`, `snap`, `landscape`, `edit-mode`, `preview-mode`, `destination-kind`, `destination-title`, `destination-body`, `reduce-motion`, `play`, `add-dialog`, `fallback`, `canvas`, `close-destination`, `next-destination`, `previous-destination`, `overview`, `help`, `help-dialog`, `reset-world`, `reset-dialog`, `confirm-reset`, `save`, `export`, `import`, `import-file`, `city-remove`, `scan-quality`, `scan-device-check`, `device-check-result`, `device-check-verdict`, `device-check-stored`, `device-check-dialog`, `device-check-copy`
 
 **Event-Bindungen**
 
 | Zeile | Ereignis | Ziel |
 |---:|---|---|
-| 219 | `click` | `$("#world-library")` |
-| 220 | `click` | `$("#object-list")` |
-| 221 | `click` | `$("#pins")` |
-| 222 | `click` | `$("#destinations")` |
-| 223 | `click` | `b` |
-| 224 | `change` | `$("#object-name")` |
-| 225 | `change` | `input` |
-| 230 | `change` | `$("#visible")` |
-| 231 | `change` | `$("#locked")` |
-| 232 | `change` | `$("#object-color")` |
-| 233 | `click` | `$("#original-color")` |
-| 234 | `change` | `$("#animation")` |
-| 235 | `change` | `$("#"+id)` |
-| 236 | `change` | `$("#landscape-toggle")` |
-| 237 | `change` | `$("#grid-toggle")` |
-| 238 | `change` | `$("#exposure")` |
-| 239 | `input` | `$("#exposure")` |
-| 240 | `click` | `$("#edit-mode")` |
-| 240 | `click` | `$("#preview-mode")` |
-| 241 | `click` | `$("#visit-destination")` |
-| 242 | `click` | `$("#close-destination")` |
-| 243 | `click` | `$("#next-destination")` |
-| 243 | `click` | `$("#previous-destination")` |
-| 244 | `click` | `$("#overview")` |
-| 244 | `click` | `$("#focus")` |
-| 245 | `change` | `$("#camera-view")` |
-| 246 | `change` | `$("#snap")` |
-| 247 | `click` | `$("#play")` |
-| 247 | `change` | `$("#reduce-motion")` |
-| 248 | `change` | `systemMotion` |
-| 248 | `visibilitychange` | `document` |
-| 249 | `click` | `$("#add-object")` |
-| 249 | `click` | `b` |
-| 250 | `click` | `$("#help")` |
-| 250 | `click` | `b` |
-| 251 | `click` | `$("#reset-world")` |
-| 251 | `click` | `$("#confirm-reset")` |
-| 252 | `click` | `$("#duplicate")` |
-| 252 | `click` | `$("#delete")` |
-| 252 | `click` | `$("#undo")` |
-| 252 | `click` | `$("#redo")` |
-| 253 | `click` | `$("#save")` |
-| 253 | `click` | `$("#export")` |
-| 253 | `click` | `$("#import")` |
-| 262 | `click` | `$("#city-remove")` |
-| 263 | `change` | `$("#import-file")` |
-| 267 | `keydown` | `document` |
-| 312 | `change` | `$("#scan-quality")` |
-| 320 | `securitypolicyviolation` | `document` |
-| 341 | `click` | `$("#device-check-copy")` |
-| 344 | `click` | `$("#scan-device-check")` |
+| 222 | `click` | `$("#world-library")` |
+| 223 | `click` | `$("#object-list")` |
+| 224 | `click` | `$("#pins")` |
+| 225 | `click` | `$("#destinations")` |
+| 226 | `click` | `b` |
+| 227 | `change` | `$("#object-name")` |
+| 228 | `change` | `input` |
+| 233 | `change` | `$("#visible")` |
+| 234 | `change` | `$("#locked")` |
+| 235 | `change` | `$("#object-color")` |
+| 236 | `click` | `$("#original-color")` |
+| 237 | `change` | `$("#animation")` |
+| 238 | `change` | `$("#"+id)` |
+| 239 | `change` | `$("#landscape-toggle")` |
+| 240 | `change` | `$("#grid-toggle")` |
+| 241 | `change` | `$("#exposure")` |
+| 242 | `input` | `$("#exposure")` |
+| 243 | `click` | `$("#edit-mode")` |
+| 243 | `click` | `$("#preview-mode")` |
+| 244 | `click` | `$("#visit-destination")` |
+| 245 | `click` | `$("#close-destination")` |
+| 246 | `click` | `$("#next-destination")` |
+| 246 | `click` | `$("#previous-destination")` |
+| 247 | `click` | `$("#overview")` |
+| 247 | `click` | `$("#focus")` |
+| 248 | `change` | `$("#camera-view")` |
+| 249 | `change` | `$("#snap")` |
+| 250 | `click` | `$("#play")` |
+| 250 | `change` | `$("#reduce-motion")` |
+| 251 | `change` | `systemMotion` |
+| 251 | `visibilitychange` | `document` |
+| 252 | `click` | `$("#add-object")` |
+| 252 | `click` | `b` |
+| 253 | `click` | `$("#help")` |
+| 253 | `click` | `b` |
+| 254 | `click` | `$("#reset-world")` |
+| 254 | `click` | `$("#confirm-reset")` |
+| 255 | `click` | `$("#duplicate")` |
+| 255 | `click` | `$("#delete")` |
+| 255 | `click` | `$("#undo")` |
+| 255 | `click` | `$("#redo")` |
+| 256 | `click` | `$("#save")` |
+| 256 | `click` | `$("#export")` |
+| 256 | `click` | `$("#import")` |
+| 265 | `click` | `$("#city-remove")` |
+| 266 | `change` | `$("#import-file")` |
+| 268 | `keydown` | `document` |
+| 313 | `change` | `$("#scan-quality")` |
+| 321 | `securitypolicyviolation` | `document` |
+| 342 | `click` | `$("#device-check-copy")` |
+| 345 | `click` | `$("#scan-device-check")` |
 
 **Speicherzugriffe**
 
 | Zeile | API | Schlüssel |
 |---:|---|---|
 | 45 | `localStorage.getItem` | `storageKey (Konstante)` |
-| 204 | `localStorage.setItem` | `storageKey (Konstante)` |
+| 207 | `localStorage.setItem` | `storageKey (Konstante)` |
 
 ## `dist/world-studio/index.html`
 
-20.339 Bytes · 38 Zeilen · World Studio
+20.409 Bytes · 38 Zeilen · World Studio
 
 Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, `/runtime/perf-meter.js` · Stylesheets: `/world-studio/studio.css`, `/glass.css`, `/runtime/perf-meter.css`
 
-**Element-IDs (130):** `i-move`, `i-rotate`, `i-scale`, `i-select`, `i-cube`, `i-plus`, `i-eye`, `i-lock`, `i-copy`, `i-trash`, `i-focus`, `i-play`, `i-pause`, `i-grid`, `i-close`, `oaGlow`, `oaBg`, `import`, `export`, `save`, `world-library`, `object-count`, `add-object`, `object-list`, `help`, `world-title`, `edit-mode`, `preview-mode`, `walk-enter`, `undo`, `redo`, `snap`, `stage`, `attribution`, `landscape`, `canvas`, `runtime-hud`, `runtime-state`, `runtime-modes`, `runtime-fullscreen`, `runtime-pause`, `runtime-exit`, `runtime-hint`, `runtime-stick`, `runtime-info`, `runtime-info-type`, `runtime-info-name`, `runtime-info-data`, `runtime-info-empty`, `runtime-info-close`, `runtime-perf`, `runtime-position`, `runtime-paused`, `runtime-pause-reason`, `runtime-resume`, `pins`, `scene-label`, `overview`, `focus`, `camera-view`, `canvas-help`, `fallback`, `destination`, `close-destination`, `destination-kind`, `destination-title`, `destination-body`, `previous-destination`, `next-destination`, `destinations`, `play`, `reduce-motion`, `save-status`, `scene-status`, `selection-status`, `object-kind`, `empty-selection`, `properties`, `selected-name`, `duplicate`, `delete`, `object-name`, `visible`, `locked`, `position-x`, `position-y`, `position-z`, `rotation-x`, `rotation-y`, `rotation-z`, `scale-x`, `scale-y`, `scale-z`, `lock-note`, `object-color`, `original-color`, `animation`, `page-enabled`, `page-title`, `page-body`, `visit-destination`, `city-info`, `city-building-name`, `city-building-meta`, `city-building-data`, `city-summary`, `city-remove`, `scan-info`, `scan-name`, `scan-meta`, `scan-data`, `scan-quality`, `scan-device-check`, `landscape-toggle`, `grid-toggle`, `exposure-value`, `exposure`, `reset-world`, `add-dialog`, `help-dialog`, `reset-dialog`, `confirm-reset`, `import-file`, `notice`, `device-check-dialog`, `device-check-title`, `device-check-verdict`, `device-check-result`, `device-check-stored`, `device-check-copy`
+**Element-IDs (132):** `i-move`, `i-rotate`, `i-scale`, `i-select`, `i-cube`, `i-plus`, `i-eye`, `i-lock`, `i-copy`, `i-trash`, `i-focus`, `i-play`, `i-pause`, `i-grid`, `i-close`, `oaGlow`, `oaBg`, `import`, `export`, `save`, `world-library`, `object-count`, `add-object`, `object-list`, `help`, `world-title`, `edit-mode`, `preview-mode`, `walk-enter`, `undo`, `redo`, `snap`, `stage`, `attribution`, `landscape`, `canvas`, `runtime-hud`, `runtime-state`, `runtime-modes`, `runtime-fullscreen`, `runtime-pause`, `runtime-exit`, `runtime-hint`, `runtime-stick`, `runtime-info`, `runtime-info-type`, `runtime-info-name`, `runtime-info-data`, `runtime-info-empty`, `runtime-info-close`, `runtime-perf`, `runtime-position`, `runtime-paused`, `runtime-pause-reason`, `runtime-resume`, `pins`, `scene-label`, `world-units`, `overview`, `focus`, `camera-view`, `canvas-help`, `fallback`, `destination`, `close-destination`, `destination-kind`, `destination-title`, `destination-body`, `previous-destination`, `next-destination`, `destinations`, `play`, `reduce-motion`, `save-status`, `scene-status`, `selection-status`, `object-kind`, `empty-selection`, `properties`, `selected-name`, `duplicate`, `delete`, `object-name`, `visible`, `locked`, `position-unit`, `position-x`, `position-y`, `position-z`, `rotation-x`, `rotation-y`, `rotation-z`, `scale-x`, `scale-y`, `scale-z`, `lock-note`, `object-color`, `original-color`, `animation`, `page-enabled`, `page-title`, `page-body`, `visit-destination`, `city-info`, `city-building-name`, `city-building-meta`, `city-building-data`, `city-summary`, `city-remove`, `scan-info`, `scan-name`, `scan-meta`, `scan-data`, `scan-quality`, `scan-device-check`, `landscape-toggle`, `grid-toggle`, `exposure-value`, `exposure`, `reset-world`, `add-dialog`, `help-dialog`, `reset-dialog`, `confirm-reset`, `import-file`, `notice`, `device-check-dialog`, `device-check-title`, `device-check-verdict`, `device-check-result`, `device-check-stored`, `device-check-copy`
 
 **data-Attribute:** `data-tool`, `data-view`, `data-vector`, `data-axis`, `data-add`
 
 ## `dist/world-studio/model.js`
 
-3.694 Bytes · 40 Zeilen · World Studio
+4.464 Bytes · 53 Zeilen · World Studio
 
 **Imports**
 
 | Zeile | Quelle | Namen |
 |---:|---|---|
 | 1 | `../worlds/data.js` | `worlds`, `stopPositions` |
+| 2 | `../map-studio/project.js` | `readProject`, `MAX_PROJECT_BYTES`, `utf8Length` |
 
-**Exporte:** `SCHEMA`, `kinds`, `clone`, `clamp`, `worldById`, `createObject`, `createDocument`, `validateDocument`, `History`
+**Exporte:** `SCHEMA`, `kinds`, `clone`, `clamp`, `worldById`, `createObject`, `createDocument`, `validateDocument`, `readImport`, `History`
 
 **Modulebene**
 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
-| 2 | const | `SCHEMA` | ✓ | `"motionspec.world.v1"` |
-| 3 | const | `kinds` | ✓ | `["landmark","box","sphere","ring","panel","text","beacon"]` |
-| 4 | const | `clone` | ✓ | `value=>structuredClone(value)` |
-| 5 | const | `clamp` | ✓ | `(value,min,max)=>Math.min(max,Math.max(min,value))` |
-| 6 | const | `worldById` | ✓ | `id=>worlds.find(w=>w.id===id)` |
-| 7 | function | `createObject` | ✓ | `(kind,index=0)` |
-| 13 | function | `createDocument` | ✓ | `(world)` |
-| 20 | function | `validateDocument` | ✓ | `(input)` |
-| 35 | class | `History` | ✓ |  |
+| 3 | const | `SCHEMA` | ✓ | `"motionspec.world.v1"` |
+| 4 | const | `kinds` | ✓ | `["landmark","box","sphere","ring","panel","text","beacon"]` |
+| 5 | const | `clone` | ✓ | `value=>structuredClone(value)` |
+| 6 | const | `clamp` | ✓ | `(value,min,max)=>Math.min(max,Math.max(min,value))` |
+| 7 | const | `worldById` | ✓ | `id=>worlds.find(w=>w.id===id)` |
+| 8 | function | `createObject` | ✓ | `(kind,index=0)` |
+| 14 | function | `createDocument` | ✓ | `(world)` |
+| 21 | function | `validateDocument` | ✓ | `(input)` |
+| 38 | function | `readImport` | ✓ | `(text)` |
+| 48 | class | `History` | ✓ |  |
 
-**Klasse `History`** (Zeile 35)
+**Klasse `History`** (Zeile 48)
 
 | Zeile | Methode | Modifikatoren | Parameter |
 |---:|---|---|---|
-| 36 | `constructor` |  | `()` |
-| 37 | `record` |  | `(before,after)` |
-| 38 | `undo` |  | `(current)` |
-| 39 | `redo` |  | `(current)` |
+| 49 | `constructor` |  | `()` |
+| 50 | `record` |  | `(before,after)` |
+| 51 | `undo` |  | `(current)` |
+| 52 | `redo` |  | `(current)` |
 
 | Zeile | Instanzfeld | Erster Wert |
 |---:|---|---|
-| 36 | `past` | `[]` |
-| 36 | `future` | `[]` |
+| 49 | `past` | `[]` |
+| 49 | `future` | `[]` |
 
 ## `dist/world-studio/renderer.js`
 
-34.517 Bytes · 393 Zeilen · World Studio
+34.565 Bytes · 394 Zeilen · World Studio
 
 **Imports**
 
@@ -2588,116 +2621,117 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | 25 | function | `wrappedText` |  | `(ctx,text,x,y,maxWidth,lineHeight,maxLines)` |
 | 38 | function | `panelTexture` |  | `(record)` |
 | 50 | function | `textTexture` |  | `(record)` |
-| 55 | class | `WorldEditorRenderer` | ✓ |  |
+| 55 | const | `textureContentKey` |  | `record=>JSON.stringify([record.page.title\|\|record.name,record.page.body,record.color])` |
+| 56 | class | `WorldEditorRenderer` | ✓ |  |
 
-**Klasse `WorldEditorRenderer`** (Zeile 55)
+**Klasse `WorldEditorRenderer`** (Zeile 56)
 
 | Zeile | Methode | Modifikatoren | Parameter |
 |---:|---|---|---|
-| 56 | `constructor` |  | `(canvas,callbacks={})` |
-| 99 | `createItem` |  | `(record,sources)` |
-| 125 | `load` |  | `(doc,resetCamera=false)` |
-| 144 | `setReach` |  | `({far,maxDistance,minDistance})` |
-| 145 | `leaveCity` |  | `()` |
-| 146 | `loadCity` |  | `(doc,resetCamera=false)` |
-| 162 | `leaveScan` |  | `()` |
-| 169 | `setQuality` |  | `(tier)` |
-| 174 | `loadScan` |  | `(scan)` |
-| 202 | `applySourceFrame` |  | `(time)` |
-| 207 | `scanExtent` |  | `()` |
-| 212 | `playSource` |  | `()` |
-| 219 | `stopSource` |  | `()` |
-| 225 | `applyObject` |  | `(record)` |
-| 239 | `updateSettings` |  | `()` |
-| 242 | `updateRoute` |  | `()` |
-| 248 | `updateSelectionBox` |  | `()` |
-| 253 | `select` |  | `(id)` |
-| 259 | `setMode` |  | `(mode)` |
-| 260 | `setSnap` |  | `(value)` |
-| 261 | `setPreview` |  | `(value)` |
-| 262 | `setMotion` |  | `(playing,reduced)` |
-| 263 | `overview` |  | `()` |
-| 284 | `focus` |  | `(id)` |
-| 290 | `cameraView` |  | `(view)` |
-| 297 | `resize` |  | `()` |
-| 301 | `request` |  | `()` |
-| 302 | `render` |  | `(now)` |
-| 327 | `gpuBegin` |  | `()` |
-| 331 | `gpuEnd` |  | `(query)` |
-| 341 | `walkUnits` |  | `()` |
-| 346 | `enterRuntime` |  | `(start,eye)` |
-| 358 | `placeView` |  | `({position,target,up=[0,1,0],avatar=null})` |
-| 366 | `avatarFor` |  | `(eyeHeight)` |
-| 376 | `placePlayer` |  | `({x,z,heading=0,pitch=0},eye)` |
-| 377 | `draw` |  | `()` |
-| 378 | `setRenderScale` |  | `(scale)` |
-| 379 | `showColliders` |  | `(colliders,y=0)` |
-| 384 | `clearColliders` |  | `()` |
-| 385 | `exitRuntime` |  | `()` |
+| 57 | `constructor` |  | `(canvas,callbacks={})` |
+| 100 | `createItem` |  | `(record,sources)` |
+| 126 | `load` |  | `(doc,resetCamera=false)` |
+| 145 | `setReach` |  | `({far,maxDistance,minDistance})` |
+| 146 | `leaveCity` |  | `()` |
+| 147 | `loadCity` |  | `(doc,resetCamera=false)` |
+| 163 | `leaveScan` |  | `()` |
+| 170 | `setQuality` |  | `(tier)` |
+| 175 | `loadScan` |  | `(scan)` |
+| 203 | `applySourceFrame` |  | `(time)` |
+| 208 | `scanExtent` |  | `()` |
+| 213 | `playSource` |  | `()` |
+| 220 | `stopSource` |  | `()` |
+| 226 | `applyObject` |  | `(record)` |
+| 240 | `updateSettings` |  | `()` |
+| 243 | `updateRoute` |  | `()` |
+| 249 | `updateSelectionBox` |  | `()` |
+| 254 | `select` |  | `(id)` |
+| 260 | `setMode` |  | `(mode)` |
+| 261 | `setSnap` |  | `(value)` |
+| 262 | `setPreview` |  | `(value)` |
+| 263 | `setMotion` |  | `(playing,reduced)` |
+| 264 | `overview` |  | `()` |
+| 285 | `focus` |  | `(id)` |
+| 291 | `cameraView` |  | `(view)` |
+| 298 | `resize` |  | `()` |
+| 302 | `request` |  | `()` |
+| 303 | `render` |  | `(now)` |
+| 328 | `gpuBegin` |  | `()` |
+| 332 | `gpuEnd` |  | `(query)` |
+| 342 | `walkUnits` |  | `()` |
+| 347 | `enterRuntime` |  | `(start,eye)` |
+| 359 | `placeView` |  | `({position,target,up=[0,1,0],avatar=null})` |
+| 367 | `avatarFor` |  | `(eyeHeight)` |
+| 377 | `placePlayer` |  | `({x,z,heading=0,pitch=0},eye)` |
+| 378 | `draw` |  | `()` |
+| 379 | `setRenderScale` |  | `(scale)` |
+| 380 | `showColliders` |  | `(colliders,y=0)` |
+| 385 | `clearColliders` |  | `()` |
+| 386 | `exitRuntime` |  | `()` |
 
 | Zeile | Instanzfeld | Erster Wert |
 |---:|---|---|
-| 57 | `canvas` | `canvas` |
-| 57 | `callbacks` | `callbacks` |
-| 57 | `frame` | `0` |
-| 57 | `playing` | `false` |
-| 57 | `reduced` | `false` |
-| 57 | `preview` | `false` |
-| 57 | `mode` | `"translate"` |
-| 57 | `motionTime` | `0` |
-| 57 | `items` | `new Map()` |
-| 57 | `available` | `true` |
-| 58 | `scene` | `new THREE.Scene()` |
-| 58 | `camera` | `new THREE.PerspectiveCamera(42,1,.1,250)` |
-| 61 | `rim` | `new THREE.DirectionalLight("#4ade80",2)` |
-| 62 | `raycaster` | `new THREE.Raycaster()` |
-| 63 | `renderer` | `new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:"low-power"})` |
-| 64 | `editorPixelRatio` | `Math.min(window.devicePixelRatio\|\|1,1.5)` |
-| 64 | `renderScale` | `this.editorPixelRatio` |
-| 66 | `orbit` | `new OrbitControls(this.camera,canvas)` |
-| 70 | `transform` | `new TransformControls(this.camera,canvas)` |
-| 80 | `grid` | `new THREE.GridHelper(26,52,"#4ade80","#3f3f3f")` |
-| 81 | `selectionBox` | `new THREE.Box3Helper(new THREE.Box3(),"#4ade80")` |
-| 82 | `pointerStart` | `{x:e.clientX,y:e.clientY,gizmo:this.transform.axis!==null}` |
-| 95 | `resizeObserver` | `new ResizeObserver(()=>this.resize())` |
-| 96 | `lastTime` | `0` |
-| 128 | `doc` | `doc` |
-| 128 | `content` | `new THREE.Group()` |
-| 129 | `builtRoot` | `built.root` |
-| 145 | `city` | `null` |
-| 145 | `cityDoc` | `null` |
-| 159 | `selected` | `null` |
-| 163 | `scan` | `null` |
-| 170 | `quality` | `tier==="high"?"high":"medium"` |
-| 183 | `scanReach` | `{far:Math.max(SCAN.far,span*6+4000*!!scan.lighting?.sky),maxDistance:Math.max(SCAN.maxDis…` |
-| 217 | `sourceTime` | `0` |
-| 217 | `source` | `true` |
-| 220 | `sourceSaved` | `null` |
-| 243 | `route` | `null` |
-| 349 | `saved` | `{camera:this.camera,position:this.camera.position.clone(),quaternion:this.camera.quaterni…` |
-| 350 | `runtime` | `true` |
-| 374 | `avatar` | `group` |
-| 374 | `avatarEye` | `eyeHeight` |
-| 380 | `colliderDebug` | `new THREE.Group()` |
+| 58 | `canvas` | `canvas` |
+| 58 | `callbacks` | `callbacks` |
+| 58 | `frame` | `0` |
+| 58 | `playing` | `false` |
+| 58 | `reduced` | `false` |
+| 58 | `preview` | `false` |
+| 58 | `mode` | `"translate"` |
+| 58 | `motionTime` | `0` |
+| 58 | `items` | `new Map()` |
+| 58 | `available` | `true` |
+| 59 | `scene` | `new THREE.Scene()` |
+| 59 | `camera` | `new THREE.PerspectiveCamera(42,1,.1,250)` |
+| 62 | `rim` | `new THREE.DirectionalLight("#4ade80",2)` |
+| 63 | `raycaster` | `new THREE.Raycaster()` |
+| 64 | `renderer` | `new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:"low-power"})` |
+| 65 | `editorPixelRatio` | `Math.min(window.devicePixelRatio\|\|1,1.5)` |
+| 65 | `renderScale` | `this.editorPixelRatio` |
+| 67 | `orbit` | `new OrbitControls(this.camera,canvas)` |
+| 71 | `transform` | `new TransformControls(this.camera,canvas)` |
+| 81 | `grid` | `new THREE.GridHelper(26,52,"#4ade80","#3f3f3f")` |
+| 82 | `selectionBox` | `new THREE.Box3Helper(new THREE.Box3(),"#4ade80")` |
+| 83 | `pointerStart` | `{x:e.clientX,y:e.clientY,gizmo:this.transform.axis!==null}` |
+| 96 | `resizeObserver` | `new ResizeObserver(()=>this.resize())` |
+| 97 | `lastTime` | `0` |
+| 129 | `doc` | `doc` |
+| 129 | `content` | `new THREE.Group()` |
+| 130 | `builtRoot` | `built.root` |
+| 146 | `city` | `null` |
+| 146 | `cityDoc` | `null` |
+| 160 | `selected` | `null` |
+| 164 | `scan` | `null` |
+| 171 | `quality` | `tier==="high"?"high":"medium"` |
+| 184 | `scanReach` | `{far:Math.max(SCAN.far,span*6+4000*!!scan.lighting?.sky),maxDistance:Math.max(SCAN.maxDis…` |
+| 218 | `sourceTime` | `0` |
+| 218 | `source` | `true` |
+| 221 | `sourceSaved` | `null` |
+| 244 | `route` | `null` |
+| 350 | `saved` | `{camera:this.camera,position:this.camera.position.clone(),quaternion:this.camera.quaterni…` |
+| 351 | `runtime` | `true` |
+| 375 | `avatar` | `group` |
+| 375 | `avatarEye` | `eyeHeight` |
+| 381 | `colliderDebug` | `new THREE.Group()` |
 
 **Event-Bindungen**
 
 | Zeile | Ereignis | Ziel |
 |---:|---|---|
-| 67 | `change` | `this.orbit` |
-| 72 | `change` | `this.transform` |
-| 73 | `dragging-changed` | `this.transform` |
-| 74 | `objectChange` | `this.transform` |
-| 82 | `pointerdown` | `canvas` |
-| 83 | `pointerup` | `canvas` |
-| 92 | `pointercancel` | `canvas` |
-| 93 | `dblclick` | `canvas` |
-| 94 | `webglcontextlost` | `canvas` |
-| 96 | `visibilitychange` | `document` |
+| 68 | `change` | `this.orbit` |
+| 73 | `change` | `this.transform` |
+| 74 | `dragging-changed` | `this.transform` |
+| 75 | `objectChange` | `this.transform` |
+| 83 | `pointerdown` | `canvas` |
+| 84 | `pointerup` | `canvas` |
+| 93 | `pointercancel` | `canvas` |
+| 94 | `dblclick` | `canvas` |
+| 95 | `webglcontextlost` | `canvas` |
+| 97 | `visibilitychange` | `document` |
 
 ## `dist/world-studio/studio.css`
 
-27.153 Bytes · 34 Zeilen · World Studio
+27.150 Bytes · 34 Zeilen · World Studio
 
 349 Regelblöcke · Media-Queries: `(min-width:1700px)`, `(max-width:1250px)`, `(max-width:1020px)`, `(max-width:720px)`, `(prefers-reduced-motion:no-preference)`, `(prefers-reduced-motion:reduce)`, `(forced-colors:active)`
 
@@ -3043,7 +3077,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 ## `edge/map-room.mjs`
 
-8.290 Bytes · 120 Zeilen · Edge-Worker (Auslieferung)
+9.661 Bytes · 144 Zeilen · Edge-Worker (Auslieferung)
 
 **Imports**
 
@@ -3077,19 +3111,23 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | Zeile | Methode | Modifikatoren | Parameter |
 |---:|---|---|---|
 | 24 | `constructor` |  | `(ctx,env,options={})` |
-| 33 | `fetch` | async | `(request)` |
-| 48 | `webSocketMessage` | async | `(ws,message)` |
-| 67 | `ground` |  | `(x,z)` |
-| 72 | `loadTerrain` |  | `(map)` |
-| 91 | `connectionsFrom` |  | `(ip)` |
-| 92 | `webSocketClose` | async | `(ws)` |
-| 93 | `webSocketError` | async | `(ws)` |
-| 95 | `strike` |  | `(ws,id)` |
-| 102 | `drop` |  | `(id)` |
-| 105 | `idOf` |  | `(ws)` |
-| 106 | `startTicking` |  | `()` |
-| 107 | `stopTicking` |  | `()` |
-| 108 | `tick` |  | `()` |
+| 37 | `fetch` | async | `(request)` |
+| 52 | `webSocketMessage` | async | `(ws,message)` |
+| 74 | `ground` |  | `(x,z)` |
+| 79 | `loadTerrain` |  | `(map)` |
+| 98 | `connectionsFrom` |  | `(ip)` |
+| 99 | `webSocketClose` | async | `(ws)` |
+| 100 | `webSocketError` | async | `(ws)` |
+| 102 | `strike` |  | `(ws,id)` |
+| 109 | `drop` |  | `(id)` |
+| 112 | `idOf` |  | `(ws)` |
+| 113 | `startTicking` |  | `()` |
+| 114 | `stopTicking` |  | `()` |
+| 115 | `idleDeadline` |  | `(player)` |
+| 116 | `expireIdle` |  | `(sockets=this.ctx.getWebSockets())` |
+| 120 | `scheduleIdleAlarm` | async | `()` |
+| 126 | `alarm` | async | `()` |
+| 127 | `tick` |  | `()` |
 
 | Zeile | Instanzfeld | Erster Wert |
 |---:|---|---|
@@ -3108,8 +3146,8 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | 28 | `upgrade` | `options.upgrade??(client=>new Response(null,{status:101,webSocket:client}))` |
 | 29 | `setInterval` | `options.setInterval??((fn,ms)=>setInterval(fn,ms))` |
 | 29 | `clearInterval` | `options.clearInterval??(t=>clearInterval(t))` |
-| 75 | `terrainFor` | `map` |
-| 86 | `terrainFailed` | `{map,at:this.now()}` |
+| 82 | `terrainFor` | `map` |
+| 93 | `terrainFailed` | `{map,at:this.now()}` |
 
 ## `edge/policy.mjs`
 
@@ -3323,7 +3361,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 ## `scripts/check.mjs`
 
-1.959 Bytes · 27 Zeilen · Werkzeug
+6.874 Bytes · 127 Zeilen · Werkzeug
 
 **Imports**
 
@@ -3332,17 +3370,18 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | 1 | `node:fs/promises` | `readFile`, `readdir`, `access` |
 | 2 | `node:child_process` | `execFileSync` |
 | 3 | `node:path` | `path` |
-| 4 | `node:url` | `fileURLToPath` |
+| 4 | `node:url` | `fileURLToPath`, `pathToFileURL` |
+
+**Exporte:** `relativeModuleReferences`, `checkProject`
 
 **Modulebene**
 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
-| 5 | const | `root` |  | `fileURLToPath(new URL("../",import.meta.url))` |
-| 6 | async function | `walk` |  | `(dir)` |
-| 7 | let | `checked` |  | `0` |
-| 24 | const | `rootHtml` |  | `await readFile(path.join(root,"dist/index.html"),"utf8")` |
-| 24 | const | `studioHtml` |  | `await readFile(path.join(root,"dist/studio/index.html"),"utf8")` |
+| 5 | async function | `walk` |  | `(dir)` |
+| 9 | function | `tokens` |  | `(source)` |
+| 70 | function | `relativeModuleReferences` | ✓ | `(source)` |
+| 97 | async function | `checkProject` | ✓ | `(root)` |
 
 ## `scripts/city-tile.mjs`
 
@@ -3452,7 +3491,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 ## `scripts/public-tests.mjs`
 
-1.283 Bytes · 21 Zeilen · Werkzeug
+1.297 Bytes · 21 Zeilen · Werkzeug
 
 **Imports**
 
@@ -3466,12 +3505,12 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
 | 5 | const | `root` |  | `fileURLToPath(new URL("../",import.meta.url))` |
-| 6 | const | `suites` |  | `["world-studio","map-studio","map-history","map-enhance","map-v2","map-runtime","physics"…` |
+| 6 | const | `suites` |  | `["build-tools","world-studio","map-studio","map-history","map-enhance","map-v2","map-runt…` |
 | 19 | const | `result` |  | `spawnSync(process.execPath,["--test","tests/repository.test.mjs","tests/edge.test.mjs"],{…` |
 
 ## `scripts/serve.mjs`
 
-9.555 Bytes · 110 Zeilen · Werkzeug
+10.421 Bytes · 123 Zeilen · Werkzeug
 
 **Imports**
 
@@ -3499,7 +3538,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | 15 | const | `SCENE_CACHE` |  | `"private, max-age=31536000, immutable"` |
 | 16 | async function | `sceneIndex` |  | `(root)` |
 | 23 | async function | `serveScenes` |  | `(req,res,pathname,root)` |
-| 34 | const | `mime` |  | `{".html":"text/html; charset=utf-8",".js":"text/javascript; charset=utf-8",".css":"text/c…` |
+| 34 | const | `mime` |  | `{".html":"text/html; charset=utf-8",".js":"text/javascript; charset=utf-8",".mjs":"text/j…` |
 | 37 | async function | `proxyEnhance` |  | `(req,res,{url,token}={})` |
 | 48 | async function | `globeLocal` |  | `(req,res,requested)` |
 | 55 | const | `kartBatches` |  | `[]` |
@@ -3631,9 +3670,86 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | 8 | const | `box` |  | `(x,z,w,d)=>[[x-w/2,z-d/2],[x+w/2,z-d/2],[x+w/2,z+d/2],[x-w/2,z+d/2]]` |
 | 9 | function | `city` |  | `(count,{span=800,size=12}={})` |
 
+## `tests/browser/agent-check.mjs`
+
+2.952 Bytes · 42 Zeilen · Browsertest
+
+**Imports**
+
+| Zeile | Quelle | Namen |
+|---:|---|---|
+| 2 | `node:assert/strict` | `assert` |
+| 3 | `node:child_process` | `execFile` |
+| 4 | `node:util` | `promisify` |
+| 5 | `node:fs/promises` | `mkdir`, `writeFile` |
+| 6 | `node:url` | `fileURLToPath` |
+| 7 | `node:path` | `path` |
+| 8 | `../../scripts/serve.mjs` | `createDevServer` |
+
+**Modulebene**
+
+| Zeile | Art | Name | Export | Wert / Signatur |
+|---:|---|---|:---:|---|
+| 10 | const | `run` |  | `promisify(execFile)` |
+| 10 | const | `bin` |  | `process.env.AGENT_BROWSER_BIN` |
+| 12 | const | `dir` |  | `fileURLToPath(new URL("../../.browser-artifacts/agent-check/",import.meta.url))` |
+| 14 | const | `session` |  | `ˋourark-ci-${process.pid}ˋ` |
+| 14 | const | `server` |  | `createDevServer()` |
+| 15 | const | `evidence` |  | `{ok:false,scope:"agent-browser visual startup only"}` |
+| 17 | const | `command` |  | `async(...args)=>{const{stdout,stderr}=await run(bin,["--session",session,...args],{timeou…` |
+
+## `tests/browser/audit-regressions.browser.mjs`
+
+16.616 Bytes · 186 Zeilen · Browsertest
+
+**Imports**
+
+| Zeile | Quelle | Namen |
+|---:|---|---|
+| 3 | `node:assert/strict` | `assert` |
+| 4 | `node:module` | `createRequire` |
+| 5 | `node:fs/promises` | `readFile`, `mkdir`, `writeFile` |
+| 6 | `node:child_process` | `execFileSync` |
+| 7 | `node:path` | `path` |
+| 8 | `node:url` | `fileURLToPath` |
+| 9 | `../../scripts/serve.mjs` | `createDevServer` |
+| 159 | `/worldport/core.mjs` | `(dynamisch)` |
+| 159 | `/worldport/osm.mjs` | `(dynamisch)` |
+
+**Modulebene**
+
+| Zeile | Art | Name | Export | Wert / Signatur |
+|---:|---|---|:---:|---|
+| 11 | const | `root` |  | `fileURLToPath(new URL("../../",import.meta.url))` |
+| 11 | const | `require` |  | `createRequire(import.meta.url)` |
+| 12 | const | `artifacts` |  | `path.join(root,".browser-artifacts/audit-regressions")` |
+| 14 | const | `evidence` |  | `{suite:"public-audit-regressions",startedAt:new Date().toISOString(),ok:false,commit:exec…` |
+| 17 | let | `browser` |  |  |
+| 17 | let | `server` |  |  |
+| 17 | let | `origin` |  |  |
+| 17 | let | `phase` |  | `"setup"` |
+| 17 | let | `downloadCount` |  | `0` |
+| 18 | const | `lastExport` |  | `new WeakMap()` |
+| 19 | const | `args` |  | `process.platform==="linux"?["--use-angle=swiftshader","--enable-unsafe-swiftshader","--ig…` |
+| 20 | function | `playwright` |  | `()` |
+| 28 | async function | `open` |  | `(route)` |
+| 50 | async function | `check` |  | `(name,route,fn)` |
+| 56 | async function | `exported` |  | `(page)` |
+| 65 | async function | `importMap` |  | `(page,data,name="audit.map.json")` |
+| 68 | async function | `waitName` |  | `(page,name)` |
+| 69 | async function | `saveMap` |  | `(page)` |
+
+**DOM-IDs, die dieses Skript anspricht (8):** `project-name`, `save`, `status`, `notice`, `count`, `world-title`, `runtime-position`, `object-name`
+
+**Speicherzugriffe**
+
+| Zeile | API | Schlüssel |
+|---:|---|---|
+| 31 | `localStorage.setItem` | `ourark.perf` |
+
 ## `tests/browser/baseline.browser.mjs`
 
-18.380 Bytes · 219 Zeilen · Browsertest
+18.285 Bytes · 218 Zeilen · Browsertest
 
 **Imports**
 
@@ -3642,26 +3758,26 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | 3 | `node:fs/promises` | `writeFile` |
 | 4 | `node:path` | `path` |
 | 5 | `./harness.mjs` | `loadPlaywright`, `startServer`, `launch`, `environment`, `drawnRatio`, `recorder`, `assert`, `artifactDir` |
-| 102 | `node:fs/promises` | `(dynamisch)` |
+| 101 | `node:fs/promises` | `(dynamisch)` |
 
 **Modulebene**
 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
 | 7 | const | `playwright` |  | `loadPlaywright()` |
-| 9 | const | `origin` |  | `await startServer()` |
-| 9 | const | `close` |  | `await startServer()` |
-| 9 | const | `browser` |  | `await launch(playwright)` |
-| 9 | const | `results` |  | `recorder()` |
-| 9 | const | `step` |  | `recorder()` |
-| 10 | const | `context` |  | `await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})` |
-| 11 | const | `page` |  | `await context.newPage()` |
-| 11 | const | `errors` |  | `[]` |
-| 14 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
-| 15 | const | `text` |  | `id=>page.locator(ˋ#${id}ˋ).textContent()` |
-| 16 | const | `notice` |  | `async()=>(await text("notice")).trim()` |
-| 17 | const | `pointCount` |  | `async()=>Number(await text("count"))` |
-| 219 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
+| 8 | const | `origin` |  | `await startServer()` |
+| 8 | const | `close` |  | `await startServer()` |
+| 8 | const | `browser` |  | `await launch(playwright)` |
+| 8 | const | `results` |  | `recorder()` |
+| 8 | const | `step` |  | `recorder()` |
+| 9 | const | `context` |  | `await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})` |
+| 10 | const | `page` |  | `await context.newPage()` |
+| 10 | const | `errors` |  | `[]` |
+| 13 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
+| 14 | const | `text` |  | `id=>page.locator(ˋ#${id}ˋ).textContent()` |
+| 15 | const | `notice` |  | `async()=>(await text("notice")).trim()` |
+| 16 | const | `pointCount` |  | `async()=>Number(await text("count"))` |
+| 218 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
 
 **DOM-IDs, die dieses Skript anspricht (5):** `map-name`, `count`, `notice`, `status`, `project-name`
 
@@ -3669,11 +3785,11 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 | Zeile | API | Schlüssel |
 |---:|---|---|
-| 147 | `indexedDB.open` | `(siehe DB_NAME)` |
+| 146 | `indexedDB.open` | `(siehe DB_NAME)` |
 
 ## `tests/browser/city.browser.mjs`
 
-6.153 Bytes · 73 Zeilen · Browsertest
+6.049 Bytes · 72 Zeilen · Browsertest
 
 **Imports**
 
@@ -3687,28 +3803,28 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
 | 6 | const | `playwright` |  | `loadPlaywright()` |
-| 8 | const | `origin` |  | `await startServer()` |
-| 8 | const | `close` |  | `await startServer()` |
-| 8 | const | `browser` |  | `await launch(playwright)` |
-| 8 | const | `results` |  | `recorder()` |
-| 8 | const | `step` |  | `recorder()` |
-| 9 | const | `page` |  | `await(await browser.newContext({viewport:{width:1440,height:900},deviceScaleFactor:2})).n…` |
-| 9 | const | `errors` |  | `[]` |
-| 11 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
-| 12 | const | `BUDGET` |  | `1000/60` |
-| 13 | const | `measure` |  | `ms=>page.evaluate(ms=>new Promise(res=>{const t=[];let last=0;const end=performance.now()…` |
-| 14 | const | `stats` |  | `()=>page.evaluate(()=>({...globalThis.__MOTIONSPEC_RENDER_STATS__}))` |
-| 17 | const | `shapes` |  | `[[[-8,-8],[8,-8],[8,-2],[-2,-2],[-2,8],[-8,8]],[[-9,-6],[9,-6],[9,6],[-9,6]],[[-8,-8],[8,…` |
-| 18 | const | `colors` |  | `["#5eead4","#72a8ef","#f3c969","#d5b5ff","#eaf1fb"]` |
-| 19 | const | `points` |  | `Array.from({length:2000},(_,i)=>({id:ˋb ${i}ˋ,name:ˋBlock ${i}ˋ,type:"building",x:(i%45)*…` |
-| 20 | const | `doc` |  | `{schema:"motionspec.map.v3",name:"Stadt 2000",map:{width:1900,depth:1900,color:"#101f34",…` |
-| 73 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
+| 7 | const | `origin` |  | `await startServer()` |
+| 7 | const | `close` |  | `await startServer()` |
+| 7 | const | `browser` |  | `await launch(playwright)` |
+| 7 | const | `results` |  | `recorder()` |
+| 7 | const | `step` |  | `recorder()` |
+| 8 | const | `page` |  | `await(await browser.newContext({viewport:{width:1440,height:900},deviceScaleFactor:2})).n…` |
+| 8 | const | `errors` |  | `[]` |
+| 10 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
+| 11 | const | `BUDGET` |  | `1000/60` |
+| 12 | const | `measure` |  | `ms=>page.evaluate(ms=>new Promise(res=>{const t=[];let last=0;const end=performance.now()…` |
+| 13 | const | `stats` |  | `()=>page.evaluate(()=>({...globalThis.__MOTIONSPEC_RENDER_STATS__}))` |
+| 16 | const | `shapes` |  | `[[[-8,-8],[8,-8],[8,-2],[-2,-2],[-2,8],[-8,8]],[[-9,-6],[9,-6],[9,6],[-9,6]],[[-8,-8],[8,…` |
+| 17 | const | `colors` |  | `["#5eead4","#72a8ef","#f3c969","#d5b5ff","#eaf1fb"]` |
+| 18 | const | `points` |  | `Array.from({length:2000},(_,i)=>({id:ˋb ${i}ˋ,name:ˋBlock ${i}ˋ,type:"building",x:(i%45)*…` |
+| 19 | const | `doc` |  | `{schema:"motionspec.map.v3",name:"Stadt 2000",map:{width:1900,depth:1900,color:"#101f34",…` |
+| 72 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
 
 **DOM-IDs, die dieses Skript anspricht (3):** `title`, `point-height`, `runtime-perf`
 
 ## `tests/browser/collision.browser.mjs`
 
-7.379 Bytes · 103 Zeilen · Browsertest
+7.275 Bytes · 102 Zeilen · Browsertest
 
 **Imports**
 
@@ -3722,30 +3838,30 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
 | 6 | const | `playwright` |  | `loadPlaywright()` |
-| 8 | const | `origin` |  | `await startServer()` |
-| 8 | const | `close` |  | `await startServer()` |
-| 8 | const | `browser` |  | `await launch(playwright)` |
-| 8 | const | `results` |  | `recorder()` |
-| 8 | const | `step` |  | `recorder()` |
-| 9 | const | `context` |  | `await browser.newContext({viewport:{width:1440,height:900}})` |
-| 10 | const | `page` |  | `await context.newPage()` |
-| 10 | const | `errors` |  | `[]` |
-| 12 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
-| 13 | const | `runtimeState` |  | `()=>page.evaluate(()=>document.body.dataset.runtime??"editing")` |
-| 14 | const | `waitState` |  | `s=>page.waitForFunction(s=>(document.body.dataset.runtime??"editing")===s,s,{timeout:5000…` |
-| 15 | const | `noticeText` |  | `()=>page.textContent("#notice")` |
-| 17 | const | `point` |  | `(id,name,over={})=>({id,name,type:"building",x:0,z:0,width:10,depth:6,height:6,rotation:0…` |
-| 18 | const | `project` |  | `(name,points,spawn=null)=>({schema:"motionspec.map.v2",name,map:{width:60,depth:60,color:…` |
-| 19 | async function | `importProject` |  | `(doc)` |
-| 23 | async function | `enterAndReport` |  | `()` |
-| 29 | async function | `outlineRatio` |  | `()` |
-| 103 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
+| 7 | const | `origin` |  | `await startServer()` |
+| 7 | const | `close` |  | `await startServer()` |
+| 7 | const | `browser` |  | `await launch(playwright)` |
+| 7 | const | `results` |  | `recorder()` |
+| 7 | const | `step` |  | `recorder()` |
+| 8 | const | `context` |  | `await browser.newContext({viewport:{width:1440,height:900}})` |
+| 9 | const | `page` |  | `await context.newPage()` |
+| 9 | const | `errors` |  | `[]` |
+| 11 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
+| 12 | const | `runtimeState` |  | `()=>page.evaluate(()=>document.body.dataset.runtime??"editing")` |
+| 13 | const | `waitState` |  | `s=>page.waitForFunction(s=>(document.body.dataset.runtime??"editing")===s,s,{timeout:5000…` |
+| 14 | const | `noticeText` |  | `()=>page.textContent("#notice")` |
+| 16 | const | `point` |  | `(id,name,over={})=>({id,name,type:"building",x:0,z:0,width:10,depth:6,height:6,rotation:0…` |
+| 17 | const | `project` |  | `(name,points,spawn=null)=>({schema:"motionspec.map.v2",name,map:{width:60,depth:60,color:…` |
+| 18 | async function | `importProject` |  | `(doc)` |
+| 22 | async function | `enterAndReport` |  | `()` |
+| 28 | async function | `outlineRatio` |  | `()` |
+| 102 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
 
 **DOM-IDs, die dieses Skript anspricht (4):** `title`, `notice`, `point-solid`, `point-interactive`
 
 ## `tests/browser/enhance.browser.mjs`
 
-5.159 Bytes · 58 Zeilen · Browsertest
+5.055 Bytes · 57 Zeilen · Browsertest
 
 **Imports**
 
@@ -3760,27 +3876,27 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
 | 7 | const | `playwright` |  | `loadPlaywright()` |
-| 10 | const | `seen` |  | `[]` |
-| 10 | let | `reply` |  | `{status:200,body:{}}` |
-| 11 | const | `origin` |  | `createServer((req,res)=>{let body="";req.on("data",c=>body+=c);req.on("end",()=>{seen.pus…` |
-| 13 | const | `configured` |  | `await startServer({enhance:{url:ˋhttp://127.0.0.1:${origin.address().port}ˋ,token:"z".rep…` |
-| 13 | const | `plain` |  | `await startServer()` |
-| 14 | const | `browser` |  | `await launch(playwright)` |
-| 14 | const | `results` |  | `recorder()` |
-| 14 | const | `step` |  | `recorder()` |
-| 15 | const | `page` |  | `await(await browser.newContext({viewport:{width:1440,height:900}})).newPage()` |
-| 15 | const | `errors` |  | `[]` |
-| 17 | const | `pngBase64` |  | `(w,h,fill)=>page.evaluate(async([w,h,fill])=>{const c=new OffscreenCanvas(w,h),g=c.getCon…` |
-| 18 | const | `name` |  | `()=>page.textContent("#map-name")` |
-| 19 | async function | `importImage` |  | `()` |
-| 24 | const | `noticeMatching` |  | `re=>page.waitForFunction(re=>new RegExp(re).test(document.getElementById("notice").textCo…` |
-| 58 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
+| 9 | const | `seen` |  | `[]` |
+| 9 | let | `reply` |  | `{status:200,body:{}}` |
+| 10 | const | `origin` |  | `createServer((req,res)=>{let body="";req.on("data",c=>body+=c);req.on("end",()=>{seen.pus…` |
+| 12 | const | `configured` |  | `await startServer({enhance:{url:ˋhttp://127.0.0.1:${origin.address().port}ˋ,token:"z".rep…` |
+| 12 | const | `plain` |  | `await startServer()` |
+| 13 | const | `browser` |  | `await launch(playwright)` |
+| 13 | const | `results` |  | `recorder()` |
+| 13 | const | `step` |  | `recorder()` |
+| 14 | const | `page` |  | `await(await browser.newContext({viewport:{width:1440,height:900}})).newPage()` |
+| 14 | const | `errors` |  | `[]` |
+| 16 | const | `pngBase64` |  | `(w,h,fill)=>page.evaluate(async([w,h,fill])=>{const c=new OffscreenCanvas(w,h),g=c.getCon…` |
+| 17 | const | `name` |  | `()=>page.textContent("#map-name")` |
+| 18 | async function | `importImage` |  | `()` |
+| 23 | const | `noticeMatching` |  | `re=>page.waitForFunction(re=>new RegExp(re).test(document.getElementById("notice").textCo…` |
+| 57 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
 
 **DOM-IDs, die dieses Skript anspricht (2):** `map-name`, `notice`
 
 ## `tests/browser/footprint.browser.mjs`
 
-5.074 Bytes · 60 Zeilen · Browsertest
+4.970 Bytes · 59 Zeilen · Browsertest
 
 **Imports**
 
@@ -3795,27 +3911,27 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
 | 7 | const | `playwright` |  | `loadPlaywright()` |
-| 9 | const | `origin` |  | `await startServer()` |
-| 9 | const | `close` |  | `await startServer()` |
-| 9 | const | `browser` |  | `await launch(playwright)` |
-| 9 | const | `results` |  | `recorder()` |
-| 9 | const | `step` |  | `recorder()` |
-| 10 | const | `page` |  | `await(await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})).…` |
-| 10 | const | `errors` |  | `[]` |
-| 12 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
-| 13 | const | `waitState` |  | `s=>page.waitForFunction(s=>(document.body.dataset.runtime??"editing")===s,s,{timeout:5000…` |
-| 14 | const | `pose` |  | `async()=>{const[,x,z,h]=/X (-?[\d.]+) · Z (-?[\d.]+) · (\d+)°/.exec(await page.textConten…` |
-| 15 | const | `hold` |  | `async(code,ms)=>{await page.keyboard.down(code);await page.waitForTimeout(ms);await page.…` |
-| 16 | const | `exportJson` |  | `async()=>{const[d]=await Promise.all([page.waitForEvent("download"),page.click("#export")…` |
-| 21 | const | `L` |  | `[[-5,-5],[5,-5],[5,-1],[-1,-1],[-1,5],[-5,5]]` |
-| 22 | const | `doc` |  | `{schema:"motionspec.map.v3",name:"Grundriss",map:{width:80,depth:80,color:"#101f34",image…` |
-| 60 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
+| 8 | const | `origin` |  | `await startServer()` |
+| 8 | const | `close` |  | `await startServer()` |
+| 8 | const | `browser` |  | `await launch(playwright)` |
+| 8 | const | `results` |  | `recorder()` |
+| 8 | const | `step` |  | `recorder()` |
+| 9 | const | `page` |  | `await(await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})).…` |
+| 9 | const | `errors` |  | `[]` |
+| 11 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
+| 12 | const | `waitState` |  | `s=>page.waitForFunction(s=>(document.body.dataset.runtime??"editing")===s,s,{timeout:5000…` |
+| 13 | const | `pose` |  | `async()=>{const[,x,z,h]=/X (-?[\d.]+) · Z (-?[\d.]+) · (\d+)°/.exec(await page.textConten…` |
+| 14 | const | `hold` |  | `async(code,ms)=>{await page.keyboard.down(code);await page.waitForTimeout(ms);await page.…` |
+| 15 | const | `exportJson` |  | `async()=>{const[d]=await Promise.all([page.waitForEvent("download"),page.click("#export")…` |
+| 20 | const | `L` |  | `[[-5,-5],[5,-5],[5,-1],[-1,-1],[-1,5],[-5,5]]` |
+| 21 | const | `doc` |  | `{schema:"motionspec.map.v3",name:"Grundriss",map:{width:80,depth:80,color:"#101f34",image…` |
+| 59 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
 
 **DOM-IDs, die dieses Skript anspricht (4):** `title`, `runtime-hint`, `notice`, `point-width`
 
 ## `tests/browser/harness.mjs`
 
-3.676 Bytes · 65 Zeilen · Browsertest
+4.397 Bytes · 75 Zeilen · Browsertest
 
 **Imports**
 
@@ -3826,7 +3942,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | 6 | `node:url` | `fileURLToPath` |
 | 7 | `../../scripts/serve.mjs` | `createDevServer` |
 
-**Exporte:** `artifactDir`, `loadPlaywright`, `startServer`, `launch`, `environment`, `drawnRatio`, `recorder`, `assert`
+**Exporte:** `artifactDir`, `loadPlaywright`, `startServer`, `browserArgs`, `launch`, `environment`, `drawnRatio`, `recorder`, `assert`
 
 **Modulebene**
 
@@ -3835,22 +3951,23 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | 9 | const | `require` |  | `createRequire(import.meta.url)` |
 | 10 | const | `artifactDir` | ✓ | `fileURLToPath(new URL("../../.browser-artifacts/",import.meta.url))` |
 | 12 | function | `loadPlaywright` | ✓ | `()` |
-| 18 | async function | `startServer` | ✓ | `(options)` |
-| 26 | async function | `launch` | ✓ | `(playwright,extraArgs=[])` |
-| 35 | async function | `environment` | ✓ | `(page)` |
-| 43 | async function | `drawnRatio` | ✓ | `(page,selector="#canvas",background=[11,18,36])` |
-| 54 | function | `recorder` | ✓ | `()` |
-| 65 | const | `assert` | ✓ | `(condition,message)=>{if(!condition)throw new Error(message);}` |
+| 22 | async function | `startServer` | ✓ | `(options)` |
+| 31 | function | `browserArgs` | ✓ | `(platform=process.platform)` |
+| 36 | async function | `launch` | ✓ | `(playwright,extraArgs=[])` |
+| 45 | async function | `environment` | ✓ | `(page)` |
+| 53 | async function | `drawnRatio` | ✓ | `(page,selector="#canvas",background=[11,18,36])` |
+| 64 | function | `recorder` | ✓ | `()` |
+| 75 | const | `assert` | ✓ | `(condition,message)=>{if(!condition)throw new Error(message);}` |
 
 **Speicherzugriffe**
 
 | Zeile | API | Schlüssel |
 |---:|---|---|
-| 31 | `localStorage.setItem` | `ourark.perf` |
+| 41 | `localStorage.setItem` | `ourark.perf` |
 
 ## `tests/browser/kart-perf.browser.mjs`
 
-18.833 Bytes · 264 Zeilen · Browsertest
+18.758 Bytes · 263 Zeilen · Browsertest
 
 **Imports**
 
@@ -3868,29 +3985,29 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
 | 12 | const | `playwright` |  | `loadPlaywright()` |
-| 14 | const | `BASELINE` |  | `fileURLToPath(new URL("./kart-perf.baseline.json",import.meta.url))` |
-| 15 | const | `UPDATE` |  | `process.env.KART_BASELINE==="update"` |
-| 16 | const | `MEASURE_MS` |  | `6000` |
-| 16 | const | `MODE_MS` |  | `4000` |
-| 18 | const | `ONLY` |  | `process.env.KART_ONLY??null` |
-| 20 | const | `TARGETS` | ✓ | `Object.freeze({desktop:{fps:58,p95Ms:20.8,drawCalls:600,gpuMB:256,firstFrameMs:2000,first…` |
-| 27 | const | `TOLERANCE` |  | `{bytes:1.05,drawCalls:1.10,triangles:1.10,gpuMB:1.05,fps:.85,p95Ms:1.5,firstFrameMs:1.5,a…` |
-| 28 | const | `DEVICES` |  | `{desktop:{context:{viewport:{width:1440,height:900},deviceScaleFactor:2},throttle:1},phon…` |
-| 33 | const | `origin` |  | `await startServer()` |
-| 33 | const | `close` |  | `await startServer()` |
-| 33 | const | `browser` |  | `await launch(playwright,["--enable-precise-memory-info"])` |
-| 33 | const | `results` |  | `recorder()` |
-| 33 | const | `step` |  | `recorder()` |
-| 34 | const | `errors` |  | `[]` |
-| 34 | const | `runs` |  | `{}` |
-| 38 | function | `probes` |  | `()` |
-| 111 | async function | `open` |  | `(map,device)` |
-| 137 | const | `fmt` |  | `(v,d=1)=>Number.isFinite(v)?v.toFixed(d):String(v)` |
-| 138 | const | `round` |  | `o=>Object.fromEntries(Object.entries(o).map(([k,v])=>[k,typeof v==="number"?Math.round(v*…` |
-| 139 | function | `targetReport` |  | `(device,m)` |
-| 148 | async function | `measureRun` |  | `(map,device)` |
-| 175 | function | `compareRun` |  | `(id,b,r)` |
-| 264 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
+| 13 | const | `BASELINE` |  | `fileURLToPath(new URL("./kart-perf.baseline.json",import.meta.url))` |
+| 14 | const | `UPDATE` |  | `process.env.KART_BASELINE==="update"` |
+| 15 | const | `MEASURE_MS` |  | `6000` |
+| 15 | const | `MODE_MS` |  | `4000` |
+| 17 | const | `ONLY` |  | `process.env.KART_ONLY??null` |
+| 19 | const | `TARGETS` | ✓ | `Object.freeze({desktop:{fps:58,p95Ms:20.8,drawCalls:600,gpuMB:256,firstFrameMs:2000,first…` |
+| 26 | const | `TOLERANCE` |  | `{bytes:1.05,drawCalls:1.10,triangles:1.10,gpuMB:1.05,fps:.85,p95Ms:1.5,firstFrameMs:1.5,a…` |
+| 27 | const | `DEVICES` |  | `{desktop:{context:{viewport:{width:1440,height:900},deviceScaleFactor:2},throttle:1},phon…` |
+| 32 | const | `origin` |  | `await startServer()` |
+| 32 | const | `close` |  | `await startServer()` |
+| 32 | const | `browser` |  | `await launch(playwright,["--enable-precise-memory-info"])` |
+| 32 | const | `results` |  | `recorder()` |
+| 32 | const | `step` |  | `recorder()` |
+| 33 | const | `errors` |  | `[]` |
+| 33 | const | `runs` |  | `{}` |
+| 37 | function | `probes` |  | `()` |
+| 110 | async function | `open` |  | `(map,device)` |
+| 136 | const | `fmt` |  | `(v,d=1)=>Number.isFinite(v)?v.toFixed(d):String(v)` |
+| 137 | const | `round` |  | `o=>Object.fromEntries(Object.entries(o).map(([k,v])=>[k,typeof v==="number"?Math.round(v*…` |
+| 138 | function | `targetReport` |  | `(device,m)` |
+| 147 | async function | `measureRun` |  | `(map,device)` |
+| 174 | function | `compareRun` |  | `(id,b,r)` |
+| 263 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
 
 **DOM-IDs, die dieses Skript anspricht (2):** `kart-canvas`, `kart-status`
 
@@ -3898,11 +4015,11 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 | Zeile | API | Schlüssel |
 |---:|---|---|
-| 39 | `localStorage.setItem` | `ourark.kart.telemetry` |
+| 38 | `localStorage.setItem` | `ourark.kart.telemetry` |
 
 ## `tests/browser/perf-meter.browser.mjs`
 
-4.305 Bytes · 47 Zeilen · Browsertest
+4.201 Bytes · 46 Zeilen · Browsertest
 
 **Imports**
 
@@ -3917,21 +4034,21 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
 | 7 | const | `playwright` |  | `loadPlaywright()` |
-| 9 | const | `origin` |  | `await startServer()` |
-| 9 | const | `close` |  | `await startServer()` |
-| 9 | const | `browser` |  | `await launch(playwright)` |
-| 9 | const | `results` |  | `recorder()` |
-| 9 | const | `step` |  | `recorder()` |
-| 10 | const | `context` |  | `await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})` |
-| 12 | const | `page` |  | `await context.newPage()` |
-| 12 | const | `errors` |  | `[]` |
-| 14 | const | `value` |  | `label=>page.evaluate(label=>{for(const dt of document.querySelectorAll(".perf-grid dt"))i…` |
-| 15 | const | `download` |  | `async act=>{const[d]=await Promise.all([page.waitForEvent("download"),page.click(ˋ.perf-h…` |
-| 47 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
+| 8 | const | `origin` |  | `await startServer()` |
+| 8 | const | `close` |  | `await startServer()` |
+| 8 | const | `browser` |  | `await launch(playwright)` |
+| 8 | const | `results` |  | `recorder()` |
+| 8 | const | `step` |  | `recorder()` |
+| 9 | const | `context` |  | `await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})` |
+| 11 | const | `page` |  | `await context.newPage()` |
+| 11 | const | `errors` |  | `[]` |
+| 13 | const | `value` |  | `label=>page.evaluate(label=>{for(const dt of document.querySelectorAll(".perf-grid dt"))i…` |
+| 14 | const | `download` |  | `async act=>{const[d]=await Promise.all([page.waitForEvent("download"),page.click(ˋ.perf-h…` |
+| 46 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
 
 ## `tests/browser/perf.browser.mjs`
 
-5.896 Bytes · 64 Zeilen · Browsertest
+5.792 Bytes · 63 Zeilen · Browsertest
 
 **Imports**
 
@@ -3945,17 +4062,17 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
 | 7 | const | `playwright` |  | `loadPlaywright()` |
-| 9 | const | `origin` |  | `await startServer()` |
-| 9 | const | `close` |  | `await startServer()` |
-| 9 | const | `browser` |  | `await launch(playwright)` |
-| 9 | const | `results` |  | `recorder()` |
-| 9 | const | `step` |  | `recorder()` |
-| 10 | const | `errors` |  | `[]` |
-| 11 | const | `BUDGET` |  | `1000/60` |
-| 13 | const | `measure` |  | `(page,ms)=>page.evaluate(ms=>new Promise(res=>{const t=[];let last=0;const end=performanc…` |
-| 14 | const | `scale` |  | `async page=>Number((/·\s*([\d,]+)×/.exec(await page.textContent("#runtime-perf"))?.[1]??"…` |
-| 15 | async function | `openWalk` |  | `(options,{throttle=1}={})` |
-| 64 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
+| 8 | const | `origin` |  | `await startServer()` |
+| 8 | const | `close` |  | `await startServer()` |
+| 8 | const | `browser` |  | `await launch(playwright)` |
+| 8 | const | `results` |  | `recorder()` |
+| 8 | const | `step` |  | `recorder()` |
+| 9 | const | `errors` |  | `[]` |
+| 10 | const | `BUDGET` |  | `1000/60` |
+| 12 | const | `measure` |  | `(page,ms)=>page.evaluate(ms=>new Promise(res=>{const t=[];let last=0;const end=performanc…` |
+| 13 | const | `scale` |  | `async page=>Number((/·\s*([\d,]+)×/.exec(await page.textContent("#runtime-perf"))?.[1]??"…` |
+| 14 | async function | `openWalk` |  | `(options,{throttle=1}={})` |
+| 63 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
 
 **DOM-IDs, die dieses Skript anspricht (2):** `runtime-perf`, `canvas`
 
@@ -4013,7 +4130,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 ## `tests/browser/runtime.browser.mjs`
 
-11.304 Bytes · 127 Zeilen · Browsertest
+11.200 Bytes · 126 Zeilen · Browsertest
 
 **Imports**
 
@@ -4022,35 +4139,35 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | 3 | `node:fs/promises` | `writeFile` |
 | 4 | `node:path` | `path` |
 | 5 | `./harness.mjs` | `loadPlaywright`, `startServer`, `launch`, `environment`, `recorder`, `assert`, `artifactDir` |
-| 27 | `node:fs/promises` | `(dynamisch)` |
+| 26 | `node:fs/promises` | `(dynamisch)` |
 
 **Modulebene**
 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
 | 7 | const | `playwright` |  | `loadPlaywright()` |
-| 9 | const | `origin` |  | `await startServer()` |
-| 9 | const | `close` |  | `await startServer()` |
-| 9 | const | `browser` |  | `await launch(playwright)` |
-| 9 | const | `results` |  | `recorder()` |
-| 9 | const | `step` |  | `recorder()` |
-| 10 | const | `context` |  | `await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})` |
-| 20 | const | `page` |  | `await context.newPage()` |
-| 20 | const | `errors` |  | `[]` |
-| 22 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
-| 23 | const | `state` |  | `()=>page.evaluate(()=>document.body.dataset.runtime??"editing")` |
-| 24 | const | `waitState` |  | `s=>page.waitForFunction(s=>(document.body.dataset.runtime??"editing")===s,s,{timeout:5000…` |
-| 25 | const | `exportJson` |  | `async()=>{const[d]=await Promise.all([page.waitForEvent("download"),page.click("#export")…` |
-| 28 | const | `editorState` |  | `()=>page.evaluate(()=>({undo:document.getElementById("undo").disabled,redo:document.getEl…` |
-| 29 | const | `canvasPng` |  | `()=>page.locator("#canvas").screenshot()` |
-| 30 | const | `idleRaf` |  | `async(ms=600)=>{const a=await page.evaluate(()=>window.__probe.raf);await page.waitForTim…` |
-| 127 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
+| 8 | const | `origin` |  | `await startServer()` |
+| 8 | const | `close` |  | `await startServer()` |
+| 8 | const | `browser` |  | `await launch(playwright)` |
+| 8 | const | `results` |  | `recorder()` |
+| 8 | const | `step` |  | `recorder()` |
+| 9 | const | `context` |  | `await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})` |
+| 19 | const | `page` |  | `await context.newPage()` |
+| 19 | const | `errors` |  | `[]` |
+| 21 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
+| 22 | const | `state` |  | `()=>page.evaluate(()=>document.body.dataset.runtime??"editing")` |
+| 23 | const | `waitState` |  | `s=>page.waitForFunction(s=>(document.body.dataset.runtime??"editing")===s,s,{timeout:5000…` |
+| 24 | const | `exportJson` |  | `async()=>{const[d]=await Promise.all([page.waitForEvent("download"),page.click("#export")…` |
+| 27 | const | `editorState` |  | `()=>page.evaluate(()=>({undo:document.getElementById("undo").disabled,redo:document.getEl…` |
+| 28 | const | `canvasPng` |  | `()=>page.locator("#canvas").screenshot()` |
+| 29 | const | `idleRaf` |  | `async(ms=600)=>{const a=await page.evaluate(()=>window.__probe.raf);await page.waitForTim…` |
+| 126 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
 
 **DOM-IDs, die dieses Skript anspricht (9):** `undo`, `redo`, `selected-name`, `count`, `status`, `projection`, `runtime-hud`, `runtime-state`, `notice`
 
 ## `tests/browser/scan-world.browser.mjs`
 
-23.743 Bytes · 241 Zeilen · Browsertest
+23.639 Bytes · 240 Zeilen · Browsertest
 
 **Imports**
 
@@ -4066,28 +4183,28 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
 | 10 | const | `playwright` |  | `loadPlaywright()` |
-| 12 | const | `origin` |  | `await startServer()` |
-| 12 | const | `close` |  | `await startServer()` |
-| 12 | const | `browser` |  | `await launch(playwright)` |
-| 12 | const | `results` |  | `recorder()` |
-| 12 | const | `step` |  | `recorder()` |
-| 13 | const | `perf` |  | `process.env.SCAN_PERF==="1"` |
-| 13 | const | `viewport` |  | `perf?{width:1920,height:1080}:{width:1440,height:900}` |
-| 14 | const | `page` |  | `await(await browser.newContext({viewport,deviceScaleFactor:1})).newPage()` |
-| 14 | const | `errors` |  | `[]` |
-| 16 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
-| 17 | const | `waitState` |  | `s=>page.waitForFunction(s=>(document.body.dataset.runtime??"editing")===s,s,{timeout:8000…` |
-| 18 | const | `pose` |  | `async()=>{const text=await page.textContent("#runtime-position"),[,x,z,h]=/X (-?[\d.]+) ·…` |
-| 19 | const | `stats` |  | `()=>page.evaluate(()=>globalThis.__MOTIONSPEC_RENDER_STATS__)` |
-| 21 | const | `inRoom` |  | `p=>p.x>-.5&&p.x<4.2&&p.z>-.8&&p.z<5.4` |
-| 22 | const | `hold` |  | `async(code,ms)=>{await page.keyboard.down(code);await page.waitForTimeout(ms);await page.…` |
-| 241 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
+| 11 | const | `origin` |  | `await startServer()` |
+| 11 | const | `close` |  | `await startServer()` |
+| 11 | const | `browser` |  | `await launch(playwright)` |
+| 11 | const | `results` |  | `recorder()` |
+| 11 | const | `step` |  | `recorder()` |
+| 12 | const | `perf` |  | `process.env.SCAN_PERF==="1"` |
+| 12 | const | `viewport` |  | `perf?{width:1920,height:1080}:{width:1440,height:900}` |
+| 13 | const | `page` |  | `await(await browser.newContext({viewport,deviceScaleFactor:1})).newPage()` |
+| 13 | const | `errors` |  | `[]` |
+| 15 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
+| 16 | const | `waitState` |  | `s=>page.waitForFunction(s=>(document.body.dataset.runtime??"editing")===s,s,{timeout:8000…` |
+| 17 | const | `pose` |  | `async()=>{const text=await page.textContent("#runtime-position"),[,x,z,h]=/X (-?[\d.]+) ·…` |
+| 18 | const | `stats` |  | `()=>page.evaluate(()=>globalThis.__MOTIONSPEC_RENDER_STATS__)` |
+| 20 | const | `inRoom` |  | `p=>p.x>-.5&&p.x<4.2&&p.z>-.8&&p.z<5.4` |
+| 21 | const | `hold` |  | `async(code,ms)=>{await page.keyboard.down(code);await page.waitForTimeout(ms);await page.…` |
+| 240 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
 
 **DOM-IDs, die dieses Skript anspricht (5):** `scan-meta`, `canvas`, `runtime-perf`, `device-check-dialog`, `device-check-stored`
 
 ## `tests/browser/walking.browser.mjs`
 
-6.906 Bytes · 90 Zeilen · Browsertest
+6.802 Bytes · 89 Zeilen · Browsertest
 
 **Imports**
 
@@ -4102,28 +4219,28 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
 | 7 | const | `playwright` |  | `loadPlaywright()` |
-| 9 | const | `origin` |  | `await startServer()` |
-| 9 | const | `close` |  | `await startServer()` |
-| 9 | const | `browser` |  | `await launch(playwright)` |
-| 9 | const | `results` |  | `recorder()` |
-| 9 | const | `step` |  | `recorder()` |
-| 10 | const | `context` |  | `await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})` |
-| 11 | const | `page` |  | `await context.newPage()` |
-| 11 | const | `errors` |  | `[]` |
-| 13 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
-| 14 | const | `waitState` |  | `s=>page.waitForFunction(s=>(document.body.dataset.runtime??"editing")===s,s,{timeout:5000…` |
-| 16 | const | `pose` |  | `async()=>{const[,x,z,h]=/X (-?[\d.]+) · Z (-?[\d.]+) · (\d+)°/.exec(await page.textConten…` |
-| 17 | const | `hold` |  | `async(code,ms)=>{await page.keyboard.down(code);await page.waitForTimeout(ms);await page.…` |
-| 18 | const | `exportJson` |  | `async()=>{const[d]=await Promise.all([page.waitForEvent("download"),page.click("#export")…` |
-| 20 | const | `point` |  | `(id,name,over={})=>({id,name,type:"building",x:0,z:0,width:10,depth:6,height:6,rotation:0…` |
-| 21 | const | `doc` |  | `{schema:"motionspec.map.v2",name:"Laufstrecke",map:{width:80,depth:80,color:"#101f34",ima…` |
-| 90 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
+| 8 | const | `origin` |  | `await startServer()` |
+| 8 | const | `close` |  | `await startServer()` |
+| 8 | const | `browser` |  | `await launch(playwright)` |
+| 8 | const | `results` |  | `recorder()` |
+| 8 | const | `step` |  | `recorder()` |
+| 9 | const | `context` |  | `await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})` |
+| 10 | const | `page` |  | `await context.newPage()` |
+| 10 | const | `errors` |  | `[]` |
+| 12 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
+| 13 | const | `waitState` |  | `s=>page.waitForFunction(s=>(document.body.dataset.runtime??"editing")===s,s,{timeout:5000…` |
+| 15 | const | `pose` |  | `async()=>{const[,x,z,h]=/X (-?[\d.]+) · Z (-?[\d.]+) · (\d+)°/.exec(await page.textConten…` |
+| 16 | const | `hold` |  | `async(code,ms)=>{await page.keyboard.down(code);await page.waitForTimeout(ms);await page.…` |
+| 17 | const | `exportJson` |  | `async()=>{const[d]=await Promise.all([page.waitForEvent("download"),page.click("#export")…` |
+| 19 | const | `point` |  | `(id,name,over={})=>({id,name,type:"building",x:0,z:0,width:10,depth:6,height:6,rotation:0…` |
+| 20 | const | `doc` |  | `{schema:"motionspec.map.v2",name:"Laufstrecke",map:{width:80,depth:80,color:"#101f34",ima…` |
+| 89 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
 
 **DOM-IDs, die dieses Skript anspricht (4):** `title`, `runtime-info`, `runtime-info-name`, `runtime-info-data`
 
 ## `tests/browser/world-upload.browser.mjs`
 
-14.956 Bytes · 144 Zeilen · Browsertest
+14.852 Bytes · 143 Zeilen · Browsertest
 
 **Imports**
 
@@ -4131,39 +4248,39 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 |---:|---|---|
 | 4 | `node:path` | `path` |
 | 5 | `./harness.mjs` | `loadPlaywright`, `startServer`, `launch`, `recorder`, `assert`, `artifactDir` |
-| 114 | `../../dist/worldport/osm.mjs` | `(dynamisch)` |
-| 131 | `../../dist/worldport/osm.mjs` | `(dynamisch)` |
+| 113 | `../../dist/worldport/osm.mjs` | `(dynamisch)` |
+| 130 | `../../dist/worldport/osm.mjs` | `(dynamisch)` |
 
 **Modulebene**
 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
 | 7 | const | `playwright` |  | `loadPlaywright()` |
-| 9 | const | `origin` |  | `await startServer()` |
-| 9 | const | `close` |  | `await startServer()` |
-| 9 | const | `browser` |  | `await launch(playwright)` |
-| 9 | const | `results` |  | `recorder()` |
-| 9 | const | `step` |  | `recorder()` |
-| 10 | const | `page` |  | `await(await browser.newContext({viewport:{width:1440,height:900},deviceScaleFactor:2})).n…` |
-| 10 | const | `errors` |  | `[]` |
-| 12 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
-| 13 | const | `BUDGET` |  | `1000/60` |
-| 14 | const | `measure` |  | `ms=>page.evaluate(ms=>new Promise(res=>{const t=[];let last=0;const end=performance.now()…` |
-| 15 | const | `stats` |  | `()=>page.evaluate(()=>({...globalThis.__MOTIONSPEC_RENDER_STATS__}))` |
-| 16 | const | `waitState` |  | `s=>page.waitForFunction(s=>(document.body.dataset.runtime??"editing")===s,s,{timeout:8000…` |
-| 17 | const | `pose` |  | `async()=>{const[,x,z,h]=/X (-?[\d.]+) · Z (-?[\d.]+) · (\d+)°/.exec(await page.textConten…` |
-| 18 | const | `hold` |  | `async(code,ms)=>{await page.keyboard.down(code);await page.waitForTimeout(ms);await page.…` |
-| 21 | const | `shapes` |  | `[[[-8,-8],[8,-8],[8,-2],[-2,-2],[-2,8],[-8,8]],[[-9,-6],[9,-6],[9,6],[-9,6]],[[-8,-8],[8,…` |
-| 22 | const | `colors` |  | `["#5eead4","#72a8ef","#f3c969","#d5b5ff","#eaf1fb"]` |
-| 23 | const | `points` |  | `Array.from({length:2000},(_,i)=>({id:ˋb ${i}ˋ,name:ˋBlock ${i}ˋ,type:"building",x:(i%45)*…` |
-| 24 | const | `city` |  | `{schema:"motionspec.map.v3",name:"Teststadt 2000",map:{width:1900,depth:1900,color:"#101f…` |
-| 144 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
+| 8 | const | `origin` |  | `await startServer()` |
+| 8 | const | `close` |  | `await startServer()` |
+| 8 | const | `browser` |  | `await launch(playwright)` |
+| 8 | const | `results` |  | `recorder()` |
+| 8 | const | `step` |  | `recorder()` |
+| 9 | const | `page` |  | `await(await browser.newContext({viewport:{width:1440,height:900},deviceScaleFactor:2})).n…` |
+| 9 | const | `errors` |  | `[]` |
+| 11 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
+| 12 | const | `BUDGET` |  | `1000/60` |
+| 13 | const | `measure` |  | `ms=>page.evaluate(ms=>new Promise(res=>{const t=[];let last=0;const end=performance.now()…` |
+| 14 | const | `stats` |  | `()=>page.evaluate(()=>({...globalThis.__MOTIONSPEC_RENDER_STATS__}))` |
+| 15 | const | `waitState` |  | `s=>page.waitForFunction(s=>(document.body.dataset.runtime??"editing")===s,s,{timeout:8000…` |
+| 16 | const | `pose` |  | `async()=>{const[,x,z,h]=/X (-?[\d.]+) · Z (-?[\d.]+) · (\d+)°/.exec(await page.textConten…` |
+| 17 | const | `hold` |  | `async(code,ms)=>{await page.keyboard.down(code);await page.waitForTimeout(ms);await page.…` |
+| 20 | const | `shapes` |  | `[[[-8,-8],[8,-8],[8,-2],[-2,-2],[-2,8],[-8,8]],[[-9,-6],[9,-6],[9,6],[-9,6]],[[-8,-8],[8,…` |
+| 21 | const | `colors` |  | `["#5eead4","#72a8ef","#f3c969","#d5b5ff","#eaf1fb"]` |
+| 22 | const | `points` |  | `Array.from({length:2000},(_,i)=>({id:ˋb ${i}ˋ,name:ˋBlock ${i}ˋ,type:"building",x:(i%45)*…` |
+| 23 | const | `city` |  | `{schema:"motionspec.map.v3",name:"Teststadt 2000",map:{width:1900,depth:1900,color:"#101f…` |
+| 143 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
 
 **DOM-IDs, die dieses Skript anspricht (12):** `world-title`, `object-count`, `notice`, `city-building-name`, `city-building-data`, `runtime-perf`, `runtime-hint`, `runtime-info-type`, `runtime-info-name`, `runtime-info-data`, `attribution`, `title`
 
 ## `tests/browser/world-walk.browser.mjs`
 
-6.566 Bytes · 76 Zeilen · Browsertest
+6.462 Bytes · 75 Zeilen · Browsertest
 
 **Imports**
 
@@ -4179,22 +4296,40 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
 | 8 | const | `playwright` |  | `loadPlaywright()` |
-| 10 | const | `origin` |  | `await startServer()` |
-| 10 | const | `close` |  | `await startServer()` |
-| 10 | const | `browser` |  | `await launch(playwright)` |
-| 10 | const | `results` |  | `recorder()` |
-| 10 | const | `step` |  | `recorder()` |
-| 11 | const | `page` |  | `await(await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})).…` |
-| 11 | const | `errors` |  | `[]` |
-| 13 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
-| 14 | const | `state` |  | `()=>page.evaluate(()=>document.body.dataset.runtime??"editing")` |
-| 15 | const | `waitState` |  | `s=>page.waitForFunction(s=>(document.body.dataset.runtime??"editing")===s,s,{timeout:8000…` |
-| 16 | const | `pose` |  | `async()=>{const[,x,z,h]=/X (-?[\d.]+) · Z (-?[\d.]+) · (\d+)°/.exec(await page.textConten…` |
-| 17 | const | `hold` |  | `async(code,ms)=>{await page.keyboard.down(code);await page.waitForTimeout(ms);await page.…` |
-| 18 | const | `exportJson` |  | `async()=>{const[d]=await Promise.all([page.waitForEvent("download"),page.click("#export")…` |
-| 76 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
+| 9 | const | `origin` |  | `await startServer()` |
+| 9 | const | `close` |  | `await startServer()` |
+| 9 | const | `browser` |  | `await launch(playwright)` |
+| 9 | const | `results` |  | `recorder()` |
+| 9 | const | `step` |  | `recorder()` |
+| 10 | const | `page` |  | `await(await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})).…` |
+| 10 | const | `errors` |  | `[]` |
+| 12 | const | `shot` |  | `name=>page.screenshot({path:path.join(artifactDir,name)})` |
+| 13 | const | `state` |  | `()=>page.evaluate(()=>document.body.dataset.runtime??"editing")` |
+| 14 | const | `waitState` |  | `s=>page.waitForFunction(s=>(document.body.dataset.runtime??"editing")===s,s,{timeout:8000…` |
+| 15 | const | `pose` |  | `async()=>{const[,x,z,h]=/X (-?[\d.]+) · Z (-?[\d.]+) · (\d+)°/.exec(await page.textConten…` |
+| 16 | const | `hold` |  | `async(code,ms)=>{await page.keyboard.down(code);await page.waitForTimeout(ms);await page.…` |
+| 17 | const | `exportJson` |  | `async()=>{const[d]=await Promise.all([page.waitForEvent("download"),page.click("#export")…` |
+| 75 | const | `failed` |  | `results.filter(r=>!r.ok).length` |
 
 **DOM-IDs, die dieses Skript anspricht (8):** `runtime-perf`, `pins`, `canvas-help`, `runtime-hint`, `runtime-info`, `runtime-info-type`, `runtime-info-name`, `runtime-info-data`
+
+## `tests/build-tools.test.mjs`
+
+4.387 Bytes · 81 Zeilen · Node-Test
+
+**Imports**
+
+| Zeile | Quelle | Namen |
+|---:|---|---|
+| 1 | `node:test` | `test` |
+| 2 | `node:assert/strict` | `assert` |
+| 3 | `node:fs/promises` | `mkdtemp`, `mkdir`, `writeFile`, `rm` |
+| 4 | `node:os` | `tmpdir` |
+| 5 | `node:path` | `path` |
+| 6 | `node:child_process` | `spawnSync` |
+| 7 | `node:url` | `fileURLToPath` |
+| 8 | `../scripts/check.mjs` | `relativeModuleReferences`, `checkProject` |
+| 9 | `./browser/harness.mjs` | `browserArgs` |
 
 ## `tests/camera-rig.test.mjs`
 
@@ -4227,7 +4362,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 ## `tests/car.test.mjs`
 
-3.260 Bytes · 50 Zeilen · Node-Test
+3.860 Bytes · 59 Zeilen · Node-Test
 
 **Imports**
 
@@ -4324,7 +4459,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 ## `tests/edge.test.mjs`
 
-47.168 Bytes · 572 Zeilen · Node-Test
+51.050 Bytes · 615 Zeilen · Node-Test
 
 **Imports**
 
@@ -4335,7 +4470,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | 3 | `node:assert/strict` | `assert` |
 | 4 | `../edge/policy.mjs` | `SECURITY_HEADERS`, `CONTENT_SECURITY_POLICY`, `readCredentials`, `sameSecret`, `clientKey` |
 | 5 | `../edge/app.mjs` | `createWorker`, `ENHANCE_MAX_BODY`, `ENHANCE_MAX_RESPONSE` |
-| 6 | `../edge/map-room.mjs` | `MapRoom`, `MAX_PER_IP` |
+| 6 | `../edge/map-room.mjs` | `MapRoom`, `MAX_PER_IP`, `IDLE_MS` |
 | 7 | `../dist/runtime/net/protocol.js` | `NET`, `netEncode`, `netDecode` |
 | 8 | `../edge/guard.mjs` | `LoginGuard`, `MAX_FAILURES`, `WINDOW_SECONDS`, `BLOCK_SECONDS` |
 | 9 | `../scripts/serve.mjs` | `createDevServer` |
@@ -4364,10 +4499,10 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 | Zeile | Ereignis | Ziel |
 |---:|---|---|
-| 556 | `message` | `ws` |
-| 556 | `open` | `ws` |
-| 568 | `open` | `ws` |
-| 570 | `open` | `ws` |
+| 599 | `message` | `ws` |
+| 599 | `open` | `ws` |
+| 611 | `open` | `ws` |
+| 613 | `open` | `ws` |
 
 ## `tests/frame-loop.test.mjs`
 
@@ -4472,7 +4607,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 ## `tests/kart.test.mjs`
 
-5.743 Bytes · 89 Zeilen · Node-Test
+6.923 Bytes · 107 Zeilen · Node-Test
 
 **Imports**
 
@@ -4482,7 +4617,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | 3 | `node:fs` | `readFileSync` |
 | 4 | `../dist/runtime/assets/codec.js` | `decodeHeightFile`, `decodeBinaryFile` |
 | 5 | `../dist/kart/track.js` | `Track`, `sampleClosedSpline`, `smoothClosed`, `featureHeight` |
-| 6 | `../dist/kart/kart.js` | `Kart`, `Race`, `KART` |
+| 6 | `../dist/kart/kart.js` | `Kart`, `Race`, `KART`, `isForwardOnTrack` |
 
 **Modulebene**
 
@@ -4537,7 +4672,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 ## `tests/map-history.test.mjs`
 
-5.916 Bytes · 97 Zeilen · Node-Test
+8.260 Bytes · 130 Zeilen · Node-Test
 
 **Imports**
 
@@ -4545,20 +4680,22 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 |---:|---|---|
 | 1 | `node:assert/strict` | `assert` |
 | 2 | `../dist/map-studio/model.js` | `demoDocument`, `validateDocument`, `copy`, `copyKeepingImage`, `History`, `HISTORY_LIMIT` |
+| 3 | `../dist/map-studio/history.js` | `ProjectHistory` |
+| 4 | `../dist/map-studio/project.js` | `serializeProject` |
 
 **Modulebene**
 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
-| 5 | const | `image` |  | `(name,fill)=>({name,dataUrl:"data:image/png;base64,"+fill.repeat(200_000)})` |
-| 6 | const | `withImage` |  | `(doc,img)=>({...copy(doc),map:{...doc.map,image:img&&{...img}}})` |
-| 7 | const | `edit` |  | `(doc,height)=>{const next=copy(doc);next.points[0].height=height;return next;}` |
-| 8 | const | `imageBytes` |  | `history=>[...history.images.values()].reduce((sum,entry)=>sum+entry.dataUrl.length,0)` |
-| 9 | const | `retainsDataUrl` |  | `history=>[...history.past,...history.future].some(entry=>JSON.stringify(entry).includes("…` |
+| 7 | const | `image` |  | `(name,fill)=>({name,dataUrl:"data:image/png;base64,"+fill.repeat(200_000)})` |
+| 8 | const | `withImage` |  | `(doc,img)=>({...copy(doc),map:{...doc.map,image:img&&{...img}}})` |
+| 9 | const | `edit` |  | `(doc,height)=>{const next=copy(doc);next.points[0].height=height;return next;}` |
+| 10 | const | `imageBytes` |  | `history=>[...history.images.values()].reduce((sum,entry)=>sum+entry.dataUrl.length,0)` |
+| 11 | const | `retainsDataUrl` |  | `history=>[...history.past,...history.future].some(entry=>JSON.stringify(entry).includes("…` |
 
 ## `tests/map-project.test.mjs`
 
-13.017 Bytes · 142 Zeilen · Node-Test
+14.347 Bytes · 160 Zeilen · Node-Test
 
 **Imports**
 
@@ -4567,7 +4704,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | 4 | `node:assert/strict` | `assert` |
 | 5 | `../dist/map-studio/model.js` | `SCHEMA`, `demoDocument`, `newPoint` |
 | 6 | `../dist/map-studio/project.js` | `ENVELOPE_SCHEMA`, `MAX_PROJECT_BYTES`, `readProject`, `serializeProject`, `envelope`, `projectBytes`, `utf8Length`, `checkEditBudget` |
-| 7 | `../dist/map-studio/storage.js` | `loadLocal`, `saveLocal`, `listLocal`, `loadProject`, `SaveConflict`, `projectKey`, `LEGACY_WORLD_ID` |
+| 7 | `../dist/map-studio/storage.js` | `loadLocal`, `saveLocal`, `listLocal`, `loadProject`, `SaveConflict`, `SaveRevisionLimit`, `projectKey`, `LEGACY_WORLD_ID` |
 | 8 | `../dist/runtime/net/protocol.js` | `POS_LIMIT`, `ROOM_BOUND`, `mapFitsNetwork`, `poseOutOfRange`, `encode`, `decode`, `TYPE` |
 | 9 | `../edge/room.mjs` | `BOUND`, `Room` |
 | 10 | `../dist/runtime/gpu/cull.js` | `EntityCuller`, `cameraFrom` |
@@ -4847,7 +4984,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 ## `tests/plane.test.mjs`
 
-3.326 Bytes · 52 Zeilen · Node-Test
+4.119 Bytes · 61 Zeilen · Node-Test
 
 **Imports**
 
@@ -4907,7 +5044,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 ## `tests/repository.test.mjs`
 
-3.368 Bytes · 44 Zeilen · Node-Test
+5.594 Bytes · 79 Zeilen · Node-Test
 
 **Imports**
 
@@ -5029,7 +5166,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 ## `tests/sim-wasm.test.mjs`
 
-5.110 Bytes · 71 Zeilen · Node-Test
+7.990 Bytes · 117 Zeilen · Node-Test
 
 **Imports**
 
@@ -5143,26 +5280,34 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 ## `tests/world-studio.test.mjs`
 
-3.947 Bytes · 45 Zeilen · Node-Test
+8.662 Bytes · 114 Zeilen · Node-Test
 
 **Imports**
 
 | Zeile | Quelle | Namen |
 |---:|---|---|
 | 1 | `node:assert/strict` | `assert` |
-| 2 | `../dist/worlds/data.js` | `worlds` |
-| 3 | `../dist/worlds/scene.js` | `buildWorld` |
-| 4 | `../dist/worlds/vendor/three.module.js` | `THREE` |
-| 5 | `../dist/worlds/vendor/TransformControls.js` | `TransformControls` |
-| 6 | `../dist/world-studio/model.js` | `createDocument`, `createObject`, `validateDocument`, `History`, `clone` |
-| 7 | `../dist/world-studio/renderer.js` | `WorldEditorRenderer` |
+| 2 | `node:fs/promises` | `readFile` |
+| 3 | `../dist/worlds/data.js` | `worlds` |
+| 4 | `../dist/worlds/scene.js` | `buildWorld` |
+| 5 | `../dist/worlds/vendor/three.module.js` | `THREE` |
+| 6 | `../dist/worlds/vendor/TransformControls.js` | `TransformControls` |
+| 7 | `../dist/world-studio/model.js` | `createDocument`, `createObject`, `validateDocument`, `readImport`, `History`, `clone` |
+| 8 | `../dist/world-studio/renderer.js` | `WorldEditorRenderer` |
+| 9 | `../dist/map-studio/project.js` | `readProject`, `serializeProject`, `MAX_PROJECT_BYTES` |
 
 **Modulebene**
 
 | Zeile | Art | Name | Export | Wert / Signatur |
 |---:|---|---|:---:|---|
-| 9 | let | `meshCount` |  | `0` |
-| 41 | const | `controls` |  | `new TransformControls(new THREE.PerspectiveCamera())` |
+| 78 | let | `meshCount` |  | `0` |
+| 110 | const | `controls` |  | `new TransformControls(new THREE.PerspectiveCamera())` |
+
+**Event-Bindungen**
+
+| Zeile | Ereignis | Ziel |
+|---:|---|---|
+| 59 | `dispose` | `original` |
 
 ## `tests/world-walk.test.mjs`
 

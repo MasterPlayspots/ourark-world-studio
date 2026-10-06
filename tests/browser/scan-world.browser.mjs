@@ -8,7 +8,6 @@ import {artifactDir} from './harness.mjs';
 import {readFile} from 'node:fs/promises';
 
 const playwright=loadPlaywright();
-if(!playwright){console.log('SKIP: playwright-core not found (set PLAYWRIGHT_CORE).');process.exit(0);}
 const {origin,close}=await startServer(),browser=await launch(playwright),{results,step}=recorder();
 const perf=process.env.SCAN_PERF==='1',viewport=perf?{width:1920,height:1080}:{width:1440,height:900};
 const page=await (await browser.newContext({viewport,deviceScaleFactor:1})).newPage(),errors=[];

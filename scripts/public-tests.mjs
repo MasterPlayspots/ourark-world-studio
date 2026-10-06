@@ -4,7 +4,7 @@ import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const suites=[
-  'world-studio','map-studio','map-history','map-enhance','map-v2','map-runtime','physics',
+  'build-tools','world-studio','map-studio','map-history','map-enhance','map-v2','map-runtime','physics',
   'broadphase','polygon','map-v3','map-project','city-layer','map-edit-cost','walker','quality',
   'world-walk','worldport','worldport-osm','osm-ground','surfaces','water','runtime','camera-rig',
   'device-check','perf-meter','kart','plane','pedestrian','kart-insights','car','sim-layout',

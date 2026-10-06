@@ -4,7 +4,7 @@
 import assert from 'node:assert/strict';
 import {SCHEMA,demoDocument,newPoint} from '../dist/map-studio/model.js';
 import {ENVELOPE_SCHEMA,MAX_PROJECT_BYTES,readProject,serializeProject,envelope,projectBytes,utf8Length,checkEditBudget} from '../dist/map-studio/project.js';
-import {loadLocal,saveLocal,listLocal,loadProject,SaveConflict,projectKey,LEGACY_WORLD_ID} from '../dist/map-studio/storage.js';
+import {loadLocal,saveLocal,listLocal,loadProject,SaveConflict,SaveRevisionLimit,projectKey,LEGACY_WORLD_ID} from '../dist/map-studio/storage.js';
 import {POS_LIMIT,ROOM_BOUND,mapFitsNetwork,poseOutOfRange,encode,decode,TYPE} from '../dist/runtime/net/protocol.js';
 import {BOUND,Room} from '../edge/room.mjs';
 import {EntityCuller,cameraFrom} from '../dist/runtime/gpu/cull.js';
@@ -114,6 +114,24 @@ function fakeIndexedDB({failPutOn=null}={}){
   assert.equal((await loadProject('world-a',{idb})).doc.name,'A2');assert.equal(await loadProject('nope',{idb}),null);
   const [x,y]=await Promise.allSettled([saveLocal({...docA,name:'tab 1'},{...a,revision:2},{idb}),saveLocal({...docA,name:'tab 2'},{...a,revision:2},{idb})]);
   assert.equal([x,y].filter(r=>r.status==='fulfilled').length,1,'concurrent saves from the same base: exactly one wins');
+}
+{
+  // A file can legitimately carry the maximum accepted revision. Its next save must fail
+  // before any database request, rather than store an envelope that cannot be opened.
+  const idb=fakeIndexedDB(),doc=demoDocument(),worldId='max-revision',max=2**31-1;
+  const meta=readProject(envelope(doc,{worldId,revision:max})).meta;
+  idb.data.set(projectKey(worldId),envelope(doc,meta));idb.data.set('last',worldId);
+  const before=structuredClone(idb.data),open=idb.open;let opens=0;
+  idb.open=function(){opens++;return open.call(this);};
+  await assert.rejects(saveLocal({...doc,name:'Must not overwrite'},meta,{idb}),error=>error instanceof SaveRevisionLimit&&/maximale Projektrevision/.test(error.message));
+  assert.equal(opens,0,'revision overflow is rejected before opening the database');
+  assert.deepEqual(idb.data,before,'no payload, revision or last-key mutation');
+  assert.equal((await loadProject(worldId,{idb})).meta.revision,max);
+  assert.equal((await loadLocal({idb})).doc.name,doc.name,'existing project remains readable');
+  // The preceding revision may still save exactly once into the valid maximum.
+  const fresh=fakeIndexedDB();
+  assert.equal(await saveLocal(doc,{worldId,revision:max-1},{idb:fresh}),max);
+  assert.equal((await loadProject(worldId,{idb:fresh})).meta.revision,max);
 }
 // 7. W3 / P02: the network range is explicit; maps beyond it are reported instead of silently clamped.
 {

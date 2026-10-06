@@ -10,7 +10,6 @@ import {fileURLToPath} from 'node:url';
 import {loadPlaywright,startServer,launch,recorder,assert,artifactDir,environment} from './harness.mjs';
 
 const playwright=loadPlaywright();
-if(!playwright){console.log('SKIP: playwright-core not found (set PLAYWRIGHT_CORE).');process.exit(0);}
 const BASELINE=fileURLToPath(new URL('./kart-perf.baseline.json',import.meta.url));
 const UPDATE=process.env.KART_BASELINE==='update';
 const MEASURE_MS=6000,MODE_MS=4000;
@@ -230,7 +229,7 @@ try{
     });
     const shot=path.join(artifactDir,'kart-perf-context-restored.png');await page.screenshot({path:shot});
     await context.close();
-    if(result.skip)return 'WEBGL_lose_context nicht verfügbar (übersprungen)';
+    assert(!result.skip,'WEBGL_lose_context fehlt; Kontextverlust-Prüfung konnte nicht ausgeführt werden');
     assert(result.paused&&result.still,'pausiert während des Verlusts');assert(/Grafik/.test(result.status),'Hinweis sichtbar');
     assert(result.resumed&&!result.lost,'läuft nach der Wiederherstellung weiter');
     assert(result.marks.includes('Grafik verloren')&&result.marks.includes('Grafik zurück'),'in den Insights vermerkt');

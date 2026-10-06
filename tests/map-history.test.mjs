@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import {demoDocument,validateDocument,copy,copyKeepingImage,History,HISTORY_LIMIT} from '../dist/map-studio/model.js';
+import {ProjectHistory} from '../dist/map-studio/history.js';
+import {serializeProject} from '../dist/map-studio/project.js';
 
 // A realistic 4 MiB map image is ~5.6 MB as a data URL; a shorter one keeps the test fast while staying unique.
 const image=(name,fill)=>({name,dataUrl:'data:image/png;base64,'+fill.repeat(200_000)});
@@ -7,6 +9,37 @@ const withImage=(doc,img)=>({...copy(doc),map:{...doc.map,image:img&&{...img}}})
 const edit=(doc,height)=>{const next=copy(doc);next.points[0].height=height;return next;};
 const imageBytes=history=>[...history.images.values()].reduce((sum,entry)=>sum+entry.dataUrl.length,0);
 const retainsDataUrl=history=>[...history.past,...history.future].some(entry=>JSON.stringify(entry).includes('data:image'));
+
+// Project imports must record metadata even when the payload is byte-identical. Recording
+// true is the editor's dirty-state trigger; Undo/Redo restores one atomic project state.
+{
+  const history=new ProjectHistory(),doc=demoDocument();
+  const a={doc,meta:{worldId:'campus',revision:3,workspaceId:'old-space',geoReference:{crs:'old',origin:[10,20]}}};
+  const b={doc,meta:{worldId:'campus',revision:3,workspaceId:'new-space',geoReference:{crs:'new',origin:[30,40]}}};
+  assert.equal(history.record(a,b),true,'metadata-only import is a real edit');
+  assert.equal(history.past.length,1);
+  const undone=history.undo(b);assert.deepEqual(undone,a);
+  assert.deepEqual(history.redo(undone),b);
+  assert.equal(history.record(b,{doc,meta:copy(b.meta)}),false,'unchanged whole project is a no-op');
+  // A bare map can clear optional metadata; that removal must also be undoable.
+  const bare={doc,meta:{worldId:'campus',revision:3}};
+  assert.equal(history.record(b,bare),true);assert.deepEqual(history.undo(bare),b);
+}
+{
+  const history=new ProjectHistory();
+  const a={doc:validateDocument(withImage(demoDocument(),image('campus.png','A'))),meta:{worldId:'campus',revision:7,workspaceId:'old-space',geoReference:{crs:'old'}}};
+  const b={doc:validateDocument(edit(a.doc,25)),meta:{worldId:'campus',revision:7,workspaceId:'new-space',geoReference:{crs:'new'}}};
+  history.record(a,b);
+  // A save occurred after import: undo must not restore the stale CAS revision.
+  const saved={...b,meta:{...b.meta,revision:8}},undone=history.undo(saved);
+  assert.deepEqual(undone.doc,a.doc);assert.deepEqual(undone.meta,{...a.meta,revision:8});
+  assert.deepEqual(history.redo(undone),saved,'redo restores content while preserving current revision');
+  assert.equal(history.images.size,1,'project metadata does not defeat image deduplication');
+  assert.equal(retainsDataUrl(history),false);
+  assert.equal('__projectHistoryMeta' in undone.doc,false,'history metadata is not map data');
+  assert.equal(serializeProject(undone.doc,undone.meta).includes('__projectHistoryMeta'),false,'internal state is never exported');
+  assert.equal(undone.doc.points[1],b.doc.points[1],'cached unchanged point identity still survives Undo');
+}
 
 // 1. API unchanged: record/undo/redo round-trip whole documents, including the image.
 {

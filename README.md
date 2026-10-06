@@ -31,7 +31,7 @@ The starter contains one building and an unobstructed spawn on a 120 × 80 m map
 | Map Studio | One validated document drives 2D editing, 3D geometry, walking and JSON exchange | No automatic 3D reconstruction from an image |
 | Data import and extension points | CSV/Overpass conversion, custom point data, pure model modules and format contracts | CSV is planar-coordinate input; OSM geometry/heights may be simplified or estimated |
 | Local project storage | Transactional revisions detect stale-tab saves | No team editing, cloud sync or managed backup |
-| Layer and World editors | DOM/CSS editor and procedural 3D dioramas available locally | Separate document formats; public dioramas use simple replacement backgrounds |
+| Layer and World editors | DOM/CSS editor and procedural 3D dioramas available locally | Separate formats and storage behavior; layer edits are temporary and its JSON export has no UI re-import; public dioramas use replacement backgrounds |
 | Runtime experiments | Collision, cameras, JS vehicle controllers, WASM simulation, networking and optional GPU culling source | These are not all integrated into Map Studio; they are not a stable plugin API |
 | Tests and documentation | Readable implementation, reproducible Node checks, limits and contribution recipes | Passing tests do not establish customer value, supported FPS or production scale |
 
@@ -48,17 +48,20 @@ The specific user benefits still to validate are **less time preparing spatial d
 - [Optional integrations and excluded data](docs/INTEGRATIONS.md)
 - [Real-use result template](docs/validation/RESULT_TEMPLATE.md)
 - [Release status and test scope](docs/RELEASE_STATUS.md)
+- [6 October audit: corrections and verification status](docs/AUDIT_2026-10-06.md)
 
 ## Other local routes
 
 | Route | Public release behavior |
 | --- | --- |
 | `/map-studio/` | Recommended starting point; self-contained starter |
-| `/studio/` and `/` | Layer editor with replacement illustration |
+| `/studio/` and `/` | Layer editor with replacement illustration; edits last only for the current page session |
 | `/world-studio/` | Procedural world editor with replacement backgrounds; prepared scans require your own data |
 | `/kart/` and `/globe/` | Integration instructions; original application entry pages are retained as `integration.html` for developers configuring their own datasets/services |
 
 Kart/globe source is included, but the original aerial photographs, terrain bundles, scans, models and hosted county data are not included. Opening a gated route does not enable these integrations automatically. See [INTEGRATIONS](docs/INTEGRATIONS.md).
+
+The layer editor resets on reload or navigation away. Its **Export** downloads the current layers and view settings for inspection or developer reuse; there is no save/restore store or UI importer for that JSON. Map Studio's local-save and re-import instructions do not apply to the layer editor.
 
 ## Verify and contribute
 
@@ -68,7 +71,7 @@ From a Git checkout:
 npm run verify
 ```
 
-This checks syntax, references, the public Node suite and generated architecture index. It does not prove a browser/GPU or a live deployment works. See [release status](docs/RELEASE_STATUS.md) for the separate browser smoke command and evidence boundary. After editing:
+This checks syntax, references, the public Node suite and generated architecture index. It does not launch a browser. After installing the separate browser tooling described in [CONTRIBUTING](CONTRIBUTING.md), run `npm run test:browser` for the public smoke and audit regressions. Both are required, and missing Playwright or Chromium is a failure. `npm run test:browser:extended` selects the older, broader integration suites. See [release status](docs/RELEASE_STATUS.md) for their evidence boundaries. After editing:
 
 ```sh
 npm run docs:architecture

@@ -58,7 +58,7 @@ export class Car{
     }
     const fx=Math.sin(s.heading),fz=-Math.cos(s.heading),nx=s.x+fx*s.speed*dt,nz=s.z+fz*s.speed*dt;
     // A wall of rock steeper than the car can climb stops it.
-    const grade=(this.ground(nx+fx*PROBE*Math.sign(s.speed||1),nz+fz*PROBE*Math.sign(s.speed||1))-this.ground(nx,nz))/PROBE*Math.sign(s.speed||1);
+    const grade=(this.ground(nx+fx*PROBE*Math.sign(s.speed||1),nz+fz*PROBE*Math.sign(s.speed||1))-this.ground(nx,nz))/PROBE;
     if(s.onGround&&grade>p.maxGrade&&Math.abs(s.speed)>.1){s.speed=0;return s;}
     s.x=nx;s.z=nz;
     const floor=this.ground(s.x,s.z)+p.rideHeight;

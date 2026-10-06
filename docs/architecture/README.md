@@ -8,7 +8,7 @@ The repository contains several applications, not one interchangeable world form
 
 | Application | Browser execution | Persistent state |
 | --- | --- | --- |
-| Layer editor | DOM and CSS transforms in dist/app.js | JSON export; no shared world model |
+| Layer editor | DOM and CSS transforms in dist/app.js | Memory-only page state; JSON export with no UI re-import or local restore |
 | Map Studio | Three.js WebGL, pure map model, project envelope and editor | IndexedDB per world; explicit JSON export |
 | World Studio | Three.js WebGL, procedural dioramas, scan/city loaders | World documents in localStorage; city storage separately in IndexedDB |
 | Kart | Three.js WebGL, JavaScript controllers, fixed-step loop, WebSocket client | Runtime state in memory; optional telemetry and realtime |
@@ -70,12 +70,16 @@ Map IndexedDB database motionspec-map-studio-v1, store projects:
 | Key | Value |
 | --- | --- |
 | project:<worldId> | Project envelope |
-| last | Most recently opened/saved world ID |
+| last | Most recently saved world ID (or the migration-selected project) |
 | current | Legacy project retained as migration input |
 
 Save is compare-and-set inside one readwrite transaction. It increments the revision only if the stored revision matches the open project. A conflicting tab receives SaveConflict; it does not silently overwrite. This revision is local, not a server revision. Migration copies and verifies legacy data before switching the last pointer.
 
+Opening a stored project through `loadProject()` and the editor's local-project list does not change `last`. Saving A, saving B, opening A without saving, then reloading restores B. Only a subsequent save makes A the restore target.
+
 World Studio uses localStorage for diorama documents and [city-store.js](../../dist/world-studio/city-store.js) for city data. Neither store is cloud synchronization. Copying or publishing this repository does not copy a user's browser data.
+
+The layer editor initializes its state from in-code defaults on each page load. It has no storage write or UI import path. Its export includes layers, view and display preferences for inspection/developer reuse, but reload or navigation discards the editable session. This is separate from both Map Studio's project round trip and World Studio's storage.
 
 The public source ZIP includes the curated tracked files and a self-contained starter. It excludes original artwork/geodata/scans, historical material, owner deployment configuration, hosted R2 objects, services from other repositories and private browser state.
 
@@ -161,7 +165,7 @@ Worker auth fails closed without configured credentials/guard. The local server 
 
 ## 10. Verification and documentation index
 
-Run npm run verify for Node/syntax/reference checks and the generated index. The public smoke is a separate node tests/browser/public-smoke.browser.mjs command and fails without a configured Playwright/Chromium installation. Original broader browser harnesses may hardcode ANGLE Metal or expect excluded fixtures. Real Safari, Firefox, mobile, touch and accessibility coverage must be recorded separately.
+Run `npm run verify` for Node/syntax/reference checks and the generated index. `npm run test:browser` requires the public smoke and audit regressions to pass; `npm run test:browser:public` runs only the smoke. Missing Playwright/Chromium is a failure. The original broader suites remain under `npm run test:browser:extended`; their shared harness uses SwiftShader on Linux, Metal on macOS and the platform default elsewhere, while some suites still expect excluded fixtures or hardware-specific budgets. Software-rendered checks do not establish physical GPU/FPS performance. Real Safari, Firefox, mobile, touch and accessibility coverage must be recorded separately.
 
 The generated register covers all tracked files plus unignored new files, with exact byte hashes. Its tokenizer indexes authored JavaScript module-level symbols, DOM references and styles; it does not parse Rust symbols. It does not prove runtime correctness or automatically verify prose. Some DOM references are heuristic. Regenerate after changes with npm run docs:architecture.
 

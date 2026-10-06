@@ -5,7 +5,6 @@ import path from 'node:path';
 import {loadPlaywright,startServer,launch,recorder,assert,artifactDir} from './harness.mjs';
 
 const playwright=loadPlaywright();
-if(!playwright){console.log('SKIP: playwright-core not found (set PLAYWRIGHT_CORE).');process.exit(0);}
 // Stand-in origin: answers with whatever the test puts into `reply`, records what it received.
 const seen=[];let reply={status:200,body:{}};
 const origin=createServer((req,res)=>{let body='';req.on('data',c=>body+=c);req.on('end',()=>{seen.push({auth:req.headers.authorization,body:JSON.parse(body)});res.writeHead(reply.status,{'content-type':'application/json'});res.end(JSON.stringify(reply.body));});});

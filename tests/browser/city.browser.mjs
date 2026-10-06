@@ -4,7 +4,6 @@ import path from 'node:path';
 import {loadPlaywright,startServer,launch,recorder,assert,artifactDir} from './harness.mjs';
 
 const playwright=loadPlaywright();
-if(!playwright){console.log('SKIP: playwright-core not found (set PLAYWRIGHT_CORE).');process.exit(0);}
 const {origin,close}=await startServer(),browser=await launch(playwright),{results,step}=recorder();
 const page=await (await browser.newContext({viewport:{width:1440,height:900},deviceScaleFactor:2})).newPage(),errors=[];
 page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});page.on('pageerror',e=>errors.push(e.message));

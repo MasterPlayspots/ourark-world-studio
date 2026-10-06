@@ -1,13 +1,14 @@
 // Local project store (IndexedDB) — contracts/map-project-v1.md. Each world has its own key `project:<worldId>`
-// holding the envelope; `last` names the project opened most recently. The pre-envelope entry `current` is never
+// holding the envelope; `last` names the project saved most recently (or the migrated legacy project). The pre-envelope entry `current` is never
 // changed or deleted: it is migrated by copying, and `last` only switches after the copy was read back.
-import {envelope,readProject} from './project.js';
+import {envelope,readProject,validateMeta} from './project.js';
 
 const DB_NAME='motionspec-map-studio-v1',STORE='projects',LEGACY_KEY='current',LAST_KEY='last';
 // The legacy entry has no identity; one fixed id makes the migration repeatable without duplicate copies.
 export const LEGACY_WORLD_ID='lokal-altbestand';
 export const projectKey=worldId=>`project:${worldId}`;
 export class SaveConflict extends Error{}
+export class SaveRevisionLimit extends Error{}
 
 export async function openStore(idb=globalThis.indexedDB){
   return new Promise((resolve,reject)=>{
@@ -68,7 +69,12 @@ export async function loadProject(worldId,{idb}={}){const stored=await read(idb,
 /** Saves doc under meta.worldId if the stored revision still equals meta.revision (or nothing is stored yet).
  *  Read, compare and write happen in one transaction, so two tabs cannot both win. → the new revision. */
 export async function saveLocal(doc,meta,{idb}={}){
+  meta=validateMeta(meta);
   const key=projectKey(meta.worldId),next=meta.revision+1;
+  // Validate the next revision before opening a write transaction. An accepted imported
+  // maximum revision must not be incremented into an envelope that readProject rejects.
+  try{validateMeta({...meta,revision:next});}
+  catch{throw new SaveRevisionLimit('Lokales Speichern nicht möglich: Die maximale Projektrevision ist erreicht. Der lokale Bestand bleibt unverändert. Bitte das Projekt als Datei exportieren.');}
   await transact(idb,'readwrite',(store,abort)=>{
     const request=store.get(key);
     request.onsuccess=()=>{

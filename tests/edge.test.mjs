@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {SECURITY_HEADERS,CONTENT_SECURITY_POLICY,readCredentials,sameSecret,clientKey} from '../edge/policy.mjs';
 import {createWorker,ENHANCE_MAX_BODY,ENHANCE_MAX_RESPONSE} from '../edge/app.mjs';
-import {MapRoom,MAX_PER_IP} from '../edge/map-room.mjs';
+import {MapRoom,MAX_PER_IP,IDLE_MS} from '../edge/map-room.mjs';
 import {TYPE as NET,encode as netEncode,decode as netDecode} from '../dist/runtime/net/protocol.js';
 import {LoginGuard,MAX_FAILURES,WINDOW_SECONDS,BLOCK_SECONDS} from '../edge/guard.mjs';
 import {createDevServer} from '../scripts/serve.mjs';
@@ -460,7 +460,7 @@ function fakeSocket(){
     serializeAttachment(v){this.attachment=structuredClone(v);},deserializeAttachment(){return this.attachment;}};
   return s;
 }
-function fakeRoomCtx(){const sockets=[];return {sockets,acceptWebSocket(ws){sockets.push(ws);},getWebSockets(){return sockets.filter(s=>!s.closed);}};}
+function fakeRoomCtx(){const sockets=[];return {sockets,storage:fakeStorage(),acceptWebSocket(ws){sockets.push(ws);},getWebSockets(){return sockets.filter(s=>!s.closed);}};}
 test('MapRoom: accepts sockets with a WELCOME, relays validated poses as snapshots each tick, answers pings, cleans up',async()=>{
   const ctx=fakeRoomCtx(),clock={t:5000},timers=[];
   globalThis.WebSocketPair=function(){const c=fakeSocket(),s=fakeSocket();this[0]=c;this[1]=s;};
@@ -549,6 +549,49 @@ test('MapRoom: after hibernation the constructor adopts the still connected sock
   const ctx=fakeRoomCtx();const s=fakeSocket();s.attachment={id:41};ctx.sockets.push(s);
   const room=new MapRoom(ctx,{},{setInterval:()=>1,clearInterval:()=>{}});
   assert.equal(room.room.size,1);assert.equal(room.room.join().id,42);
+});
+test('MapRoom: the idle alarm closes a socket with no pose after the tick loop has stopped',async t=>{
+  const ctx=fakeRoomCtx(),clock={t:1000},timers=new Set();
+  const options={now:()=>clock.t,upgrade:()=>new Response(null,{status:200}),setInterval:fn=>{timers.add(fn);return fn;},clearInterval:fn=>timers.delete(fn)};
+  globalThis.WebSocketPair=function(){this[0]=fakeSocket();this[1]=fakeSocket();};t.after(()=>{delete globalThis.WebSocketPair;});
+  const room=new MapRoom(ctx,{},options);
+  await room.fetch(new Request('https://room/connect',{headers:{Upgrade:'websocket'}}));
+  const ws=ctx.sockets[0];
+  clock.t+=50;for(const tick of [...timers])tick();
+  assert.equal(timers.size,0,'the first quiet tick can hibernate');assert.equal(ctx.storage.alarm,1000+IDLE_MS);
+  clock.t=ctx.storage.alarm-1;await room.alarm();assert.equal(ws.closed,null,'the connection keeps its full idle allowance');
+  // An alarm can wake a new object, whose Room has no in-memory pose/join timestamps.
+  clock.t=ctx.storage.alarm;const resumed=new MapRoom(ctx,{},options);await resumed.alarm();
+  assert.deepEqual(ws.closed,[1000,'Inaktiv']);assert.equal(resumed.room.size,0);assert.equal(timers.size,0);assert.equal(ctx.storage.alarm,null);
+});
+test('MapRoom: stale poses hibernate, refreshed poses extend the deadline, and pings do not reset it',async t=>{
+  const ctx=fakeRoomCtx(),clock={t:1000},timers=new Set();
+  const options={now:()=>clock.t,upgrade:()=>new Response(null,{status:200}),setInterval:fn=>{timers.add(fn);return fn;},clearInterval:fn=>timers.delete(fn)};
+  globalThis.WebSocketPair=function(){this[0]=fakeSocket();this[1]=fakeSocket();};t.after(()=>{delete globalThis.WebSocketPair;});
+  let room=new MapRoom(ctx,{},options);
+  await room.fetch(new Request('https://room/connect',{headers:{Upgrade:'websocket'}}));const ws=ctx.sockets[0];
+  const pose=netEncode(NET.POSE,0,[{id:0,x:0,y:0,z:0,mode:'walk'}]).buffer;
+  clock.t=1500;await room.webSocketMessage(ws,pose);
+  clock.t=4550;for(const tick of [...timers])tick();
+  assert.equal(timers.size,0);assert.equal(ctx.storage.alarm,1500+IDLE_MS);
+  clock.t=20000;room=new MapRoom(ctx,{},options);await room.webSocketMessage(ws,pose);
+  assert.equal(ws.attachment.lastHeard,20000,'last pose is preserved across hibernation');
+  clock.t=24000;for(const tick of [...timers])tick();assert.equal(timers.size,0);
+  assert.equal(ctx.storage.alarm,20000+IDLE_MS);
+  clock.t=1500+IDLE_MS;await room.alarm();assert.equal(ws.closed,null,'an earlier queued alarm must not close a refreshed client');
+  clock.t=49000;await room.webSocketMessage(ws,netEncode(NET.PING,7,[]).buffer);
+  assert.equal(netDecode(ws.sent.at(-1)).type,NET.PONG);assert.equal(ws.attachment.lastHeard,20000,'pings do not extend the pose deadline');
+  clock.t=50000;room=new MapRoom(ctx,{},options);await room.alarm();
+  assert.deepEqual(ws.closed,[1000,'Inaktiv']);assert.equal(room.room.size,0);assert.equal(timers.size,0);assert.equal(ctx.storage.alarm,null);
+});
+test('MapRoom: idle expiry also runs when alarm storage is unavailable',async t=>{
+  const ctx=fakeRoomCtx(),clock={t:1000},timers=new Set();delete ctx.storage;
+  globalThis.WebSocketPair=function(){this[0]=fakeSocket();this[1]=fakeSocket();};t.after(()=>{delete globalThis.WebSocketPair;});
+  const room=new MapRoom(ctx,{},{now:()=>clock.t,upgrade:()=>new Response(null,{status:200}),setInterval:fn=>{timers.add(fn);return fn;},clearInterval:fn=>timers.delete(fn)});
+  await room.fetch(new Request('https://room/connect',{headers:{Upgrade:'websocket'}}));
+  clock.t+=50;for(const tick of [...timers])tick();assert.equal(timers.size,1,'without alarms the timer still owns cleanup');
+  clock.t=1000+IDLE_MS;for(const tick of [...timers])tick();
+  assert.deepEqual(ctx.sockets[0].closed,[1000,'Inaktiv']);assert.equal(room.room.size,0);assert.equal(timers.size,0);
 });
 test('dev server realtime: two real WebSocket clients, poses in, snapshots out, foreign origin refused',async()=>{
   const server=createDevServer();await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));

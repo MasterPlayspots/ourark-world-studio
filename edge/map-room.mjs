@@ -27,7 +27,11 @@ export class MapRoom{
     this.room=new Room({now:this.now,ground:(x,z)=>this.ground(x,z)});this.garbage=new Map();this.strikes=new Map();this.timer=null;this.socketIds=new WeakMap();
     this.upgrade=options.upgrade??(client=>new Response(null,{status:101,webSocket:client}));
     this.setInterval=options.setInterval??((fn,ms)=>setInterval(fn,ms));this.clearInterval=options.clearInterval??(t=>clearInterval(t));
-    for(const ws of ctx.getWebSockets()){const a=ws.deserializeAttachment();if(Number.isInteger(a?.id))this.room.adopt(a.id);if(a?.map)this.loadTerrain(a.map);}
+    for(const ws of ctx.getWebSockets()){
+      const a=ws.deserializeAttachment();
+      if(Number.isInteger(a?.id)){this.room.adopt(a.id);if(Number.isFinite(a.lastHeard))this.room.players.get(a.id).joined=a.lastHeard;}
+      if(a?.map)this.loadTerrain(a.map);
+    }
     if(this.room.size)this.startTicking();
   }
   async fetch(request){
@@ -40,7 +44,7 @@ export class MapRoom{
     const joined=this.room.join();
     if(!joined)return new Response('Karte voll.',{status:503});
     const pair=new WebSocketPair(),[client,server]=[pair[0],pair[1]];
-    try{this.ctx.acceptWebSocket(server);server.serializeAttachment({id:joined.id,map,ip});server.send(joined.welcome);}
+    try{this.ctx.acceptWebSocket(server);server.serializeAttachment({id:joined.id,map,ip,lastHeard:this.now()});server.send(joined.welcome);}
     catch(error){this.room.leave(joined.id);throw error;}
     this.startTicking();
     return this.upgrade(client);
@@ -53,6 +57,9 @@ export class MapRoom{
     if(!this.room.players.has(id))this.room.adopt(id);
     if(typeof message==='string'){this.strike(ws,id);return;}// protocol v1 is binary only
     const result=this.room.receive(id,new Uint8Array(message));
+    // The last well-formed pose also survives hibernation; waking must not restart the idle allowance.
+    const heard=this.room.players.get(id)?.heard,attachment=ws.deserializeAttachment();
+    if(Number.isFinite(heard)&&heard!==attachment?.lastHeard)ws.serializeAttachment({...attachment,lastHeard:heard});
     if(result.ok&&!result.reply)this.startTicking();
     if(result.reply)ws.send(result.reply);
     if(result.correction)ws.send(result.correction);
@@ -105,16 +112,33 @@ export class MapRoom{
   idOf(ws){let id=this.socketIds.get(ws);if(id===undefined){id=ws.deserializeAttachment()?.id;this.socketIds.set(ws,id);}return id;}
   startTicking(){if(!this.timer)this.timer=this.setInterval(()=>this.tick(),TICK_MS);}
   stopTicking(){if(this.timer){this.clearInterval(this.timer);this.timer=null;}}
+  idleDeadline(player){return Math.max(player.joined,player.heard??0,player.at??0)+IDLE_MS;}
+  expireIdle(sockets=this.ctx.getWebSockets()){
+    const now=this.now();
+    for(const ws of sockets){const id=this.idOf(ws),p=this.room.players.get(id);if(p&&now>=this.idleDeadline(p)){ws.close(1000,'Inaktiv');this.drop(id);}}
+  }
+  async scheduleIdleAlarm(){
+    const deadlines=[...this.room.players.values()].map(p=>this.idleDeadline(p));
+    if(deadlines.length)await this.ctx.storage.setAlarm(Math.min(...deadlines));
+    else await this.ctx.storage.deleteAlarm?.();
+  }
+  // Durable Object alarms wake an otherwise hibernating room to enforce the idle deadline.
+  async alarm(){this.expireIdle();await this.scheduleIdleAlarm();}
   tick(){
     const sockets=this.ctx.getWebSockets();
     if(!sockets.length){this.stopTicking();return;}
-    const frames=this.room.tick(),now=this.now();
+    this.expireIdle(sockets);
+    const frames=this.room.tick();
     for(const ws of sockets){
-      const id=this.idOf(ws),p=this.room.players.get(id);
-      if(p&&now-(p.heard||p.at||p.joined)>IDLE_MS){ws.close(1000,'Inaktiv');this.drop(id);continue;}
+      const id=this.idOf(ws);
       const frame=frames.get(id);if(frame)try{ws.send(frame);}catch{}
     }
-    // Nobody moving: stop ticking so the object can hibernate; the next accepted pose starts it again.
-    if(!this.room.active)this.stopTicking();
+    // Nobody moving: an alarm performs the eventual cleanup while the tick loop can hibernate.
+    // Non-Worker hosts without alarm storage keep ticking until the same deadline is reached.
+    if(!this.room.active&&this.ctx.storage?.setAlarm){
+      this.stopTicking();
+      const pending=this.scheduleIdleAlarm().catch(error=>{console.warn('MapRoom idle alarm',error?.message);if(this.room.size)this.startTicking();});
+      this.ctx.waitUntil?.(pending);
+    }
   }
 }

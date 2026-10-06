@@ -1,50 +1,50 @@
 <!-- GENERIERT von scripts/architecture-index.mjs — nicht von Hand bearbeiten. Neu erzeugen: npm run docs:architecture -->
 # Dateiregister — jede Datei, Byte für Byte
 
-Basis: Commit `a627709` plus Arbeitsbaum. Ablageregel und Deutung: [README.md](README.md).
+Basis: Commit `8ea9e35` plus Arbeitsbaum. Ablageregel und Deutung: [README.md](README.md).
 
-529 Dateien, 16.290.345 Bytes gesamt. Davon Drittanbieter unter vendor/ 14.613.655 Bytes, übrige Dateien 1.676.690 Bytes.
+535 Dateien, 16.360.751 Bytes gesamt. Davon Drittanbieter unter vendor/ 14.613.655 Bytes, übrige Dateien 1.747.096 Bytes.
 Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen zwei Ständen überein, ist die Datei Byte für Byte gleich.
 
 ## Übersicht nach Rolle
 
 | Rolle | Dateien | Bytes |
 |---|---:|---:|
-| Projekt | 11 | 238.325 |
-| Deployment-Konfiguration | 1 | 498 |
+| Projekt | 12 | 240.654 |
+| Deployment-Konfiguration | 1 | 3.503 |
 | Implementierter Formatvertrag | 3 | 10.082 |
 | Entwurfs-Vertrag (nicht implementiert) | 3 | 9.364 |
 | Layereditor / geteilte Styles | 7 | 101.765 |
-| Globus | 6 | 49.075 |
+| Globus | 6 | 49.053 |
 | Drittanbieter (CesiumJS 1.138.0) | 326 | 12.367.580 |
-| Kart und Gelände | 10 | 115.458 |
-| Map Studio | 7 | 102.043 |
-| Runtime (Begehmodus) | 30 | 184.399 |
-| World Studio | 7 | 129.914 |
+| Kart und Gelände | 10 | 115.634 |
+| Map Studio | 8 | 103.850 |
+| Runtime (Begehmodus) | 30 | 185.082 |
+| World Studio | 7 | 130.733 |
 | Datenimport | 3 | 35.392 |
 | Welt-Vorlagen (geteilt) | 7 | 30.105 |
 | Drittanbieter (Three.js 0.180.0) | 7 | 2.246.075 |
-| Dokumentation | 10 | 84.518 |
-| Edge-Worker (Auslieferung) | 9 | 49.338 |
+| Dokumentation | 11 | 95.568 |
+| Edge-Worker (Auslieferung) | 9 | 50.709 |
 | Einstiegsbeispiel | 2 | 2.604 |
-| Werkzeug | 13 | 70.194 |
-| Rust-Simulationskern | 3 | 18.035 |
-| Node-Test | 48 | 283.440 |
-| Browsertest | 16 | 162.141 |
+| Werkzeug | 13 | 75.998 |
+| Rust-Simulationskern | 3 | 18.107 |
+| Node-Test | 49 | 307.777 |
+| Browsertest | 18 | 181.116 |
 
 ## Alle Dateien
 
 | Datei | Bytes | Zeilen | Rolle | SHA-256 | Byte-identisch mit |
 |---|---:|---:|---|---|---|
 | `.gitattributes` | 186 | 12 | Projekt | `09f3aa134188fbd935b39f1b14c27dcd752f221319954c046178fb15b484a22b` |  |
-| `.github/workflows/verify.yml` | 498 | 19 | Deployment-Konfiguration | `6bb47e560327ab31c24bd9bf755021f1f15ba514604733e3bf765c8ea6dd0e40` |  |
+| `.github/workflows/verify.yml` | 3.503 | 84 | Deployment-Konfiguration | `f5d64a6e39465506bc7d3b6c5f055419280d49a3431e3b0a867033f6a683249e` |  |
 | `.gitignore` | 190 | 18 | Projekt | `29e8caa51c247d3ce1ddc1619d4bd89adc8b4ce3f37b0f9c2b4c6314c59b5a4d` |  |
 | `.nvmrc` | 3 | 1 | Projekt | `68ca3fba3b7e864770cb61aeb306d4bd4354b68ab4dd38450860c5d823e42a53` |  |
-| `CONTRIBUTING.md` | 7.748 | 109 | Projekt | `f20923d83edb19167f21bb9b02c4f7bf04e4431264cc12876854cc0f12864fc5` |  |
+| `CONTRIBUTING.md` | 9.113 | 111 | Projekt | `e639f3d60d3fb2a17864d99e0d94b0337d14cd7fc6968f8aee994f137560887a` |  |
 | `LICENSE` | 1.069 | 21 | Projekt | `946978d5f4a89e607d97827a9f38641a8896e6c71e6426a2bd201032ca0790ec` |  |
 | `LICENSE_SCOPE.md` | 1.419 | 15 | Projekt | `9222dc91b6fab5b0afd99654cc5784f0161a88987c6fceec178c4b7c79678c4a` |  |
 | `PUBLIC_SOURCE.json` | 217.939 | 5388 | Projekt | `93ba71cb94374973f933414777f103934c4561e02d0b1abe674d94f52c3491f8` |  |
-| `README.md` | 6.027 | 82 | Projekt | `78acfd45ff26082186afd93f1e92ef436a794249a5149c50600e76afca4e0f61` |  |
+| `README.md` | 6.775 | 85 | Projekt | `10ed202882d135bbe4b4937646dcc1e524193ad783056efba0bf3da6a412de02` |  |
 | `THIRD_PARTY_NOTICES.md` | 2.034 | 22 | Projekt | `ecfa3a3bb8cebe9218506c7da8e9cc42b756ed8c883dc474082d53431363e873` |  |
 | `contracts/map-project-v1.md` | 4.703 | 60 | Implementierter Formatvertrag | `2b885594c1c919fadad32539d16bf378a1a55e65a4bd7ffa6d5b316603d6ae9e` |  |
 | `contracts/net-protocol-v1.md` | 3.902 | 49 | Implementierter Formatvertrag | `ba5fc413137dc35a38d28f20260b72425e33c1a713767ef60e5d9a6bad3a4fa4` |  |
@@ -54,7 +54,7 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | `dist/app.js` | 18.653 | 73 | Layereditor / geteilte Styles | `09f7cd8ec57f306fe3942a85c5dd51f9fa7b48fab24b9198491c7c4e1a88602a` |  |
 | `dist/assets/starter-motion.svg` | 366 | — | Layereditor / geteilte Styles | `531ae1081a008c20989e9db6dad2b8c243629810bc95f93579a111a901ecc1b5` |  |
 | `dist/glass.css` | 1.763 | 22 | Layereditor / geteilte Styles | `4ed18bccbb7ae2011e6b3ffce103f349eafdb33bf6dc4b996fa89fc0f8c71b20` |  |
-| `dist/globe/car.js` | 4.590 | 78 | Globus | `d79370f6d7803eee953d8e6a90089d01fefdf7d66c1d1a2ab72fd66675a2da5e` |  |
+| `dist/globe/car.js` | 4.568 | 78 | Globus | `376721bfb01124a53e5718bf057499efd859c9510b5db58cec60b8ed40e36b22` |  |
 | `dist/globe/globe.css` | 3.073 | 31 | Globus | `6efc467d28317ae95c39dd129e483470cb76299eeb0cb3d2a25d61f9bad85345` |  |
 | `dist/globe/index.html` | 1.362 | 7 | Globus | `3cd966097d863e087f686893d8c41baa6f3d9be2b78317ac0354391811a2e971` |  |
 | `dist/globe/integration.html` | 4.078 | 51 | Globus | `a9cb9190863fdbb78d6cfdc4c4faac6a81fc4eadb1085bed52df97465b0b97aa` |  |
@@ -391,18 +391,19 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | `dist/kart/insights.js` | 17.102 | 222 | Kart und Gelände | `2fa2901a3b04a041dcd622736a29f3ed22e8a3e7ab61a4a4f0ffbb34bb961ea7` |  |
 | `dist/kart/integration.html` | 3.781 | 45 | Kart und Gelände | `a3e887e1def219dd5c215b3418f9f9d833fe5a5b125fc64d1e311eefbaa9efe9` |  |
 | `dist/kart/kart.css` | 5.806 | 66 | Kart und Gelände | `dd6e9222c32b54c6334a8b0ebb55f0cfa12bcd1cd5efae0ff2a2a3b1a731d7bb` |  |
-| `dist/kart/kart.js` | 7.365 | 136 | Kart und Gelände | `795c543b0820a5684a113483f008b4c40d0cddd7e3e56c3d187cdaa7cffdfbce` |  |
-| `dist/kart/main.js` | 43.853 | 634 | Kart und Gelände | `8ed91148878e15555e0883aba8a111be5bc7473b7ce6d2865eb35b2231102779` |  |
+| `dist/kart/kart.js` | 7.591 | 141 | Kart und Gelände | `b502f42e9aa9bc8c4b184f1c9720a01ccb23980fbf4c964804012297d2d81b36` |  |
+| `dist/kart/main.js` | 43.815 | 634 | Kart und Gelände | `630d3ede802c6d19bb8d1428f8558179dbde488b54a244d78dc6a232cd91accf` |  |
 | `dist/kart/pedestrian.js` | 4.421 | 78 | Kart und Gelände | `11548e9360a7c123517fa3c2646047b42eb81aa2113e3f7eb79c66499d8b918c` |  |
-| `dist/kart/plane.js` | 5.633 | 87 | Kart und Gelände | `352912c2e8b22b21c11c39e91c761357dbfa0947bf81a7df6aae3e97f7206682` |  |
+| `dist/kart/plane.js` | 5.621 | 87 | Kart und Gelände | `7b1a21f2d7520cf210ee05192516e8e8e27c47216b167ee9bdc069ad1789756e` |  |
 | `dist/kart/scenery.js` | 19.969 | 292 | Kart und Gelände | `6ded44b23a54b93d6d79ce22b8f1c7ca2a26bd9f3a513031b8159390b9fba01a` |  |
 | `dist/kart/track.js` | 6.088 | 105 | Kart und Gelände | `e90ad8aa853e8dcc033826535902626f072ed2de5ca0d8ba0df42e0dde40c100` |  |
-| `dist/map-studio/editor.js` | 27.454 | 268 | Map Studio | `69028d929b00627be9025f44e05eed9954c0343b6492118159f1dec734683d9c` |  |
+| `dist/map-studio/editor.js` | 27.797 | 269 | Map Studio | `470a9e1b78f717c1460f5e8dfb3d1a3dcc8c92ed1a86686ea7fd8f6227b66544` |  |
+| `dist/map-studio/history.js` | 922 | 21 | Map Studio | `8da76f8439cf9e3595939f71a8a83d5a32caa7d500d8b88bc709c90a10d529ba` |  |
 | `dist/map-studio/index.html` | 13.630 | 20 | Map Studio | `4a143175736fb12622444ff586269d9d679e56da20c89637a19f91fbaec2e125` |  |
 | `dist/map-studio/model.js` | 17.552 | 218 | Map Studio | `688ab4c1a2cff5c90b3f9eadab5ff3740078ba5e888cface0b20f97e7cf846f7` |  |
 | `dist/map-studio/project.js` | 6.116 | 89 | Map Studio | `31250709e8b11ca6f72a6e6eae2a5c17aa79263338358d641f5e2aff0c1b80a8` |  |
 | `dist/map-studio/renderer.js` | 15.602 | 132 | Map Studio | `32c5f7869b5ebb6b0c1d30bd89692b08cc32ccb3f7da82a43521d738223d952f` |  |
-| `dist/map-studio/storage.js` | 5.021 | 81 | Map Studio | `50c1600296c5c7cfc4341c97920017e5770a8d78eb450a64d1965dad48f1c6db` |  |
+| `dist/map-studio/storage.js` | 5.563 | 87 | Map Studio | `974b32636ce938f18743ebe43b82ab1cdaf4f9cb3abe4804721ea8d02c036587` |  |
 | `dist/map-studio/studio.css` | 16.668 | 12 | Map Studio | `6e02464436880b9c5f5b22cd4fa251178736178255d36279d0509622a839ccd6` |  |
 | `dist/motionspec-theme.css` | 17.690 | 287 | Layereditor / geteilte Styles | `b1a54686c185a96e401ab45ba134e872101e255c0c81a1052db8ae72d3ac0d0e` |  |
 | `dist/runtime/assets/codec.js` | 3.201 | 55 | Runtime (Begehmodus) | `756e1d28c9a4a1a32bf390ba1abbcf6e30673d9b74b405425160126d09343964` |  |
@@ -430,19 +431,19 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | `dist/runtime/scan/loader.js` | 10.209 | 137 | Runtime (Begehmodus) | `0f75634cadf8b93b6623a47f0ed0e97f1ec692769fdd3bd200219a6e56828733` |  |
 | `dist/runtime/session.js` | 2.821 | 49 | Runtime (Begehmodus) | `a919b4c6f1d794bf29dfc8633697d78583a61af7d7b1f262623ad2e7db9b1e87` |  |
 | `dist/runtime/sim/layout.js` | 2.834 | 62 | Runtime (Begehmodus) | `d7f58c5ba78d13deafe00b10f58677a1a9d9ba301cf9a0cb597cd2e161437966` |  |
-| `dist/runtime/sim/sim.wasm` | 29.162 | — | Runtime (Begehmodus) | `762547eab32ab569197c6b89f261b32edaa18a6b2a57561b54fb02e0032b11e0` |  |
+| `dist/runtime/sim/sim.wasm` | 29.248 | — | Runtime (Begehmodus) | `e641d0e61a87611db3c3a77d4b9da2b701fdfd05f4f34bf94c471c473fb4d5e0` |  |
 | `dist/runtime/sim/snapshot.js` | 2.534 | 54 | Runtime (Begehmodus) | `ddb2052b2b712a71fb9cddf7d3e964990b1d6578a742753bf9169505a7644410` |  |
-| `dist/runtime/sim/wasm.js` | 3.881 | 59 | Runtime (Begehmodus) | `90914782cf04a96ff75a457ef9b6612a3b6bb6857b174539da70a294223d457d` |  |
+| `dist/runtime/sim/wasm.js` | 4.478 | 64 | Runtime (Begehmodus) | `ef2336f9d6d1438781a99ecbc5a90fa4d611d555fcd4b9626814e6fedc3a9dd3` |  |
 | `dist/runtime/walk-host.js` | 16.781 | 198 | Runtime (Begehmodus) | `9005e199cafdb1b61666e9bbd51cdcc07b056723bab1ce75aa44be05f3525a44` |  |
 | `dist/runtime/walker.js` | 4.711 | 74 | Runtime (Begehmodus) | `c4d6bc251f4b815a8ac38b6561f687348d67cab7011139d952453407f1bfda78` |  |
 | `dist/studio/index.html` | 14.354 | 80 | Layereditor / geteilte Styles | `16cd9e0ea4f9e19e4ed604d91218d455e4b80ec9bf265ee6e86daadc95785daf` | `dist/index.html` |
 | `dist/styles.css` | 34.585 | 14 | Layereditor / geteilte Styles | `40b64a96590bfc1bb3f1fb2881f686520100e7c4718b02484be1457b9958328b` |  |
 | `dist/world-studio/city-store.js` | 1.143 | 19 | World Studio | `2a5f1971b7d8be4ffd112a0550398a9429d80db4048ab7cb75cf3b7bc4b11fd2` |  |
-| `dist/world-studio/editor.js` | 39.027 | 355 | World Studio | `a7ca3fc77f994aae4609e926ff336a354ee4a0aca53f31062a51fdc0ac4fc059` |  |
-| `dist/world-studio/index.html` | 20.339 | 38 | World Studio | `e17c8aceaae9a67819f6df26f56f4834533fe4044ee318552b3b71d5b2f8a093` |  |
-| `dist/world-studio/model.js` | 3.694 | 40 | World Studio | `3be243f905c529f15cd92e758c758a1ffd07d2e4a97cb931037c5041d5586846` |  |
-| `dist/world-studio/renderer.js` | 34.517 | 393 | World Studio | `c7b196004aa7ef9db2c61fe5f0ee903ea14b06bc6a2d37934e3ee47397b00367` |  |
-| `dist/world-studio/studio.css` | 27.153 | 34 | World Studio | `a27a204d0dd8b772a06afa9227618a25ae65b43d46e87680a30d64d6cab19f4b` |  |
+| `dist/world-studio/editor.js` | 38.961 | 356 | World Studio | `0b7f236029f557becd07083d9a9bcb18ad1d6695a8a0aeb6b5a6c3b2b8679f49` |  |
+| `dist/world-studio/index.html` | 20.409 | 38 | World Studio | `933aea2e257405c8e90b4ba0060e47dee9d91ba486e14a56242d7f40b82477e7` |  |
+| `dist/world-studio/model.js` | 4.464 | 53 | World Studio | `d8d14480f6b28d4c7a822cf98efeab21795fcbd618436574663d7c71a8a4c183` |  |
+| `dist/world-studio/renderer.js` | 34.565 | 394 | World Studio | `e45e61ca9f91ef91ea8e65f32e80f56970fff9a30f262b632594247104dc6afc` |  |
+| `dist/world-studio/studio.css` | 27.150 | 34 | World Studio | `eb06c9f1301c39ff0f644795273574201df183ebdddbf60f1faff981ce1c1adb` |  |
 | `dist/world-studio/walk.js` | 4.041 | 61 | World Studio | `e2265ba00e7a8f84278d689eb2d9681d5ab5b5af6a875b40118261303230be9d` |  |
 | `dist/worldport/core.mjs` | 8.640 | 104 | Datenimport | `6ca10c53f66a8a56c1326a5c4e177888984d01f535d53279358d8477b1a92bc9` |  |
 | `dist/worldport/osm-ground.mjs` | 13.527 | 206 | Datenimport | `429ae7aa050a4a512d747548b0cd58d00d19486509bf8491d76da1eee0b9fb29` |  |
@@ -461,20 +462,21 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | `dist/worlds/vendor/three.core.js` | 1.403.455 | 58773 | Drittanbieter (Three.js 0.180.0) | `eb077d2417f61d3e6d9264c317cabc4ea35769ed6b0ab533067292a550784c20` |  |
 | `dist/worlds/vendor/three.module.js` | 603.113 | 18251 | Drittanbieter (Three.js 0.180.0) | `c8211c69345d2e9949dc7a8ac969380497aa0600a5a8ac6a459c8cd02dd9cb8a` |  |
 | `dist/worlds/vendor/utils/BufferGeometryUtils.js` | 35.552 | 1435 | Drittanbieter (Three.js 0.180.0) | `7ce3f7739d1e459c3a093c89ef9833313a5bb3ef32cff195ef2cfa29a9ce66a9` |  |
+| `docs/AUDIT_2026-10-06.md` | 5.376 | 28 | Dokumentation | `0f1e3411c6799be4085627a44f090aceccfde3349a4a17aa839b159899f021b5` |  |
 | `docs/FINDINGS.md` | 4.519 | 38 | Dokumentation | `e16030eb689aae342b0c50a1d4d9eeb1bd11e467e52ba4c876ac7b6c7cdb79cf` |  |
-| `docs/GETTING_STARTED.md` | 15.833 | 204 | Dokumentation | `19d61e4039bdd8d91a90b055745329368b4001d4f0dafcb8ea57a41ee34c1fdb` |  |
+| `docs/GETTING_STARTED.md` | 16.985 | 208 | Dokumentation | `7308ca6370cb3dd4db769ad96d7798d2d101b6507cf2f3a6faee705cef9cec3d` |  |
 | `docs/INTEGRATIONS.md` | 4.454 | 39 | Dokumentation | `afe9392182a497fa90b8bd6770545ee1f62f58c4688269bf997136380a6bbbbd` |  |
-| `docs/LIMITS.md` | 15.233 | 106 | Dokumentation | `533e9672e2358f83dfd8efdf5c2e7559b90dbb284974fe01e68fcd45526f75a6` |  |
+| `docs/LIMITS.md` | 16.380 | 110 | Dokumentation | `cc428f2aa3d73174bd38e61a984696d366560f2b2960084d3d00f27eefe46283` |  |
 | `docs/MAP_STUDIO.md` | 3.175 | 41 | Dokumentation | `b73bd435abee6ced2d356abdf8dce964bde874b4ee1b5d69d4a1ab419d7f9264` |  |
-| `docs/RELEASE_STATUS.md` | 3.491 | 41 | Dokumentation | `68a27b37a3a9ccf2b97c06068e0d652427767b430ff27e3c2179c94adc60d921` |  |
+| `docs/RELEASE_STATUS.md` | 5.946 | 65 | Dokumentation | `b80a460e0b41b29ac6e2132d006764446e1d06d9ade2ca3f85dfeb7156f199c9` |  |
 | `docs/ROADMAP.md` | 1.353 | 11 | Dokumentation | `27ebd848a1d7300a2f8a446026ecc1073b025db21b89febc2b1a1fd102e66305` |  |
 | `docs/VALUE_AND_VALIDATION.md` | 16.811 | 101 | Dokumentation | `6c2869531a7cd1e351322729ebf98a62379baa51490b9ad33ad320f06aab7e8b` |  |
-| `docs/architecture/README.md` | 15.270 | 168 | Dokumentation | `f25d618782fa7b007dce628534b5a8f6608fc11132c0fe54d25d94b6e8841831` |  |
+| `docs/architecture/README.md` | 16.190 | 172 | Dokumentation | `806875f4082424cbb946ee73778267176303fed593df9ab144d85ecb5b50241d` |  |
 | `docs/validation/RESULT_TEMPLATE.md` | 4.379 | 80 | Dokumentation | `0a019ec54a0d4369a7a7af6f72dbb412be9af0f6e4210d840e354384dfea40a8` |  |
 | `edge/app.mjs` | 12.787 | 148 | Edge-Worker (Auslieferung) | `4641bfc5d79e95f31b54439cc9cb5ae95418c731a0dbf4b32206d9b100e181de` |  |
 | `edge/globe.mjs` | 3.170 | 43 | Edge-Worker (Auslieferung) | `68bcb07a16d7fed2514938fc3614fd038f38d529eca4d3428cfb253487b56203` |  |
 | `edge/guard.mjs` | 2.284 | 39 | Edge-Worker (Auslieferung) | `426e23203b0fb68614efe4df4c1138a820fa314fc5041805c6938846840854d0` |  |
-| `edge/map-room.mjs` | 8.290 | 120 | Edge-Worker (Auslieferung) | `78645288e90507c76a933a9a02b0b6866de923656320d2cbafc930c0106ad104` |  |
+| `edge/map-room.mjs` | 9.661 | 144 | Edge-Worker (Auslieferung) | `06a3f3f78075a827c01964f146c503dee49a8f38f49b1e07be807f4a2f412455` |  |
 | `edge/policy.mjs` | 5.220 | 76 | Edge-Worker (Auslieferung) | `b35d00536675f3aa4d62362eb1226683d2ddc1b1bcf0adda99fdf6a89b57286d` |  |
 | `edge/realtime.mjs` | 1.474 | 20 | Edge-Worker (Auslieferung) | `44dfec5e3b3a0ca4271717ab03d273b328b44a014dc79f82cc5d4cebda2b799b` |  |
 | `edge/room.mjs` | 8.218 | 128 | Edge-Worker (Auslieferung) | `ea5091a1b529a21068770be710775109a79367a1f6196ebe7868dc9aecd0c1d2` |  |
@@ -483,47 +485,51 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | `examples/README.md` | 1.901 | 35 | Einstiegsbeispiel | `3954c30e4a784ae8e693f6ca03abafc0f5dd4d40c629de815cbf73e2ca8ef14a` |  |
 | `examples/map-starter.map.json` | 703 | 20 | Einstiegsbeispiel | `423c5e2064208e0bbc7cc25ad584e34b8145bac84727c41d8bb718bcfdc23ba0` |  |
 | `package-lock.json` | 276 | 16 | Projekt | `4da12f8e07858ae2b8bd775cbc324c0f8ea012d9ad77929be7ad48a5f272dc29` |  |
-| `package.json` | 1.434 | 25 | Projekt | `a19df8d3b3d90213c3bad07eec3b84711d7d540cc5cedbc403b6ad13a583244e` |  |
+| `package.json` | 1.562 | 26 | Projekt | `ba5ad16c8610e0603c24e3445b5d855114d09af78358f36521d7a91941c58084` |  |
+| `rust-toolchain.toml` | 88 | — | Projekt | `9cbeb062ec3a97a5b5b76aacde94f5dcb034ed98f32af151480764de2e03d6f9` |  |
 | `schemas/world-package-v2.schema.json` | 3.715 | 165 | Entwurfs-Vertrag (nicht implementiert) | `cd6742053de9d61d96a996b4dce4e15567c6f3af7f0fb8782b6ae99966490fe8` |  |
 | `scripts/architecture-index.mjs` | 27.843 | 347 | Werkzeug | `b8fe5f68862d2f34f96d0aae2942ca10b1cae3ea79763fb5b99cfcc8c17befb6` |  |
-| `scripts/build-wasm.sh` | 443 | — | Werkzeug | `7944e0c94aab4868e0516cb69e57886a8f1147adfdaa6554b10debe5d9d77f63` |  |
-| `scripts/check.mjs` | 1.959 | 27 | Werkzeug | `6dd6d246d0f34c72302cb814172d14a96c05bfda7f2b2ef1bf312f3cc964915c` |  |
+| `scripts/build-wasm.sh` | 452 | — | Werkzeug | `ffcb6a0bf5ae22a1d6fb301badd38040a6c0430cf1152261ee7be81bf74abb83` |  |
+| `scripts/check.mjs` | 6.874 | 127 | Werkzeug | `50da85fbe8c0afd7941ccd13009352d0f67e1598be3508ef3e1180aa41d5e041` |  |
 | `scripts/city-tile.mjs` | 8.127 | 100 | Werkzeug | `c4897e82793f3a1d5f8573d7445261ee9699288d1ca47735ac08351433450749` |  |
 | `scripts/globe/make-vehicles.mjs` | 4.023 | 59 | Werkzeug | `f631f1f03868019303ddcc94204240e9e9bf688e1eb7802e6be9fae1021936f8` |  |
 | `scripts/kart/pack-assets.mjs` | 5.169 | 80 | Werkzeug | `95f3029cdad0bbb2eb178610f4dfaa1dc11b6c890bb02ecc8ca70a122eeb6f31` |  |
 | `scripts/package-source.mjs` | 962 | 12 | Werkzeug | `8ccd616f23809a8e92d5035072d07cb0a19649248811c836d8e0fcb0f64488dc` |  |
-| `scripts/public-tests.mjs` | 1.283 | 21 | Werkzeug | `bbc33b0b4a6e82b597acbeb012dbe0b5a2a25dff87f249f0ec4758aae5868867` |  |
-| `scripts/serve.mjs` | 9.555 | 110 | Werkzeug | `25b0b207d8725cc4cdd346a27025bd3d69927e29e139f89697c7ff0f894491e6` |  |
+| `scripts/public-tests.mjs` | 1.297 | 21 | Werkzeug | `bac0b3e629c8d4c4e06ec6322b28330ec796085a72165bde593ceac611f9b0a1` |  |
+| `scripts/serve.mjs` | 10.421 | 123 | Werkzeug | `f1f46eafec6f2d22479977c316529a7b3872c4c77c89648a5f7f332f26d716c4` |  |
 | `scripts/verify-public-source.mjs` | 2.287 | 34 | Werkzeug | `963c2f61e1794b0fd8efaf5a2c448acee276b1bebae122233074c46fbd6eaf55` |  |
 | `scripts/worldport-osm.mjs` | 2.889 | 34 | Werkzeug | `64ff641e4b052a71e2f533793496ac0f6f04518d4d8a519485bad42fcc32dc09` |  |
 | `scripts/worldport.mjs` | 1.722 | 18 | Werkzeug | `97b038be70349afa4ed676091d192d66a5e026df351ba2398679e9413539a393` |  |
 | `scripts/ws-local.mjs` | 3.932 | 58 | Werkzeug | `6c019b479d61d01a462b5c84b6d41b8d0726750853d64694bef7ee92af490af0` |  |
 | `sim/Cargo.lock` | 154 | — | Rust-Simulationskern | `1fe06aa1d8cec5a8193c1e679383a02e50994c0b655f7b091d642a5fa3c0ba94` |  |
 | `sim/Cargo.toml` | 367 | — | Rust-Simulationskern | `f0ff0c66b82baf05cea66f97646215e97ceec59c3c8e45c57196b02418db03b8` |  |
-| `sim/src/lib.rs` | 17.514 | — | Rust-Simulationskern | `e4e9aefd22d5f050559c48df64838bcba79719dbe116f3b99c53527a98dfc9ea` |  |
+| `sim/src/lib.rs` | 17.586 | — | Rust-Simulationskern | `cc0bb5618af324b5edf0dbfafc742e9b5488b4dd620a7f8eb943183d1e8e1cfd` |  |
 | `tests/broadphase.test.mjs` | 4.983 | 70 | Node-Test | `c03e270eb1ed3721146370ae04fb51a22e7c3c697eabad50e7b7ee0dbddb8225` |  |
-| `tests/browser/baseline.browser.mjs` | 18.380 | 219 | Browsertest | `7b70475cbad8f02d616df9f8066048632174a03c620eb0718c5c7ada56457a96` |  |
-| `tests/browser/city.browser.mjs` | 6.153 | 73 | Browsertest | `9bcdf697eb55be7971437e4df5f3c6add39075b4e9ffc18ad95497d5d40d45e6` |  |
-| `tests/browser/collision.browser.mjs` | 7.379 | 103 | Browsertest | `a8d1f14a27966fb7a5addd491b6e655534863211474c08993a64196e8235da25` |  |
-| `tests/browser/enhance.browser.mjs` | 5.159 | 58 | Browsertest | `a3e4eee442cd76abec505d1f5c8d9bda139f43efffb6ab31d6b050e87e5d5f61` |  |
-| `tests/browser/footprint.browser.mjs` | 5.074 | 60 | Browsertest | `8364d2b0a63339853073f571e53753ac48a2ef126b832c6a31749babec9bc660` |  |
-| `tests/browser/harness.mjs` | 3.676 | 65 | Browsertest | `bfa354b93816548d76abdc8828f7768cd00a5932ee71d5821c663d0c3115263f` |  |
+| `tests/browser/agent-check.mjs` | 2.952 | 42 | Browsertest | `ba3b1a81dc0cc57aa57717bba669c1c50ad87a425914e38a41b8d239f90e6450` |  |
+| `tests/browser/audit-regressions.browser.mjs` | 16.616 | 186 | Browsertest | `d20cc4005fd0b3a5e07171cefe771e29708c6a14c5b633d6b763f460cd157edc` |  |
+| `tests/browser/baseline.browser.mjs` | 18.285 | 218 | Browsertest | `0d1f6e78b5db051508640c490f9d6cd1fd547e1f217cde831ec75479866d652c` |  |
+| `tests/browser/city.browser.mjs` | 6.049 | 72 | Browsertest | `f6708cdd83c8d94cb0db773eda363845b75e0319c9944caecd5922ae0efbb502` |  |
+| `tests/browser/collision.browser.mjs` | 7.275 | 102 | Browsertest | `45f4054b51da0dc6697a7befd16732ddf6eca43f2c7935ad6eafe0e17173fca5` |  |
+| `tests/browser/enhance.browser.mjs` | 5.055 | 57 | Browsertest | `69619e6a941ca03d481b08ea444a56c681a0995a0f6a50445a87747f7da62ad4` |  |
+| `tests/browser/footprint.browser.mjs` | 4.970 | 59 | Browsertest | `9ecdd906a0964c49e8a84fe0125030af6b768912b8023f684d38b83ee899e1ab` |  |
+| `tests/browser/harness.mjs` | 4.397 | 75 | Browsertest | `79bcef63454670a6abe37bf3805ede802ba8685c908a0f71b541fd71ee941a78` |  |
 | `tests/browser/kart-perf.baseline.json` | 5.456 | 212 | Browsertest | `850786ffcc7228c0437f6b431ab7ad882b4c98fcf96110f2b9aff6f563c21107` |  |
-| `tests/browser/kart-perf.browser.mjs` | 18.833 | 264 | Browsertest | `3d5ed0cdb0671be83467b6f4423ec8d1500a5d7c5b9261b9ae2caee139e0f5b9` |  |
-| `tests/browser/perf-meter.browser.mjs` | 4.305 | 47 | Browsertest | `5716a43135c8304c2941386a9146c78656189bcfc9cac1ac708f4996effaccfe` |  |
-| `tests/browser/perf.browser.mjs` | 5.896 | 64 | Browsertest | `6e920452c738186781cb2f59ebbbf4cb4f22671523c0ad7e2ea1506e75fc7b4e` |  |
+| `tests/browser/kart-perf.browser.mjs` | 18.758 | 263 | Browsertest | `ffc0fa70c48799d0fc3276cf52141b021d2f162cbaff7c095bc8fe0f09633095` |  |
+| `tests/browser/perf-meter.browser.mjs` | 4.201 | 46 | Browsertest | `939eb1ad2d30c1a8952e4b55842422ac0644d6a2dc28bf0a4597f8cbbc9d97d2` |  |
+| `tests/browser/perf.browser.mjs` | 5.792 | 63 | Browsertest | `fb77e70dec789a3f239e003bee87c82a9ec1bce7dfa8052c0168f246e97972cd` |  |
 | `tests/browser/public-smoke.browser.mjs` | 18.355 | 309 | Browsertest | `d883afedb345093a72e1bc80f941ed0610e5045d9fc70bc3693b0b680c827f96` |  |
-| `tests/browser/runtime.browser.mjs` | 11.304 | 127 | Browsertest | `c7f5419edc44725b70713545d03845107157da37e1cb3fa7727f54aecc9659c1` |  |
-| `tests/browser/scan-world.browser.mjs` | 23.743 | 241 | Browsertest | `c2f0c642adcad831fd1afc6bbb5dbc918911a6572f4b94db79be474fc3b102cd` |  |
-| `tests/browser/walking.browser.mjs` | 6.906 | 90 | Browsertest | `51f113932b697c954fab3b09a68d41b3de04f704cff127b28d02c506f9aac6e1` |  |
-| `tests/browser/world-upload.browser.mjs` | 14.956 | 144 | Browsertest | `e2be345a0363ec5731b611c1abbe60a204227114cf5fd7bdd7dec94be36a40db` |  |
-| `tests/browser/world-walk.browser.mjs` | 6.566 | 76 | Browsertest | `b8963fd7b03c08df2d96a1292e5c88026a1305e3a8d8e0c27ed41f47ecc6ab56` |  |
+| `tests/browser/runtime.browser.mjs` | 11.200 | 126 | Browsertest | `56e6f4da228d71f734851aa62ba64d4e10aa7a66ade891639426166a67c105da` |  |
+| `tests/browser/scan-world.browser.mjs` | 23.639 | 240 | Browsertest | `bd39e67035339acad31117d524a7e86b9eef3432e7febce41f94b3e138161bd8` |  |
+| `tests/browser/walking.browser.mjs` | 6.802 | 89 | Browsertest | `32f2ab0f5c60bcf55e228cb75cae9341d7539dcfe266aaf296abd2584901896c` |  |
+| `tests/browser/world-upload.browser.mjs` | 14.852 | 143 | Browsertest | `11ab567c402ee2fb78c5aa6e02f11cd500d40a4462e66a134690ac37ee476a54` |  |
+| `tests/browser/world-walk.browser.mjs` | 6.462 | 75 | Browsertest | `35dfe63ce0d9229c5406ab114b0be910712454d2e7af56d6568b7735e8fafacf` |  |
+| `tests/build-tools.test.mjs` | 4.387 | 81 | Node-Test | `8bdfb9af794f582aa7e08450157096b9ba6071b5c17841fa0d96169a5bcf1aea` |  |
 | `tests/camera-rig.test.mjs` | 4.553 | 52 | Node-Test | `bf70cc3a048bf2e76df27a56166abede8378c03e97b5b83b56f324e2f79a89de` |  |
-| `tests/car.test.mjs` | 3.260 | 50 | Node-Test | `78c0af852943ef0b8161378b424d1c00df744e292bd44c75a5e425c3c8ec2baa` |  |
+| `tests/car.test.mjs` | 3.860 | 59 | Node-Test | `40aa252426eed74581d27e815de141d6e909d858ca6294c50bc0442d47fdf163` |  |
 | `tests/city-layer.test.mjs` | 4.817 | 51 | Node-Test | `07f8d01ee0d4a3d0e618d097ca1273a48002506beaed19305593b1861e1a3eb6` |  |
 | `tests/city-tile.test.mjs` | 2.634 | 35 | Node-Test | `a19cf7319e181d124f4975a20c08e2b214b5f668c56d12b04a19f81e713b2a7c` |  |
 | `tests/device-check.test.mjs` | 1.597 | 17 | Node-Test | `df8d403db6c852cb62721395b92c6e0aa7a709d062062129d5a20695cd1c73e1` |  |
-| `tests/edge.test.mjs` | 47.168 | 572 | Node-Test | `ccc57c0586cb633f7ba324d57b18bb8f6c4049761d2995518f868ecd48712186` |  |
+| `tests/edge.test.mjs` | 51.050 | 615 | Node-Test | `693b3bbadf5a8a8821d276bfc6a83e4ab1da29a20b0180d70c8dae39595e3ada` |  |
 | `tests/fixtures/city-mini.map.json` | 4.079 | 363 | Node-Test | `2e7aefcbf4ad1654ef0028fb0d1ca0442c159a49725ba248147fc223fa7c9f7a` |  |
 | `tests/fixtures/leonida-sample.csv` | 796 | — | Node-Test | `6005b852f3f16fdf8999e383ebcba3643504b0baa22fd69ec750140ad0a1f3d7` |  |
 | `tests/frame-loop.test.mjs` | 4.625 | 62 | Node-Test | `8479b5a94ae1f50afa90d29e0bb7f9fb7bbb399d23561fbf6a8898fbf945a1d2` |  |
@@ -531,11 +537,11 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | `tests/gpu-cull.test.mjs` | 3.681 | 41 | Node-Test | `1cd04046216f1784b073f9ff2918a98d0d5452ddb811f38e77245bbdd837f141` |  |
 | `tests/kart-assets.test.mjs` | 2.714 | 37 | Node-Test | `78324db30572e88a1cb96c750c7231d87c2cef22d112e7e9ff23347a5acbe3a6` |  |
 | `tests/kart-insights.test.mjs` | 3.688 | 54 | Node-Test | `3998e3697fa45fabd06f8d7260e0369fcffbf1d301e00b002db2baafb9819fb7` |  |
-| `tests/kart.test.mjs` | 5.743 | 89 | Node-Test | `ca291c86a7ca68449f59540fdbf0311981b1d3e7e794131767fb39b9d0c8b6e8` |  |
+| `tests/kart.test.mjs` | 6.923 | 107 | Node-Test | `22e5ffadfaea95d8d7404deb91ade98f8f0cf1c8a816d27affdaac10b08fdf7f` |  |
 | `tests/map-edit-cost.test.mjs` | 8.247 | 93 | Node-Test | `d6f0d92e1854a7df3d3078eacc59e79e04b56cb2538ed8f2edd20e9da3ba3b2b` |  |
 | `tests/map-enhance.test.mjs` | 1.811 | 23 | Node-Test | `8db57e202b4e2b90f7c0adeae0bd4b204bde9e2a71dc7b5678ce4a9fce61e194` |  |
-| `tests/map-history.test.mjs` | 5.916 | 97 | Node-Test | `681f17a558841dc3e250e8b57a54ee130d6cba04ee250d922899a9c77c703302` |  |
-| `tests/map-project.test.mjs` | 13.017 | 142 | Node-Test | `fe281abbb58ad5afc132a9cbbc30be170e8853c6b39ab28117d5b2df81da82bd` |  |
+| `tests/map-history.test.mjs` | 8.260 | 130 | Node-Test | `c45200ae6b935d3bf1eead8f3bac558d8e99cd893fd0a1ec30f5479be0109036` |  |
+| `tests/map-project.test.mjs` | 14.347 | 160 | Node-Test | `72b4e766ba417c6d6267caa9eedd07b17b19b060c82f3999187687dcdb1886ed` |  |
 | `tests/map-runtime.test.mjs` | 5.501 | 66 | Node-Test | `d97747c22def7682f136f59cd0349b5a0fa91613f40b45fd62952a54b6638e6f` |  |
 | `tests/map-studio.test.mjs` | 4.554 | 34 | Node-Test | `34109cfd8fcf11c19cc81a304b6677ea6ded38ed2ca62b60fb0cf9737a4b8db3` |  |
 | `tests/map-v2.test.mjs` | 4.535 | 55 | Node-Test | `2079ac0c6254a9b3de706fef14dc0f1a0ef5983b72c97d3b2d7bfd751cc8bd8a` |  |
@@ -547,21 +553,21 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | `tests/pedestrian.test.mjs` | 3.253 | 57 | Node-Test | `6f42a88e68d446df1955e58beb606895f358504fc5cc33abb32c1f04e123d189` |  |
 | `tests/perf-meter.test.mjs` | 945 | 13 | Node-Test | `34c4fde2be179821c5582aac4bc38b5ff3ee110e3c2e2344b87c510fa580c76e` |  |
 | `tests/physics.test.mjs` | 10.120 | 143 | Node-Test | `5b31ac7eec65520c477bc2875165ea86539fe3bc1fd23ae8cbd522ea5bb3f173` |  |
-| `tests/plane.test.mjs` | 3.326 | 52 | Node-Test | `55ef1689688f8d426596ecde12e9e197edb4045158d4cb7cbb21661232a1ae9b` |  |
+| `tests/plane.test.mjs` | 4.119 | 61 | Node-Test | `a8eeff8b19690eb95b291706d19fe8a921fece65cc847653b41d9cfaf0761764` |  |
 | `tests/polygon.test.mjs` | 3.348 | 45 | Node-Test | `15cbbd8cfb417f4cfeadee40b5503dee1752073a5cf8a86927a632dce7f1d285` |  |
 | `tests/quality.test.mjs` | 3.799 | 65 | Node-Test | `f26c46f69116768627c8201f9dbabaa2e5a3232489a211e1e78c1d0cd798480a` |  |
-| `tests/repository.test.mjs` | 3.368 | 44 | Node-Test | `2e912fd3a8f147351c535ae592ced9abe64e2a0e9f9bc5110fc34153dbc49d6f` |  |
+| `tests/repository.test.mjs` | 5.594 | 79 | Node-Test | `597030695a721b12886b5b5be41b973a1845c2d2a945bf439cd2ade7e8a72383` |  |
 | `tests/room.test.mjs` | 10.796 | 138 | Node-Test | `b004e01b80f33707b9b263230f204c80866f242de46f1a5993827634b0b199a0` |  |
 | `tests/runtime.test.mjs` | 10.095 | 149 | Node-Test | `f0ab5f5b928a13c2c65f01087a2971b8b2563a88bd03561ea313071e1e70731d` |  |
 | `tests/scan-world.test.mjs` | 4.709 | 70 | Node-Test | `e1b5afeb6d0b7b7a81537bfd5c10f98afdc5b04c243e8ef8d68e3adc15edf47f` |  |
 | `tests/sim-layout.test.mjs` | 2.424 | 35 | Node-Test | `c5099e5d3c6b959b316a1b769a54c4a31e1c5d73fbf733bc13c4b9187999de40` |  |
 | `tests/sim-snapshot.test.mjs` | 6.843 | 87 | Node-Test | `6989fdbeec8276abd0c8961a665f5d0a0fdfeca7142d1cd33f37802dc66e480d` |  |
-| `tests/sim-wasm.test.mjs` | 5.110 | 71 | Node-Test | `56065ca191a574c477905c8861a3b20990080d40ac2d98fad40937e37329f660` |  |
+| `tests/sim-wasm.test.mjs` | 7.990 | 117 | Node-Test | `6478a2b5526fac3f9540ab7987a924b2151ce7c2ff7d9ff239896984ef04232e` |  |
 | `tests/surfaces.test.mjs` | 4.528 | 54 | Node-Test | `6b6e766d6dbe4b9cbf64fb1b9f8488c300a792fc4cfbc74eb3d4b666f0291545` |  |
 | `tests/vram-budget.test.mjs` | 2.448 | 26 | Node-Test | `ed876415a79cf550568c5754ae926efa1c8cd9fae869ff7eb9a1865816577c5f` |  |
 | `tests/walker.test.mjs` | 5.857 | 81 | Node-Test | `968576b6b6487ce3f4a4d4c090f5184c907604c55cecedc4b300c1fe0a535ff6` |  |
 | `tests/water.test.mjs` | 2.791 | 36 | Node-Test | `ba48bc2019e31b71fd55141124402fa010aeb85aa62407b7f5372ecf7ee1db16` |  |
-| `tests/world-studio.test.mjs` | 3.947 | 45 | Node-Test | `8fbcf13ae987ab6c878321f688b77a6f6308ec967e16730652f8e3c296585b27` |  |
+| `tests/world-studio.test.mjs` | 8.662 | 114 | Node-Test | `1e9795292ea70fe10f35c7818eca7ea3caaa77039ea4877cebbb729f25989093` |  |
 | `tests/world-walk.test.mjs` | 4.955 | 65 | Node-Test | `17bd518ad220e04d326dc81a9aa8634bb279594e62d89aecfe5b838f0e17a7b0` |  |
 | `tests/worldport-osm.test.mjs` | 11.114 | 135 | Node-Test | `d4998e9687b8b63cfb2973cd3d4596b06a9c65d8e2266fd3238a1d2edb940df3` |  |
 | `tests/worldport.test.mjs` | 8.679 | 109 | Node-Test | `8377cad8b4ce49cade7cb4d6c60e56024fa5e022b52f6edc5d3ab6dd16817b89` |  |
