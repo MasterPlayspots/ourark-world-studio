@@ -47,6 +47,7 @@ The specific user benefits still to validate are **less time preparing spatial d
 - [Contribution and extension recipes](CONTRIBUTING.md)
 - [Optional integrations and excluded data](docs/INTEGRATIONS.md)
 - [Real-use result template](docs/validation/RESULT_TEMPLATE.md)
+- [Technology, opportunities and open real-use pilots — detailed review in German](docs/TECHNOLOGY_AND_USE_CASES.de.md)
 - [Release status and test scope](docs/RELEASE_STATUS.md)
 - [6 October audit: corrections and verification status](docs/AUDIT_2026-10-06.md)
 

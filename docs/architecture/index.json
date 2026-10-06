@@ -1,6 +1,6 @@
 {
  "generatedBy": "scripts/architecture-index.mjs",
- "commit": "8ea9e35",
+ "commit": "024b057",
  "files": [
   {
    "file": ".gitattributes",
@@ -60,9 +60,9 @@
   },
   {
    "file": "README.md",
-   "bytes": 6775,
-   "sha256": "10ed202882d135bbe4b4937646dcc1e524193ad783056efba0bf3da6a412de02",
-   "lines": 85,
+   "bytes": 6897,
+   "sha256": "7d3533e07ccf4b4ff4b64c8563f25321393780b0bc95ef248d30240d9c3e9c3f",
+   "lines": 86,
    "role": "Projekt"
   },
   {
@@ -16533,10 +16533,17 @@
    "role": "Dokumentation"
   },
   {
+   "file": "docs/TECHNOLOGY_AND_USE_CASES.de.md",
+   "bytes": 51368,
+   "sha256": "6ec22940915e068d0d1498b2e0b3bc2efc6d054b64b96d6b27095ce68b166896",
+   "lines": 471,
+   "role": "Dokumentation"
+  },
+  {
    "file": "docs/VALUE_AND_VALIDATION.md",
-   "bytes": 16811,
-   "sha256": "6c2869531a7cd1e351322729ebf98a62379baa51490b9ad33ad320f06aab7e8b",
-   "lines": 101,
+   "bytes": 17203,
+   "sha256": "2dc0425bfd9f0bf3c372ca8aa8f79f6d687c621ee450e717514bc9c3946f7b3c",
+   "lines": 103,
    "role": "Dokumentation"
   },
   {
