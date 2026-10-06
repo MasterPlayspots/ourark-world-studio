@@ -76,7 +76,7 @@ export class Plane{
     if(s.y<=floor){
       // A landing comes down onto the ground; meeting a slope or cliff higher than the plane was is a crash.
       const gentle=s.vy>-p.landingSink&&Math.abs(s.roll)<p.landingBank&&s.pitch>-.2&&floor-this.previous.y<1.5;
-      if(s.onGround||gentle){s.y=floor;s.onGround=true;s.vy=0;s.pitch=Math.max(0,s.pitch);}
+      if(gentle){s.y=floor;s.onGround=true;s.vy=0;s.pitch=Math.max(0,s.pitch);}
       else{s.y=floor;s.crashed=true;this.crashes++;}
     }else if(s.onGround&&(s.vy>.5&&s.speed>=p.takeoff||s.y>floor+.3))s.onGround=false;   // lift-off, or rolled off an edge
     else if(s.onGround)s.y=floor;

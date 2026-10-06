@@ -40,6 +40,15 @@ const drive=(car,seconds,input={})=>{for(let i=0;i<seconds/DT;i++)car.step(DT,ty
   drive(car,8,{throttle:1});
   assert.ok(car.state.z>-52&&car.state.y<4,`stopped at the rock (z ${car.state.z.toFixed(1)})`);
 }
+{ // The climb limit follows travel direction: reversing downhill is free, reversing into a cliff stops.
+  const down=new Car({ground:(x,z)=>100-z});down.place({x:0,z:0,heading:0});
+  drive(down,1,{throttle:-1});
+  assert.ok(down.state.z>.3&&down.state.speed<-.1,'reverse can descend a steep slope');
+  const up=new Car({ground:(x,z)=>z>20?(z-20)*2:0});up.place({x:0,z:0,heading:0});
+  let furthest=0;
+  for(let i=0;i<10/DT;i++){up.step(DT,{throttle:-1});furthest=Math.max(furthest,up.state.z);}
+  assert.ok(furthest<20&&up.state.y===0,`reverse stops before the cliff (z ${furthest.toFixed(2)})`);
+}
 { // Fast over a sharp crest (ramp up, then a drop): airborne for a moment, lands again on the ground.
   const crest=(x,z)=>{const d=-z;return d<100?d*.2:Math.max(0,20-(d-100)*1.5);};
   const car=new Car({ground:crest});car.place({x:0,z:0});

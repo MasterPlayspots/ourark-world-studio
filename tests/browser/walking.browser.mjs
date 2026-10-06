@@ -5,7 +5,6 @@ import {readFile} from 'node:fs/promises';
 import {loadPlaywright,startServer,launch,recorder,assert,artifactDir} from './harness.mjs';
 
 const playwright=loadPlaywright();
-if(!playwright){console.log('SKIP: playwright-core not found (set PLAYWRIGHT_CORE).');process.exit(0);}
 const {origin,close}=await startServer(),browser=await launch(playwright),{results,step}=recorder();
 const context=await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true});
 const page=await context.newPage(),errors=[];

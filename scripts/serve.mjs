@@ -31,7 +31,7 @@ async function serveScenes(req,res,pathname,root){
     send(200,data,mime[path.extname(match[2])]||'application/octet-stream',{'Content-Length':data.length,'Cache-Control':SCENE_CACHE});
   }catch{send(404,'Not found','text/plain; charset=utf-8');}
 }
-const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.txt':'text/plain; charset=utf-8','.glb':'model/gltf-binary','.gltf':'model/gltf+json','.wasm':'application/wasm','.xml':'application/xml'};
+const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.txt':'text/plain; charset=utf-8','.glb':'model/gltf-binary','.gltf':'model/gltf+json','.wasm':'application/wasm','.xml':'application/xml'};
 // Local stand-in for the Worker route POST /api/enhance: forwards to a renderboost origin (RENDERBOOST_URL +
 // RENDERBOOST_TOKEN), without the R2 cache. Without configuration it answers 503 like an unconfigured Worker.
 async function proxyEnhance(req,res,{url,token}={}){
@@ -72,8 +72,11 @@ export function createDevServer(root=siteRoot,options={}){
   const server=createHttpServer(root,options);server.on('upgrade',handleUpgrade);return server;
 }
 function createHttpServer(root=siteRoot,{enhance,scenes=scenesRoot}={}){
-  return createServer(async(req,res)=>{
-    const requested=new URL(req.url,'http://localhost').pathname;
+  const handle=async(req,res)=>{
+    let url;
+    try{url=new URL(req.url,'http://localhost');}
+    catch{req.resume();res.writeHead(400,{...SECURITY_HEADERS,'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-store'});res.end('Bad request');return;}
+    const requested=url.pathname;
     if(requested==='/api/enhance'){await proxyEnhance(req,res,enhance);return;}
     if(requested==='/api/scenes'||requested.startsWith('/scenes/')){await serveScenes(req,res,requested,scenes);return;}
     // Local stand-ins for the globe routes, same code as the Worker (key from env GOOGLE_MAPS_KEY).
@@ -87,18 +90,28 @@ function createHttpServer(root=siteRoot,{enhance,scenes=scenesRoot}={}){
     if(requested==='/api/device-check'){req.resume();res.writeHead(req.method==='POST'?200:405,{...SECURITY_HEADERS,'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(req.method==='POST'?{stored:null}:{error:'Nur POST.'}));return;}
     if(!['GET','HEAD'].includes(req.method)){res.writeHead(405,{...SECURITY_HEADERS,Allow:'GET, HEAD'});res.end();return;}
     try{
-      const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
+      const pathname=decodeURIComponent(requested);
       if(pathname.includes('\0')||pathname.includes('\\'))throw new Error('Invalid path');
       let file=path.resolve(root,'.'+pathname),resolvedRoot=await realpath(root);
       if(file!==resolvedRoot&&!file.startsWith(resolvedRoot+path.sep))throw new Error('Invalid path');
-      if((await stat(file)).isDirectory())file=path.join(file,'index.html');
+      if((await stat(file)).isDirectory()){
+        // Relative links resolve against the canonical directory URL (not its parent).
+        if(!requested.endsWith('/')){res.writeHead(308,{...securityHeadersFor(requested+'/'),'Location':requested+'/'+url.search,'Cache-Control':'no-store'});res.end();return;}
+        file=path.join(file,'index.html');
+      }
       const real=await realpath(file);
       if(!real.startsWith(resolvedRoot+path.sep))throw new Error('Invalid path');
       const data=await readFile(real);
       res.writeHead(200,{...securityHeadersFor(pathname),'Content-Type':mime[path.extname(real)]||'application/octet-stream','Content-Length':data.length,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});
       res.end(req.method==='HEAD'?undefined:data);
     }catch{res.writeHead(404,{...SECURITY_HEADERS,'Content-Type':'text/plain; charset=utf-8'});res.end('Not found');}
-  });
+  };
+  // An asynchronous route rejection must affect this request, never the whole development server.
+  return createServer((req,res)=>{void handle(req,res).catch(()=>{
+    req.resume();
+    if(res.headersSent){res.destroy();return;}
+    res.writeHead(500,{...SECURITY_HEADERS,'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-store'});res.end('Internal server error');
+  });});
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
   const port=Number(process.env.PORT||8080),host=process.env.HOST||'127.0.0.1';

@@ -30,6 +30,11 @@ export const MAX_LAPS=16;
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
 const wrap=a=>{const t=Math.PI*2;return ((a+Math.PI)%t+t)%t-Math.PI;};
 
+// Direction of travel along the track, including reversing with the nose pointed forwards.
+export function isForwardOnTrack({heading,speed},{tx,tz}){
+  return (Math.sin(heading)*tx-Math.cos(heading)*tz)*speed>=0;
+}
+
 export class Kart{
   constructor({track,start=0,lane=0,params=KART}){
     this.track=track;this.p=params;this.proj={};this.reset(start,lane);
@@ -120,7 +125,7 @@ export class Race{
     const current=Math.floor(s/this.length*this.sectors)%this.sectors;
     if(current!==this.lastSector){
       const next=(this.sector+1)%this.sectors;
-      if(current===next){
+      if(forward&&current===next){
         this.sector=next;
         if(next===0){
           const lapTime=this.time-this.lapStart;this.lapTimes.push(lapTime);this.lapStart=this.time;

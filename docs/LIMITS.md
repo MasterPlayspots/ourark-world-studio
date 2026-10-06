@@ -48,7 +48,7 @@ Existing oversized local projects have a recovery exception: they can be opened,
 | --- | --- |
 | Shared 2D/3D map | Both views derive from one map payload. A ground image is a texture: it does not automatically create building geometry, correct heights or a navigable reconstruction |
 | World Studio | Its procedural scenes and world JSON are separate from Map Studio project envelopes. A diorama background image is not equivalent to full surrounding 3D geometry |
-| Layer editor | Uses DOM/CSS layout and CSS 3D preview. Its layers do not automatically become meshes, colliders or the map's document model |
+| Layer editor | Uses DOM/CSS layout and CSS 3D preview. State is memory-only and resets on reload/navigation. JSON export has no UI re-import or local restore; layers do not automatically become meshes, colliders or the map's document model |
 | Walking | Uses a frozen editor snapshot, collision shapes and a specialized movement controller. It does not provide general rigid-body physics, arbitrary vehicle dynamics or a configurable avatar system |
 | Driving and flying | Implemented in the kart/globe applications; there is no general vehicle authoring tool or completed vehicle integration for every user-authored map |
 | World interchange | Map JSON, World Studio JSON, prepared scans and track manifests are different formats. `contracts/world-package-v2.d.ts` describes a future complete archive; a shipping asset-inclusive world-package importer/exporter is absent |
@@ -61,6 +61,8 @@ Evidence: `dist/map-studio/model.js`, `renderer.js`; `dist/world-studio/model.js
 ## Storage, rendering and simulation
 
 **Local save is device-local persistence.** Map Studio uses IndexedDB with a transactional revision comparison. A stale tab receives a conflict instead of silently overwriting that world's newer save. This does not sync devices, resolve the conflict for the user, provide cloud backup or guarantee storage availability under browser quota/eviction policies. Export project files for transfer and backup. Publishing the source does not publish anyone's browser-local projects. World Studio uses separate localStorage/IndexedDB paths. Evidence: `dist/map-studio/storage.js`, `tests/map-project.test.mjs`, `dist/world-studio/city-store.js`.
+
+Map Studio restores the last **saved** project, not necessarily the last one opened. Selecting a stored project only reads it; save it to change which project a reload restores. The layer editor has none of these persistence mechanisms: its export records data but cannot be re-imported through its UI. Evidence: `dist/map-studio/storage.js` (`loadProject`, `saveLocal`), `dist/map-studio/editor.js` (`showLocalProjects`), `dist/app.js` (`state`, `sceneData`).
 
 **Three.js rendering remains WebGL.** Optional WebGPU is a compute culling path, requested with `gpu=1` in the kart app. The default remote-entity culler runs on the CPU; unavailable/failed WebGPU falls back to CPU. Upload, queueing and readback are part of the awaited culling cost. CPU/fallback tests do not establish execution or a speedup on a real GPU. There is no integrated Makepad runtime, `wgpu-core`, subgroup-matrix kernel, SharedArrayBuffer transport or WebTransport path. Evidence: `dist/runtime/gpu/cull.js`, `tests/gpu-cull.test.mjs`, `dist/kart/main.js`, `sim/Cargo.toml`.
 
@@ -104,3 +106,5 @@ Before adopting the system for a real job, record the source revision, data prov
 - Can a deliberately configured hosted deployment handle the intended users, networks, authentication and operating costs reliably?
 
 There are no established release-wide guarantees for minimum FPS, supported mobile memory, geometric accuracy, accessibility conformance, time saved, conversion improvement or user capacity. Browser tests, real Safari/Firefox/mobile/touch coverage, accessibility review, field-use validation and live deployment checks remain separate work. A passing Node CI run should be reported as exactly that.
+
+`npm run test:browser` requires both the public smoke and audit regressions to pass; `npm run test:browser:public` runs only the smoke. The scripts require separate Playwright/Chromium tooling and fail if it is absent. `npm run test:browser:extended` runs the older integration suites, which may need excluded datasets or hardware-specific budgets. Linux runs use software rendering; a successful functional check is not physical-device GPU/FPS evidence. Consult the exact revision's CI logs and [release record](RELEASE_STATUS.md) before reporting a browser or Rust build as passed.

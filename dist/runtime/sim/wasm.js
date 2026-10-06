@@ -33,9 +33,14 @@ export class WasmSim{
   /** The entity records as bytes (count × 64 B), a view — not a copy — for GPU upload or the network. */
   entityBytes(count=this.capacity){this.check();return new Uint8Array(this.memory.buffer,this.entitiesPtr,count*ENTITY_BYTES);}
   setTerrain(heights,width,depth,cell=1,scale=.01){
-    if(width*depth>1_000_000)throw new RangeError('Höhenraster zu groß');
-    new Uint16Array(this.memory.buffer,this.heightPtr,width*depth).set(heights);
+    const count=width*depth,cell32=Math.fround(cell),scale32=Math.fround(scale);
+    if(!Number.isInteger(width)||!Number.isInteger(depth)||width<2||depth<2||count>1_000_000)throw new RangeError('Ungültige Höhenraster-Größe');
+    if(!Number.isFinite(cell)||!Number.isFinite(cell32)||cell32<=0||!Number.isFinite(scale)||!Number.isFinite(scale32)||scale<0)throw new RangeError('Ungültiger Höhenraster-Maßstab');
+    if(!(heights instanceof Uint16Array)||heights.length!==count)throw new TypeError('Höhenraster braucht genau Breite × Tiefe Uint16-Werte');
+    // Validate and construct the view before changing either the active grid or its metadata.
+    const grid=new Uint16Array(this.memory.buffer,this.heightPtr,count);
     if(!this.exports.sim_set_terrain(width,depth,cell,scale))throw new Error('Höhenraster abgelehnt');
+    grid.set(heights);
   }
   ground(x,z){return this.exports.sim_ground(x,z);}
   spawn(slot,{id=slot+1,mode,x=0,z=0,heading=0,height=80}){

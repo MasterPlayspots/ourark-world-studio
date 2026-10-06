@@ -1,10 +1,79 @@
 import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
 import {worlds} from '../dist/worlds/data.js';
 import {buildWorld} from '../dist/worlds/scene.js';
 import * as THREE from '../dist/worlds/vendor/three.module.js';
 import {TransformControls} from '../dist/worlds/vendor/TransformControls.js';
-import {createDocument,createObject,validateDocument,History,clone} from '../dist/world-studio/model.js';
+import {createDocument,createObject,validateDocument,readImport,History,clone} from '../dist/world-studio/model.js';
 import {WorldEditorRenderer} from '../dist/world-studio/renderer.js';
+import {readProject,serializeProject,MAX_PROJECT_BYTES} from '../dist/map-studio/project.js';
+
+// Exercise the exact import dispatcher used by World Studio with a current Map Studio
+// export, not just the legacy bare-map fixture that previously hid this regression.
+{
+  const starter=JSON.parse(await readFile(new URL('../examples/map-starter.map.json',import.meta.url),'utf8'));
+  const {doc,meta}=readProject(starter);
+  const exported=serializeProject(doc,meta),imported=readImport(exported);
+  assert.equal(imported.kind,'map');assert.deepEqual(imported.doc,doc);
+  assert.equal(imported.doc.points[0].name,'Workshop');
+  assert.equal(imported.doc.points[0].data.assetId,'building-001');
+  for(const schema of ['motionspec.map.v1','motionspec.map.v2','motionspec.map.v3']){
+    const legacy=readImport(JSON.stringify({...starter.payload,schema}));
+    assert.equal(legacy.kind,'map');assert.equal(legacy.doc.schema,'motionspec.map.v3');
+    assert.equal(legacy.doc.points[0].name,'Workshop');
+  }
+  assert.throws(()=>readImport(JSON.stringify({...starter,worldId:''})),/Welt-ID/);
+  assert.throws(()=>readImport(JSON.stringify({...starter,schema:'ourark.map-project.v2'})),/neueren/);
+  assert.throws(()=>readImport(JSON.stringify({...starter,payload:null})),/Karteninhalt/);
+  assert.throws(()=>readImport(JSON.stringify({...starter,payload:{...starter.payload,points:null}})));
+  // JSON member order is not a format requirement. A map's schema can follow a large field.
+  const padding='x'.repeat(1024*1024);
+  assert.equal(readImport(JSON.stringify({padding,...starter})).kind,'map');
+  const scene=createDocument(worlds[0]);
+  assert.deepEqual(readImport(JSON.stringify(scene)),{kind:'scene',doc:scene});
+  assert.throws(()=>readImport(JSON.stringify({...scene,padding})),/scene smaller than 1 MB/);
+  assert.throws(()=>readImport(JSON.stringify({...scene,padding:'🌍'.repeat(300_000)})),/scene smaller than 1 MB/,'scene budget counts UTF-8 bytes');
+  assert.throws(()=>readImport(' '.repeat(MAX_PROJECT_BYTES+1)),/smaller than 16 MB/);
+}
+
+// Render text through the real createItem/applyObject methods. The canvas stub records
+// the strings painted, so a changed model without a refreshed texture cannot pass.
+{
+  const previousDocument=Object.getOwnPropertyDescriptor(globalThis,'document'),drawn=[];
+  globalThis.document={createElement(tag){
+    assert.equal(tag,'canvas');
+    return {width:0,height:0,getContext(){return {
+      clearRect(){},fillRect(){},strokeRect(){},beginPath(){},moveTo(){},lineTo(){},stroke(){},
+      createLinearGradient(){return {addColorStop(){}};},
+      measureText(text){return {width:text.length*20};},fillText(text){drawn.push(text);}
+    };}};
+  }};
+  try{
+    for(const kind of ['text','panel']){
+      drawn.length=0;
+      const editor=Object.create(WorldEditorRenderer.prototype);
+      Object.assign(editor,{content:new THREE.Group(),items:new Map(),request(){},updateSelectionBox(){}});
+      const record=createObject(kind);record.name='Before rename';record.page.title='';record.page.body='';
+      editor.createItem(record,[]);assert.ok(drawn.includes('Before rename'));
+      const face=editor.items.get(record.id).visual.children[0],original=face.material.map;
+      let disposed=false;original.addEventListener('dispose',()=>{disposed=true;});
+      drawn.length=0;record.name='After rename';editor.applyObject(record);
+      assert.ok(drawn.includes('After rename'),`${kind} must repaint its displayed name fallback`);
+      assert.notEqual(face.material.map,original);assert.equal(disposed,true,'replaced texture released');
+      record.page.title='Explicit heading';editor.applyObject(record);
+      const explicit=face.material.map;drawn.length=0;record.name='Unshown new name';editor.applyObject(record);
+      assert.equal(face.material.map,explicit,'unchanged displayed heading reuses its texture');assert.equal(drawn.length,0);
+      // Delimiters inside user text must not make distinct content share a cache key.
+      record.page.title='One\nTwo';record.page.body='Three';editor.applyObject(record);
+      const beforeBoundaryChange=face.material.map;
+      record.page.title='One';record.page.body='Two\nThree';editor.applyObject(record);
+      assert.notEqual(face.material.map,beforeBoundaryChange,'heading/body boundaries are part of the key');
+      editor.content.traverse(object=>{object.geometry?.dispose();object.material?.map?.dispose();object.material?.dispose();});
+    }
+  }finally{
+    if(previousDocument)Object.defineProperty(globalThis,'document',previousDocument);else delete globalThis.document;
+  }
+}
 
 let meshCount=0;
 for(const world of worlds){
@@ -42,4 +111,4 @@ const controls=new TransformControls(new THREE.PerspectiveCamera());
 assert.ok(controls.getHelper());controls.setMode('rotate');assert.equal(controls.getMode(),'rotate');controls.setMode('scale');controls.setTranslationSnap(.5);assert.equal(controls.translationSnap,.5);
 // No DOM was attached in this non-browser test; release the helper directly.
 controls.getHelper().traverse(o=>{o.geometry?.dispose();if(o.material)(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.dispose());});
-console.log(`PASS: five worlds, ${meshCount} meshes, actual editable transforms/material isolation/route updates, JSON round-trip, undo/redo, reset and invalid imports.`);
+console.log(`PASS: five worlds, ${meshCount} meshes, actual editable transforms/material isolation/route updates, map envelope/legacy imports and budgets, text fallback repaint, JSON round-trip, undo/redo, reset and invalid imports.`);

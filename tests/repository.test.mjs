@@ -22,6 +22,41 @@ test('public server serves the three self-contained editors, vector placeholders
     assert.deepEqual((await (await fetch(base+'/api/scenes')).json()).scenes,[],'no prepared scans are bundled');
   }finally{await new Promise(resolve=>server.close(resolve));}
 });
+test('local routes reject malformed URLs without stopping the server and serve module MIME types',async()=>{
+  const server=createDevServer();await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  try{
+    const base=`http://127.0.0.1:${server.address().port}`;
+    const malformed=await fetch(base+'//[');
+    assert.equal(malformed.status,400);assert.equal(await malformed.text(),'Bad request');
+    assert.equal((await fetch(base+'/map-studio/')).status,200,'another request still succeeds after the bad URL');
+    for(const file of ['core','osm','osm-ground']){
+      const response=await fetch(`${base}/worldport/${file}.mjs`);
+      assert.equal(response.status,200,file);assert.match(response.headers.get('Content-Type'),/^text\/javascript\b/,file);
+      assert.ok((await response.text()).length>0);
+    }
+  }finally{await new Promise(resolve=>server.close(resolve));}
+});
+test('directory redirects preserve queries and make relative integration links resolve inside their directory',async()=>{
+  const server=createDevServer();await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  try{
+    const base=`http://127.0.0.1:${server.address().port}`;
+    for(const name of ['kart','globe','studio','map-studio','world-studio']){
+      for(const method of ['GET','HEAD']){
+        const response=await fetch(`${base}/${name}?option=keep%20me`,{method,redirect:'manual'});
+        assert.equal(response.status,308,name);assert.equal(response.headers.get('Location'),`/${name}/?option=keep%20me`,name);
+        assert.equal(await response.text(),'');
+      }
+      const response=await fetch(`${base}/${name}?option=keep%20me`);
+      assert.equal(response.status,200,name);assert.equal(response.url,`${base}/${name}/?option=keep%20me`);
+      if(name==='kart'||name==='globe'){
+        const html=await response.text(),link=html.match(/href="(integration\.html[^\"]*)"/)[1];
+        const integration=new URL(link,response.url);
+        assert.equal(integration.pathname,`/${name}/integration.html`);
+        assert.equal((await fetch(integration)).status,200,'the gate link works after following a slashless URL');
+      }
+    }
+  }finally{await new Promise(resolve=>server.close(resolve));}
+});
 test('public source manifest records provenance and excludes private payloads',async()=>{
   const manifest=JSON.parse(await readFile(new URL('../PUBLIC_SOURCE.json',import.meta.url),'utf8'));
   assert.equal(manifest.format,'motionspec.public-source.v1');assert.equal(manifest.historyIncluded,false);assert.match(manifest.sourceCommit,/^[0-9a-f]{40}$/);

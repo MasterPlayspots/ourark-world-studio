@@ -48,5 +48,14 @@ const fly=(plane,seconds,input={})=>{for(let i=0;i<seconds/DT;i++)plane.step(DT,
   const plane=new Plane({ground:hill});plane.launch({x:0,z:0,height:50});
   fly(plane,15);assert.ok(plane.state.crashed,'hit the hill');
 }
+{ // Ground contact still rejects abrupt terrain rises while taxiing, but follows a gradual slope.
+  const taxi=new Plane({ground:(x,z)=>z<-2?100:0});taxi.launch({x:0,z:0,height:PLANE.wheelHeight});
+  taxi.step(DT);assert.ok(taxi.state.onGround,'starts taxiing before reaching the cliff');
+  fly(taxi,.1);assert.ok(taxi.state.crashed,'taxiing into a cliff crashes instead of climbing it');
+  assert.equal(taxi.crashes,1);const stopped={...taxi.state};fly(taxi,1);
+  assert.equal(taxi.state.z,stopped.z);assert.equal(taxi.crashes,1,'crash counted once');
+  const slope=new Plane({ground:(x,z)=>-z*.1});slope.launch({x:0,z:0,height:PLANE.wheelHeight});
+  fly(slope,1);assert.ok(slope.state.onGround&&!slope.state.crashed&&slope.state.y>PLANE.wheelHeight,'taxi follows gradual rising ground');
+}
 
 console.log('PASS: plane cruise, climb/dive energy, banked turns, stall, landing, roll-out, take-off and crashes.');

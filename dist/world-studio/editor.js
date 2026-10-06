@@ -1,7 +1,7 @@
 import {worlds} from '../worlds/data.js';
-import {createDocument,createObject,validateDocument,History,clone,clamp,worldById} from './model.js';
+import {createDocument,createObject,validateDocument,readImport,History,clone,clamp,worldById} from './model.js';
 import {WorldEditorRenderer} from './renderer.js';
-import {groundLevel,sceneColliders,prepareWorldWalk} from './walk.js';
+import {groundLevel,sceneColliders,prepareWorldWalk,WORLD_METRES} from './walk.js';
 import {createWalkMode,LABELS_EN} from '../runtime/walk-host.js';
 import {validateDocument as validateMap} from '../map-studio/model.js';
 import {prepareWalk} from '../runtime/map-adapter.js';
@@ -82,6 +82,7 @@ function enterCity({writeUrl=true}={}){
   active=CITY;playing=false;dragSnapshot=null;preview=false;leaveScanUi();document.body.classList.remove('is-preview');document.body.classList.add('is-city');
   $('#world-title').textContent=city.name;document.title=city.name+' — 3D World Studio';$('#destination').hidden=true;$('#destinations').hidden=true;
   $('#city-info').hidden=false;$('#canvas-help').textContent='Drag to orbit · right drag to pan · scroll to zoom · click a building to inspect it';$('#scene-label').textContent='UPLOADED WORLD / REAL SCALE';
+  $('#add-object').disabled=true;$('#world-units').textContent='1 unit = 1 m';
   $('#attribution').textContent=city.attribution??'';$('#attribution').hidden=!city.attribution;
   engine?.loadCity(city,true);if(citySelected)engine?.select(citySelected);renderLibrary();renderCity();syncMotion();
   if(writeUrl)history.replaceState(null,'',`#${CITY}`);
@@ -107,6 +108,7 @@ async function enterScan(id,{writeUrl=true}={}){
   active=SCAN_PREFIX+id;playing=false;dragSnapshot=null;preview=false;
   document.body.classList.remove('is-preview');document.body.classList.add('is-city','is-scan');$('#city-info').hidden=true;$('#scan-info').hidden=false;$('#attribution').hidden=true;
   $('#world-title').textContent=scans.find(s=>s.id===id)?.name??'Scan world';$('#scene-label').textContent='SCAN WORLD / REAL SCALE';
+  $('#add-object').disabled=true;$('#world-units').textContent='1 unit = 1 m';
   $('#canvas-help').textContent='Drag to orbit · right drag to pan · scroll to zoom · Source camera replays the video path';
   if(writeUrl)history.replaceState(null,'',`#${active}`);renderLibrary();renderScan();syncMotion();
   try{
@@ -172,6 +174,7 @@ function setWorld(id,{writeUrl=true}={}){
   leaveScanUi();document.body.classList.remove('is-city');$('#city-info').hidden=true;$('#attribution').hidden=true;if($('#scene-label').textContent.startsWith('UPLOADED'))$('#scene-label').textContent='PERSPECTIVE / WEBGL';
   if(!worldById(id))id='alpine';active=id;playing=false;dragSnapshot=null;preview=false;document.body.classList.remove('is-preview');
   const world=worldById(id);$('#world-title').textContent=world.name;document.title=world.name+' — 3D World Studio';
+  $('#world-units').textContent=`Diorama units · walk scale ≈ ${WORLD_METRES} m / unit`;
   $('#landscape').style.backgroundImage=`url('/worlds/assets/${world.image}')`;$('#destination').hidden=true;$('#destinations').hidden=true;
   $('#edit-mode').setAttribute('aria-pressed','true');$('#preview-mode').setAttribute('aria-pressed','false');$('#canvas-help').textContent='Drag an axis to edit · drag empty space to orbit · scroll to zoom';
   engine?.setPreview(false);engine?.load(doc(),true);engine?.setMode(mode);engine?.setSnap($('#snap').checked);renderLibrary();render();syncMotion();
@@ -196,7 +199,7 @@ function undo(redo=false){if(preview||isExternal())return;const next=histories.g
 function duplicate(){if(isExternal())return;const object=selected();if(!object||preview||doc().objects.length>=100)return;commit(d=>{const copy=clone(object);copy.id=crypto.randomUUID();copy.name=(object.name+' copy').slice(0,60);copy.position[0]=clamp(copy.position[0]+1.5,-100,100);copy.locked=false;d.objects.push(copy);d.selected=copy.id;},{rebuild:true});notify('Object duplicated.');}
 function remove(){if(isExternal())return;const object=selected();if(!object||object.locked||preview)return;commit(d=>{const index=d.objects.findIndex(o=>o.id===object.id);d.objects.splice(index,1);d.selected=d.objects[Math.min(index,d.objects.length-1)]?.id||null;},{rebuild:true});notify('Object removed. Undo is available.');}
 function addObject(kind){
-  if(isCity())return;
+  if(isExternal())return;
   if(preview||doc().objects.length>=100){notify('This scene supports up to 100 objects.');return;}
   commit(d=>{const object=createObject(kind,d.objects.length);object.position=[0,kind==='panel'?3:1,3];object.name+=` ${d.objects.filter(o=>o.kind===kind).length+1}`;d.objects.push(object);d.selected=object.id;},{rebuild:true});
   $('#add-dialog').close();notify('Object added. Use the handles or inspector to shape it.');
@@ -246,7 +249,7 @@ $('#camera-view').addEventListener('change',e=>{if(e.target.value==='perspective
 $('#snap').addEventListener('change',e=>engine?.setSnap(e.target.checked));
 $('#play').addEventListener('click',()=>{playing=!playing;syncMotion();});$('#reduce-motion').addEventListener('change',e=>{manualReduced=e.target.checked;if(systemMotion.matches&&!manualReduced)notify('Your system’s reduced-motion preference is respected.');syncMotion();});
 systemMotion.addEventListener('change',syncMotion);document.addEventListener('visibilitychange',()=>{if(document.hidden){playing=false;syncMotion();}});
-$('#add-object').addEventListener('click',()=>$('#add-dialog').showModal());document.querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>addObject(b.dataset.add)));
+$('#add-object').addEventListener('click',()=>{if(!isExternal())$('#add-dialog').showModal();});document.querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>addObject(b.dataset.add)));
 $('#help').addEventListener('click',()=>$('#help-dialog').showModal());document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>b.closest('dialog').close()));
 $('#reset-world').addEventListener('click',()=>$('#reset-dialog').showModal());$('#confirm-reset').addEventListener('click',()=>{const before=clone(doc());documents.set(active,createDocument(worldById(active)));record(before);engine?.load(doc(),true);render();$('#reset-dialog').close();notify('Original world restored. You can undo this.');});
 $('#duplicate').addEventListener('click',duplicate);$('#delete').addEventListener('click',remove);$('#undo').addEventListener('click',()=>undo());$('#redo').addEventListener('click',()=>undo(true));
@@ -261,9 +264,7 @@ async function uploadWorld(input){
 }
 $('#city-remove').addEventListener('click',async()=>{if(!city)return;cityGeneration++;city=null;citySelected=null;try{await removeCity();}catch{}setWorld('alpine');notify('Uploaded world removed from this device.');});
 $('#import-file').addEventListener('change',async e=>{const file=e.target.files[0];e.target.value='';if(!file)return;try{if(file.size>MAX_UPLOAD)throw new Error('Choose a file smaller than 16 MB.');const text=await file.text();
-  // Only Map Studio projects may be larger than 1 MB: check before parsing (their schema comes first when exported).
-  if(file.size>1024*1024&&!/"schema"\s*:\s*"motionspec\.map\.v\d+"/.test(text.slice(0,4096)))throw new Error('Choose a scene smaller than 1 MB, or a Map Studio project.');
-  const input=JSON.parse(text);if(MAP_SCHEMA.test(input?.schema??'')){await uploadWorld(input);return;}if(file.size>1024*1024)throw new Error('Choose a scene smaller than 1 MB.');const imported=validateDocument(input);const before=clone(documents.get(imported.world));documents.set(imported.world,imported);histories.get(imported.world).record(before,imported);dirty.add(imported.world);setWorld(imported.world);notify('Scene imported. Undo restores the previous version.');}catch(error){notify(error.message||'This file could not be imported.');}});
+  const importedFile=readImport(text);if(importedFile.kind==='map'){await uploadWorld(importedFile.doc);return;}const imported=importedFile.doc;const before=clone(documents.get(imported.world));documents.set(imported.world,imported);histories.get(imported.world).record(before,imported);dirty.add(imported.world);setWorld(imported.world);notify('Scene imported. Undo restores the previous version.');}catch(error){notify(error.message||'This file could not be imported.');}});
 document.addEventListener('keydown',e=>{
   if(document.body.dataset.runtime)return;// walk mode: the shared InputRouter owns the keyboard
   if(e.target.closest('input,textarea,select,[contenteditable=true]')||document.querySelector('dialog[open]'))return;

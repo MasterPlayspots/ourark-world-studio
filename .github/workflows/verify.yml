@@ -3,6 +3,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
@@ -17,3 +18,67 @@ jobs:
           node-version-file: .nvmrc
           package-manager-cache: false
       - run: npm run verify
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+      - name: Install isolated pinned browser tools
+        run: |
+          npm install --prefix "$RUNNER_TEMP/browser-tools" --no-package-lock --ignore-scripts --no-audit --no-fund playwright@1.62.1 agent-browser@0.38.2
+          node "$RUNNER_TEMP/browser-tools/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Verify visible startup with agent-browser
+        env:
+          AGENT_BROWSER_ARGS: --use-angle=swiftshader,--enable-unsafe-swiftshader,--ignore-gpu-blocklist
+        run: |
+          export AGENT_BROWSER_BIN="$RUNNER_TEMP/browser-tools/node_modules/.bin/agent-browser"
+          export AGENT_BROWSER_EXECUTABLE_PATH="$(node -e 'console.log(require(process.argv[1]).chromium.executablePath())' "$RUNNER_TEMP/browser-tools/node_modules/playwright")"
+          node tests/browser/agent-check.mjs
+      - name: Verify editor flows and audit regressions
+        env:
+          PLAYWRIGHT_CORE: ${{ runner.temp }}/browser-tools/node_modules/playwright
+        run: npm run test:browser
+      - name: Store browser evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: public-browser-evidence
+          path: .browser-artifacts/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+  wasm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+      - name: Rebuild with the pinned Rust compiler
+        run: |
+          rustup toolchain install 1.97.1 --profile minimal --target wasm32-unknown-unknown
+          rustc --version
+          cp dist/runtime/sim/sim.wasm "$RUNNER_TEMP/committed-sim.wasm"
+          npm run build:wasm
+          node tests/sim-wasm.test.mjs
+      - name: Store rebuilt WASM
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: rebuilt-sim-wasm
+          path: dist/runtime/sim/sim.wasm
+          if-no-files-found: error
+          retention-days: 30
+      - name: Require committed WASM to match its source build
+        run: cmp dist/runtime/sim/sim.wasm "$RUNNER_TEMP/committed-sim.wasm"

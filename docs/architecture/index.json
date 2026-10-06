@@ -1,6 +1,6 @@
 {
  "generatedBy": "scripts/architecture-index.mjs",
- "commit": "a627709",
+ "commit": "bd4850c",
  "files": [
   {
    "file": ".gitattributes",
@@ -11,9 +11,9 @@
   },
   {
    "file": ".github/workflows/verify.yml",
-   "bytes": 498,
-   "sha256": "6bb47e560327ab31c24bd9bf755021f1f15ba514604733e3bf765c8ea6dd0e40",
-   "lines": 19,
+   "bytes": 3503,
+   "sha256": "f5d64a6e39465506bc7d3b6c5f055419280d49a3431e3b0a867033f6a683249e",
+   "lines": 84,
    "role": "Deployment-Konfiguration"
   },
   {
@@ -32,9 +32,9 @@
   },
   {
    "file": "CONTRIBUTING.md",
-   "bytes": 7748,
-   "sha256": "f20923d83edb19167f21bb9b02c4f7bf04e4431264cc12876854cc0f12864fc5",
-   "lines": 109,
+   "bytes": 9113,
+   "sha256": "e639f3d60d3fb2a17864d99e0d94b0337d14cd7fc6968f8aee994f137560887a",
+   "lines": 111,
    "role": "Projekt"
   },
   {
@@ -60,9 +60,9 @@
   },
   {
    "file": "README.md",
-   "bytes": 6027,
-   "sha256": "78acfd45ff26082186afd93f1e92ef436a794249a5149c50600e76afca4e0f61",
-   "lines": 82,
+   "bytes": 6775,
+   "sha256": "10ed202882d135bbe4b4937646dcc1e524193ad783056efba0bf3da6a412de02",
+   "lines": 85,
    "role": "Projekt"
   },
   {
@@ -741,8 +741,8 @@
   },
   {
    "file": "dist/globe/car.js",
-   "bytes": 4590,
-   "sha256": "d79370f6d7803eee953d8e6a90089d01fefdf7d66c1d1a2ab72fd66675a2da5e",
+   "bytes": 4568,
+   "sha256": "376721bfb01124a53e5718bf057499efd859c9510b5db58cec60b8ed40e36b22",
    "lines": 78,
    "role": "Globus",
    "js": {
@@ -4367,9 +4367,9 @@
   },
   {
    "file": "dist/kart/kart.js",
-   "bytes": 7365,
-   "sha256": "795c543b0820a5684a113483f008b4c40d0cddd7e3e56c3d187cdaa7cffdfbce",
-   "lines": 136,
+   "bytes": 7591,
+   "sha256": "b502f42e9aa9bc8c4b184f1c9720a01ccb23980fbf4c964804012297d2d81b36",
+   "lines": 141,
    "role": "Kart und Gelände",
    "js": {
     "imports": [
@@ -4387,6 +4387,7 @@
      "KART",
      "KART_STATE",
      "MAX_LAPS",
+     "isForwardOnTrack",
      "Kart",
      "Race"
     ],
@@ -4434,40 +4435,47 @@
       "init": "a=>{const t=Math.PI*2;return((a+Math.PI)%t+t)%t-Math.PI;}"
      },
      {
+      "kind": "function",
+      "name": "isForwardOnTrack",
+      "line": 34,
+      "exported": true,
+      "signature": "({heading,speed},{tx,tz})"
+     },
+     {
       "kind": "class",
       "name": "Kart",
-      "line": 33,
+      "line": 38,
       "exported": true
      },
      {
       "kind": "class",
       "name": "Race",
-      "line": 101,
+      "line": 106,
       "exported": true
      }
     ],
     "classes": [
      {
       "name": "Kart",
-      "line": 33,
+      "line": 38,
       "extends": null,
       "exported": true,
       "methods": [
        {
         "name": "constructor",
-        "line": 34,
+        "line": 39,
         "modifiers": [],
         "signature": "({track,start=0,lane=0,params=KART})"
        },
        {
         "name": "reset",
-        "line": 38,
+        "line": 43,
         "modifiers": [],
         "signature": "(s=0,lane=0)"
        },
        {
         "name": "stateSize",
-        "line": 44,
+        "line": 49,
         "modifiers": [
          "get"
         ],
@@ -4475,19 +4483,19 @@
        },
        {
         "name": "saveState",
-        "line": 45,
+        "line": 50,
         "modifiers": [],
         "signature": "(buf,offset)"
        },
        {
         "name": "loadState",
-        "line": 46,
+        "line": 51,
         "modifiers": [],
         "signature": "(buf,offset)"
        },
        {
         "name": "step",
-        "line": 48,
+        "line": 53,
         "modifiers": [],
         "signature": "(dt,{throttle=0,steer=0}={})"
        }
@@ -4495,52 +4503,52 @@
       "fields": [
        {
         "name": "track",
-        "line": 35,
+        "line": 40,
         "init": "track"
        },
        {
         "name": "p",
-        "line": 35,
+        "line": 40,
         "init": "params"
        },
        {
         "name": "proj",
-        "line": 35,
+        "line": 40,
         "init": "{}"
        },
        {
         "name": "state",
-        "line": 41,
+        "line": 46,
         "init": "{x,z,y:t.heightAt(sample.s),heading:Math.atan2(sample.tx,-sample.tz),speed:0,vy:0,steer:0…"
        },
        {
         "name": "previous",
-        "line": 42,
+        "line": 47,
         "init": "{...this.state}"
        }
       ]
      },
      {
       "name": "Race",
-      "line": 101,
+      "line": 106,
       "extends": null,
       "exported": true,
       "methods": [
        {
         "name": "constructor",
-        "line": 102,
+        "line": 107,
         "modifiers": [],
         "signature": "({length,sectors=4,laps=3})"
        },
        {
         "name": "reset",
-        "line": 103,
+        "line": 108,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "stateSize",
-        "line": 105,
+        "line": 110,
         "modifiers": [
          "get"
         ],
@@ -4548,19 +4556,19 @@
        },
        {
         "name": "saveState",
-        "line": 106,
-        "modifiers": [],
-        "signature": "(buf,offset)"
-       },
-       {
-        "name": "loadState",
         "line": 111,
         "modifiers": [],
         "signature": "(buf,offset)"
        },
        {
+        "name": "loadState",
+        "line": 116,
+        "modifiers": [],
+        "signature": "(buf,offset)"
+       },
+       {
         "name": "update",
-        "line": 117,
+        "line": 122,
         "modifiers": [],
         "signature": "(dt,s,forward=true)"
        }
@@ -4568,62 +4576,62 @@
       "fields": [
        {
         "name": "length",
-        "line": 102,
+        "line": 107,
         "init": "(Konstruktor-Option)"
        },
        {
         "name": "sectors",
-        "line": 102,
+        "line": 107,
         "init": "(Konstruktor-Option)"
        },
        {
         "name": "laps",
-        "line": 102,
+        "line": 107,
         "init": "(Konstruktor-Option)"
        },
        {
         "name": "lap",
-        "line": 103,
+        "line": 108,
         "init": "1"
        },
        {
         "name": "sector",
-        "line": 103,
+        "line": 108,
         "init": "0"
        },
        {
         "name": "time",
-        "line": 103,
+        "line": 108,
         "init": "0"
        },
        {
         "name": "lapStart",
-        "line": 103,
+        "line": 108,
         "init": "0"
        },
        {
         "name": "lapTimes",
-        "line": 103,
+        "line": 108,
         "init": "[]"
        },
        {
         "name": "best",
-        "line": 103,
+        "line": 108,
         "init": "null"
        },
        {
         "name": "finished",
-        "line": 103,
+        "line": 108,
         "init": "false"
        },
        {
         "name": "lastSector",
-        "line": 103,
+        "line": 108,
         "init": "0"
        },
        {
         "name": "wrongWay",
-        "line": 103,
+        "line": 108,
         "init": "false"
        }
       ]
@@ -4636,8 +4644,8 @@
   },
   {
    "file": "dist/kart/main.js",
-   "bytes": 43853,
-   "sha256": "8ed91148878e15555e0883aba8a111be5bc7473b7ce6d2865eb35b2231102779",
+   "bytes": 43815,
+   "sha256": "630d3ede802c6d19bb8d1428f8558179dbde488b54a244d78dc6a232cd91accf",
    "lines": 634,
    "role": "Kart und Gelände",
    "js": {
@@ -4661,7 +4669,8 @@
       "from": "./kart.js",
       "names": [
        "Kart",
-       "Race"
+       "Race",
+       "isForwardOnTrack"
       ]
      },
      {
@@ -5223,8 +5232,8 @@
   },
   {
    "file": "dist/kart/plane.js",
-   "bytes": 5633,
-   "sha256": "352912c2e8b22b21c11c39e91c761357dbfa0947bf81a7df6aae3e97f7206682",
+   "bytes": 5621,
+   "sha256": "7b1a21f2d7520cf210ee05192516e8e8e27c47216b167ee9bdc069ad1789756e",
    "lines": 87,
    "role": "Kart und Gelände",
    "js": {
@@ -5716,9 +5725,9 @@
   },
   {
    "file": "dist/map-studio/editor.js",
-   "bytes": 27454,
-   "sha256": "69028d929b00627be9025f44e05eed9954c0343b6492118159f1dec734683d9c",
-   "lines": 268,
+   "bytes": 27797,
+   "sha256": "470a9e1b78f717c1460f5e8dfb3d1a3dcc8c92ed1a86686ea7fd8f6227b66544",
+   "lines": 269,
    "role": "Map Studio",
    "js": {
     "imports": [
@@ -5731,7 +5740,6 @@
        "newPoint",
        "copy",
        "editableShell",
-       "History",
        "categories",
        "MAX_POINTS",
        "MAX_MAP_METRES",
@@ -5746,17 +5754,25 @@
      },
      {
       "line": 2,
+      "from": "./history.js",
+      "names": [
+       "ProjectHistory"
+      ]
+     },
+     {
+      "line": 3,
       "from": "./storage.js",
       "names": [
        "loadLocal",
        "saveLocal",
        "listLocal",
        "loadProject",
-       "SaveConflict"
+       "SaveConflict",
+       "SaveRevisionLimit"
       ]
      },
      {
-      "line": 3,
+      "line": 4,
       "from": "./project.js",
       "names": [
        "readProject",
@@ -5770,14 +5786,14 @@
       ]
      },
      {
-      "line": 4,
+      "line": 5,
       "from": "../runtime/map-adapter.js",
       "names": [
        "prepareWalk"
       ]
      },
      {
-      "line": 5,
+      "line": 6,
       "from": "../runtime/net/protocol.js",
       "names": [
        "mapFitsNetwork",
@@ -5785,14 +5801,14 @@
       ]
      },
      {
-      "line": 6,
+      "line": 7,
       "from": "../runtime/frozen.js",
       "names": [
        "isValidated"
       ]
      },
      {
-      "line": 7,
+      "line": 8,
       "from": "../runtime/walk-host.js",
       "names": [
        "createWalkMode",
@@ -5800,7 +5816,7 @@
       ]
      },
      {
-      "line": 241,
+      "line": 242,
       "from": "./renderer.js",
       "names": [
        "(dynamisch)"
@@ -5813,385 +5829,385 @@
      {
       "kind": "const",
       "name": "$",
-      "line": 9,
+      "line": 10,
       "exported": false,
       "init": "id=>document.getElementById(id)"
      },
      {
       "kind": "let",
       "name": "dragPoints",
-      "line": 11,
+      "line": 12,
       "exported": false,
       "init": "null"
      },
      {
       "kind": "let",
       "name": "dragIndex",
-      "line": 11,
+      "line": 12,
       "exported": false,
       "init": "-1"
      },
      {
       "kind": "let",
       "name": "doc",
-      "line": 12,
+      "line": 13,
       "exported": false,
       "init": "demoDocument()"
      },
      {
       "kind": "let",
       "name": "meta",
-      "line": 12,
+      "line": 13,
       "exported": false,
       "init": "{worldId:newWorldId(),revision:0}"
      },
      {
       "kind": "let",
       "name": "docBytes",
-      "line": 12,
+      "line": 13,
       "exported": false,
       "init": "projectBytes(doc,meta)"
      },
      {
       "kind": "let",
       "name": "selected",
-      "line": 12,
+      "line": 13,
       "exported": false,
       "init": "doc.points[0].id"
      },
      {
       "kind": "let",
       "name": "mode",
-      "line": 12,
+      "line": 13,
       "exported": false,
       "init": "\"2d\""
      },
      {
       "kind": "let",
       "name": "renderer",
-      "line": 12,
+      "line": 13,
       "exported": false,
       "init": "null"
      },
      {
       "kind": "let",
       "name": "dirty",
-      "line": 12,
+      "line": 13,
       "exported": false,
       "init": "false"
      },
      {
       "kind": "let",
       "name": "revision",
-      "line": 12,
+      "line": 13,
       "exported": false,
       "init": "0"
      },
      {
       "kind": "let",
       "name": "placing",
-      "line": 12,
+      "line": 13,
       "exported": false,
       "init": "false"
      },
      {
       "kind": "let",
       "name": "dragBefore",
-      "line": 12,
+      "line": 13,
       "exported": false,
       "init": "null"
      },
      {
       "kind": "let",
       "name": "noticeTimer",
-      "line": 12,
+      "line": 13,
       "exported": false,
       "init": ""
      },
      {
       "kind": "let",
       "name": "importing",
-      "line": 12,
+      "line": 13,
       "exported": false,
       "init": "false"
      },
      {
       "kind": "const",
       "name": "history",
-      "line": 13,
+      "line": 14,
       "exported": false,
-      "init": "new History()"
+      "init": "new ProjectHistory()"
      },
      {
       "kind": "const",
       "name": "labelPool",
-      "line": 13,
+      "line": 14,
       "exported": false,
       "init": "[]"
      },
      {
       "kind": "const",
       "name": "rows",
-      "line": 13,
+      "line": 14,
       "exported": false,
       "init": "new Map()"
      },
      {
       "kind": "const",
       "name": "MAX_LABELS",
-      "line": 16,
+      "line": 17,
       "exported": false,
       "init": "60"
      },
      {
       "kind": "let",
       "name": "pointById",
-      "line": 16,
+      "line": 17,
       "exported": false,
       "init": "new Map()"
      },
      {
       "kind": "let",
       "name": "rowOrder",
-      "line": 16,
+      "line": 17,
       "exported": false,
       "init": "\"\""
      },
      {
       "kind": "let",
       "name": "pressedRow",
-      "line": 16,
+      "line": 17,
       "exported": false,
       "init": "null"
      },
      {
       "kind": "const",
       "name": "current",
-      "line": 17,
+      "line": 18,
       "exported": false,
       "init": "()=>pointById.get(selected)??doc.points.find(p=>p.id===selected)"
      },
      {
       "kind": "function",
       "name": "notice",
-      "line": 18,
-      "exported": false,
-      "signature": "(message)"
-     },
-     {
-      "kind": "function",
-      "name": "setStatus",
       "line": 19,
       "exported": false,
       "signature": "(message)"
      },
      {
       "kind": "function",
-      "name": "networkHint",
+      "name": "setStatus",
       "line": 20,
+      "exported": false,
+      "signature": "(message)"
+     },
+     {
+      "kind": "function",
+      "name": "networkHint",
+      "line": 21,
       "exported": false,
       "signature": "(map)"
      },
      {
       "kind": "function",
       "name": "historyControls",
-      "line": 21,
+      "line": 22,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "function",
       "name": "markChanged",
-      "line": 22,
+      "line": 23,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "const",
       "name": "editing",
-      "line": 23,
+      "line": 24,
       "exported": false,
       "init": "()=>session.state===\"editing\""
      },
      {
       "kind": "function",
       "name": "assertEditing",
-      "line": 25,
+      "line": 26,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "const",
       "name": "dragging",
-      "line": 28,
+      "line": 29,
       "exported": false,
       "init": "()=>dragBefore!==null"
      },
      {
       "kind": "const",
       "name": "DRAG_BUSY",
-      "line": 29,
+      "line": 30,
       "exported": false,
       "init": "\"Bitte zuerst den gezogenen Punkt ablegen.\""
      },
      {
       "kind": "function",
       "name": "mutate",
-      "line": 30,
+      "line": 31,
       "exported": false,
       "signature": "(action,message)"
      },
      {
       "kind": "function",
       "name": "editPoint",
-      "line": 38,
+      "line": 39,
       "exported": false,
       "signature": "(key,value)"
      },
      {
       "kind": "function",
       "name": "select",
-      "line": 39,
+      "line": 40,
       "exported": false,
       "signature": "(id)"
      },
      {
       "kind": "function",
       "name": "renderList",
-      "line": 40,
+      "line": 41,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "function",
       "name": "renderInspector",
-      "line": 63,
+      "line": 64,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "function",
       "name": "renderLabels",
-      "line": 74,
+      "line": 75,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "function",
       "name": "placeLabels",
-      "line": 80,
+      "line": 81,
       "exported": false,
       "signature": "(positions)"
      },
      {
       "kind": "function",
       "name": "updateLabelSelection",
-      "line": 92,
-      "exported": false,
-      "signature": "()"
-     },
-     {
-      "kind": "function",
-      "name": "render",
       "line": 93,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "function",
+      "name": "render",
+      "line": 94,
+      "exported": false,
+      "signature": "()"
+     },
+     {
+      "kind": "function",
       "name": "add",
-      "line": 100,
+      "line": 101,
       "exported": false,
       "signature": "(x=0,z=0)"
      },
      {
       "kind": "function",
       "name": "setPlacing",
-      "line": 104,
-      "exported": false,
-      "signature": "(value)"
-     },
-     {
-      "kind": "function",
-      "name": "setMode",
       "line": 105,
       "exported": false,
       "signature": "(value)"
      },
      {
       "kind": "function",
-      "name": "stepHistory",
+      "name": "setMode",
       "line": 106,
+      "exported": false,
+      "signature": "(value)"
+     },
+     {
+      "kind": "function",
+      "name": "stepHistory",
+      "line": 107,
       "exported": false,
       "signature": "(direction)"
      },
      {
       "kind": "function",
       "name": "openProject",
-      "line": 110,
+      "line": 111,
       "exported": false,
       "signature": "(next,nextMeta,message,{saved=false}={})"
      },
      {
       "kind": "async function",
       "name": "showLocalProjects",
-      "line": 124,
+      "line": 125,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "function",
       "name": "fileData",
-      "line": 139,
+      "line": 140,
       "exported": false,
       "signature": "(file)"
      },
      {
       "kind": "async function",
       "name": "decodeImage",
-      "line": 140,
+      "line": 141,
       "exported": false,
       "signature": "(dataUrl)"
      },
      {
       "kind": "async function",
       "name": "withImport",
-      "line": 141,
+      "line": 142,
       "exported": false,
       "signature": "(input,action)"
      },
      {
       "kind": "let",
       "name": "enhancing",
-      "line": 151,
+      "line": 152,
       "exported": false,
       "init": "false"
      },
      {
       "kind": "const",
       "name": "decimal",
-      "line": 152,
+      "line": 153,
       "exported": false,
       "init": "n=>n.toLocaleString(\"de-DE\",{maximumFractionDigits:1})"
      },
      {
       "kind": "const",
       "name": "choose",
-      "line": 198,
+      "line": 199,
       "exported": false,
       "init": "kind=>{$(\"import-dialog\").close();$(`${kind}-file`).click();}"
      },
      {
       "kind": "const",
       "name": "session",
-      "line": 229,
+      "line": 230,
       "exported": false,
       "init": "createWalkMode({$,getRenderer:()=>renderer,getDocument:()=>doc,notice,labels:LABELS_DE,ed…"
      },
      {
       "kind": "const",
       "name": "restoreRevision",
-      "line": 267,
+      "line": 268,
       "exported": false,
       "init": "0"
      }
@@ -6200,305 +6216,300 @@
     "domIds": [
      {
       "id": "notice",
-      "line": 18
-     },
-     {
-      "id": "status",
       "line": 19
      },
      {
+      "id": "status",
+      "line": 20
+     },
+     {
       "id": "undo",
-      "line": 21
+      "line": 22
      },
      {
       "id": "redo",
-      "line": 21
+      "line": 22
      },
      {
       "id": "count",
-      "line": 41
+      "line": 42
      },
      {
       "id": "point-list",
-      "line": 57
+      "line": 58
      },
      {
       "id": "add",
-      "line": 61
+      "line": 62
      },
      {
       "id": "place",
-      "line": 61
+      "line": 62
      },
      {
       "id": "properties",
-      "line": 64
-     },
-     {
-      "id": "no-selection",
-      "line": 64
-     },
-     {
-      "id": "type-badge",
-      "line": 64
-     },
-     {
-      "id": "focus",
-      "line": 64
-     },
-     {
-      "id": "selection-info",
       "line": 65
      },
      {
+      "id": "no-selection",
+      "line": 65
+     },
+     {
+      "id": "type-badge",
+      "line": 65
+     },
+     {
+      "id": "focus",
+      "line": 65
+     },
+     {
+      "id": "selection-info",
+      "line": 66
+     },
+     {
       "id": "selected-name",
-      "line": 67
+      "line": 68
      },
      {
       "id": "point-id",
-      "line": 67
+      "line": 68
      },
      {
       "id": "point-*",
-      "line": 68,
+      "line": 69,
       "dynamic": true
      },
      {
       "id": "point-visible",
-      "line": 69
+      "line": 70
      },
      {
       "id": "point-locked",
-      "line": 69
+      "line": 70
      },
      {
       "id": "geometry",
-      "line": 71
+      "line": 72
      },
      {
       "id": "point-data",
-      "line": 71
+      "line": 72
      },
      {
       "id": "data-apply",
-      "line": 71
+      "line": 72
      },
      {
       "id": "delete",
-      "line": 71
+      "line": 72
      },
      {
       "id": "duplicate",
-      "line": 71
+      "line": 72
      },
      {
       "id": "data-error",
-      "line": 71
+      "line": 72
      },
      {
       "id": "labels",
-      "line": 75
+      "line": 76
      },
      {
       "id": "project-name",
-      "line": 96
-     },
-     {
-      "id": "title",
-      "line": 96
-     },
-     {
-      "id": "map-width",
-      "line": 96
-     },
-     {
-      "id": "map-depth",
-      "line": 96
-     },
-     {
-      "id": "map-color",
-      "line": 96
-     },
-     {
-      "id": "map-name",
-      "line": 96
-     },
-     {
-      "id": "map-detail",
-      "line": 96
-     },
-     {
-      "id": "image-remove",
-      "line": 96
-     },
-     {
-      "id": "image-enhance",
-      "line": 96
-     },
-     {
-      "id": "attribution",
       "line": 97
      },
      {
+      "id": "title",
+      "line": 97
+     },
+     {
+      "id": "map-width",
+      "line": 97
+     },
+     {
+      "id": "map-depth",
+      "line": 97
+     },
+     {
+      "id": "map-color",
+      "line": 97
+     },
+     {
+      "id": "map-name",
+      "line": 97
+     },
+     {
+      "id": "map-detail",
+      "line": 97
+     },
+     {
+      "id": "image-remove",
+      "line": 97
+     },
+     {
+      "id": "image-enhance",
+      "line": 97
+     },
+     {
+      "id": "attribution",
+      "line": 98
+     },
+     {
       "id": "snap",
-      "line": 102
+      "line": 103
      },
      {
       "id": "controls",
-      "line": 104
+      "line": 105
      },
      {
       "id": "view-2d",
-      "line": 105
+      "line": 106
      },
      {
       "id": "view-3d",
-      "line": 105
+      "line": 106
      },
      {
       "id": "projection",
-      "line": 105
+      "line": 106
      },
      {
       "id": "local-projects",
-      "line": 126
-     },
-     {
-      "id": "local-list",
       "line": 127
      },
      {
+      "id": "local-list",
+      "line": 128
+     },
+     {
       "id": "import-dialog",
-      "line": 131
+      "line": 132
      },
      {
       "id": "map-*",
-      "line": 147,
+      "line": 148,
       "dynamic": true
      },
      {
       "id": "overview",
-      "line": 176
+      "line": 177
      },
      {
       "id": "save",
-      "line": 180
+      "line": 181
      },
      {
       "id": "export",
-      "line": 192
+      "line": 193
      },
      {
       "id": "import",
-      "line": 197
+      "line": 198
      },
      {
       "id": "help",
-      "line": 197
+      "line": 198
      },
      {
       "id": "help-dialog",
-      "line": 197
+      "line": 198
      },
      {
       "id": "*-file",
-      "line": 198,
+      "line": 199,
       "dynamic": true
      },
      {
       "id": "image-import",
-      "line": 198
-     },
-     {
-      "id": "choose-image",
-      "line": 198
-     },
-     {
-      "id": "choose-points",
-      "line": 198
-     },
-     {
-      "id": "choose-project",
-      "line": 198
-     },
-     {
-      "id": "image-file",
       "line": 199
      },
      {
+      "id": "choose-image",
+      "line": 199
+     },
+     {
+      "id": "choose-points",
+      "line": 199
+     },
+     {
+      "id": "choose-project",
+      "line": 199
+     },
+     {
+      "id": "image-file",
+      "line": 200
+     },
+     {
       "id": "project-file",
-      "line": 204
+      "line": 205
      },
      {
       "id": "points-file",
-      "line": 210
+      "line": 211
      },
      {
       "id": "canvas",
-      "line": 221
+      "line": 222
      },
      {
       "id": "point-x",
-      "line": 252
+      "line": 253
      },
      {
       "id": "point-z",
-      "line": 252
+      "line": 253
      },
      {
       "id": "fallback-text",
-      "line": 264
+      "line": 265
      },
      {
       "id": "fallback",
-      "line": 264
+      "line": 265
      }
     ],
     "events": [
      {
       "event": "click",
-      "line": 48,
+      "line": 49,
       "target": "row"
      },
      {
       "event": "click",
-      "line": 75,
+      "line": 76,
       "target": "button"
      },
      {
       "event": "click",
-      "line": 130,
+      "line": 131,
       "target": "button"
-     },
-     {
-      "event": "change",
-      "line": 146,
-      "target": "$(\"project-name\")"
      },
      {
       "event": "change",
       "line": 147,
-      "target": "$(`map-${key}`)"
+      "target": "$(\"project-name\")"
      },
      {
       "event": "change",
       "line": 148,
+      "target": "$(`map-${key}`)"
+     },
+     {
+      "event": "change",
+      "line": 149,
       "target": "$(\"map-color\")"
      },
      {
       "event": "click",
-      "line": 153,
+      "line": 154,
       "target": "$(\"image-enhance\")"
      },
      {
       "event": "click",
-      "line": 171,
-      "target": "$(\"image-remove\")"
-     },
-     {
-      "event": "change",
       "line": 172,
-      "target": "$(`point-${key}`)"
+      "target": "$(\"image-remove\")"
      },
      {
       "event": "change",
@@ -6506,141 +6517,207 @@
       "target": "$(`point-${key}`)"
      },
      {
-      "event": "click",
+      "event": "change",
       "line": 174,
-      "target": "b"
+      "target": "$(`point-${key}`)"
      },
      {
       "event": "click",
       "line": 175,
-      "target": "$(\"data-apply\")"
-     },
-     {
-      "event": "click",
-      "line": 176,
-      "target": "$(\"add\")"
-     },
-     {
-      "event": "click",
-      "line": 176,
-      "target": "$(\"place\")"
-     },
-     {
-      "event": "click",
-      "line": 176,
-      "target": "$(\"view-2d\")"
-     },
-     {
-      "event": "click",
-      "line": 176,
-      "target": "$(\"view-3d\")"
-     },
-     {
-      "event": "click",
-      "line": 176,
-      "target": "$(\"overview\")"
-     },
-     {
-      "event": "click",
-      "line": 176,
-      "target": "$(\"focus\")"
-     },
-     {
-      "event": "change",
-      "line": 176,
-      "target": "$(\"snap\")"
-     },
-     {
-      "event": "click",
-      "line": 177,
-      "target": "$(\"undo\")"
-     },
-     {
-      "event": "click",
-      "line": 177,
-      "target": "$(\"redo\")"
-     },
-     {
-      "event": "click",
-      "line": 178,
-      "target": "$(\"delete\")"
-     },
-     {
-      "event": "click",
-      "line": 179,
-      "target": "$(\"duplicate\")"
-     },
-     {
-      "event": "click",
-      "line": 180,
-      "target": "$(\"save\")"
-     },
-     {
-      "event": "click",
-      "line": 192,
-      "target": "$(\"export\")"
-     },
-     {
-      "event": "click",
-      "line": 197,
-      "target": "$(\"import\")"
-     },
-     {
-      "event": "click",
-      "line": 197,
-      "target": "$(\"help\")"
-     },
-     {
-      "event": "click",
-      "line": 197,
       "target": "b"
      },
      {
       "event": "click",
+      "line": 176,
+      "target": "$(\"data-apply\")"
+     },
+     {
+      "event": "click",
+      "line": 177,
+      "target": "$(\"add\")"
+     },
+     {
+      "event": "click",
+      "line": 177,
+      "target": "$(\"place\")"
+     },
+     {
+      "event": "click",
+      "line": 177,
+      "target": "$(\"view-2d\")"
+     },
+     {
+      "event": "click",
+      "line": 177,
+      "target": "$(\"view-3d\")"
+     },
+     {
+      "event": "click",
+      "line": 177,
+      "target": "$(\"overview\")"
+     },
+     {
+      "event": "click",
+      "line": 177,
+      "target": "$(\"focus\")"
+     },
+     {
+      "event": "change",
+      "line": 177,
+      "target": "$(\"snap\")"
+     },
+     {
+      "event": "click",
+      "line": 178,
+      "target": "$(\"undo\")"
+     },
+     {
+      "event": "click",
+      "line": 178,
+      "target": "$(\"redo\")"
+     },
+     {
+      "event": "click",
+      "line": 179,
+      "target": "$(\"delete\")"
+     },
+     {
+      "event": "click",
+      "line": 180,
+      "target": "$(\"duplicate\")"
+     },
+     {
+      "event": "click",
+      "line": 181,
+      "target": "$(\"save\")"
+     },
+     {
+      "event": "click",
+      "line": 193,
+      "target": "$(\"export\")"
+     },
+     {
+      "event": "click",
       "line": 198,
+      "target": "$(\"import\")"
+     },
+     {
+      "event": "click",
+      "line": 198,
+      "target": "$(\"help\")"
+     },
+     {
+      "event": "click",
+      "line": 198,
+      "target": "b"
+     },
+     {
+      "event": "click",
+      "line": 199,
       "target": "$(\"image-import\")"
      },
      {
       "event": "click",
-      "line": 198,
+      "line": 199,
       "target": "$(\"choose-image\")"
      },
      {
       "event": "click",
-      "line": 198,
+      "line": 199,
       "target": "$(\"choose-points\")"
      },
      {
       "event": "click",
-      "line": 198,
+      "line": 199,
       "target": "$(\"choose-project\")"
      },
      {
       "event": "change",
-      "line": 199,
+      "line": 200,
       "target": "$(\"image-file\")"
      },
      {
       "event": "change",
-      "line": 204,
+      "line": 205,
       "target": "$(\"project-file\")"
      },
      {
       "event": "change",
-      "line": 210,
+      "line": 211,
       "target": "$(\"points-file\")"
      },
      {
       "event": "keydown",
-      "line": 216,
+      "line": 217,
       "target": "window"
      },
      {
       "event": "beforeunload",
-      "line": 238,
+      "line": 239,
       "target": "window"
      }
     ],
+    "storage": []
+   }
+  },
+  {
+   "file": "dist/map-studio/history.js",
+   "bytes": 922,
+   "sha256": "8da76f8439cf9e3595939f71a8a83d5a32caa7d500d8b88bc709c90a10d529ba",
+   "lines": 21,
+   "role": "Map Studio",
+   "js": {
+    "imports": [
+     {
+      "line": 1,
+      "from": "./model.js",
+      "names": [
+       "History"
+      ]
+     }
+    ],
+    "exports": [
+     "ProjectHistory"
+    ],
+    "declarations": [
+     {
+      "kind": "class",
+      "name": "ProjectHistory",
+      "line": 6,
+      "exported": true
+     }
+    ],
+    "classes": [
+     {
+      "name": "ProjectHistory",
+      "line": 6,
+      "extends": "History",
+      "exported": true,
+      "methods": [
+       {
+        "name": "pack",
+        "line": 7,
+        "modifiers": [],
+        "signature": "({doc,meta})"
+       },
+       {
+        "name": "unpack",
+        "line": 12,
+        "modifiers": [],
+        "signature": "(entry)"
+       },
+       {
+        "name": "step",
+        "line": 15,
+        "modifiers": [],
+        "signature": "(from,to,current)"
+       }
+      ],
+      "fields": []
+     }
+    ],
+    "domIds": [],
+    "events": [],
     "storage": []
    }
   },
@@ -7971,9 +8048,9 @@
   },
   {
    "file": "dist/map-studio/storage.js",
-   "bytes": 5021,
-   "sha256": "50c1600296c5c7cfc4341c97920017e5770a8d78eb450a64d1965dad48f1c6db",
-   "lines": 81,
+   "bytes": 5563,
+   "sha256": "974b32636ce938f18743ebe43b82ab1cdaf4f9cb3abe4804721ea8d02c036587",
+   "lines": 87,
    "role": "Map Studio",
    "js": {
     "imports": [
@@ -7982,7 +8059,8 @@
       "from": "./project.js",
       "names": [
        "envelope",
-       "readProject"
+       "readProject",
+       "validateMeta"
       ]
      }
     ],
@@ -7990,6 +8068,7 @@
      "LEGACY_WORLD_ID",
      "projectKey",
      "SaveConflict",
+     "SaveRevisionLimit",
      "openStore",
      "loadLocal",
      "listLocal",
@@ -8046,58 +8125,64 @@
       "exported": true
      },
      {
+      "kind": "class",
+      "name": "SaveRevisionLimit",
+      "line": 11,
+      "exported": true
+     },
+     {
       "kind": "async function",
       "name": "openStore",
-      "line": 12,
+      "line": 13,
       "exported": true,
       "signature": "(idb=globalThis.indexedDB)"
      },
      {
       "kind": "async function",
       "name": "transact",
-      "line": 23,
+      "line": 24,
       "exported": false,
       "signature": "(idb,mode,work)"
      },
      {
       "kind": "const",
       "name": "read",
-      "line": 32,
+      "line": 33,
       "exported": false,
       "init": "(idb,key)=>transact(idb,\"readonly\",store=>{const request=store.get(key);return()=>request…"
      },
      {
       "kind": "async function",
       "name": "loadLocal",
-      "line": 35,
+      "line": 36,
       "exported": true,
       "signature": "({idb}={})"
      },
      {
       "kind": "async function",
       "name": "migrate",
-      "line": 48,
+      "line": 49,
       "exported": false,
       "signature": "(idb,{meta,doc})"
      },
      {
       "kind": "async function",
       "name": "listLocal",
-      "line": 58,
+      "line": 59,
       "exported": true,
       "signature": "({idb}={})"
      },
      {
       "kind": "async function",
       "name": "loadProject",
-      "line": 66,
+      "line": 67,
       "exported": true,
       "signature": "(worldId,{idb}={})"
      },
      {
       "kind": "async function",
       "name": "saveLocal",
-      "line": 70,
+      "line": 71,
       "exported": true,
       "signature": "(doc,meta,{idb}={})"
      }
@@ -8106,6 +8191,14 @@
      {
       "name": "SaveConflict",
       "line": 10,
+      "extends": "Error",
+      "exported": true,
+      "methods": [],
+      "fields": []
+     },
+     {
+      "name": "SaveRevisionLimit",
+      "line": 11,
       "extends": "Error",
       "exported": true,
       "methods": [],
@@ -12073,9 +12166,9 @@
   },
   {
    "file": "dist/runtime/sim/wasm.js",
-   "bytes": 3881,
-   "sha256": "90914782cf04a96ff75a457ef9b6612a3b6bb6857b174539da70a294223d457d",
-   "lines": 59,
+   "bytes": 4478,
+   "sha256": "ef2336f9d6d1438781a99ecbc5a90fa4d611d555fcd4b9626814e6fedc3a9dd3",
+   "lines": 64,
    "role": "Runtime (Begehmodus)",
    "js": {
     "imports": [
@@ -12162,37 +12255,37 @@
        },
        {
         "name": "ground",
-        "line": 40,
+        "line": 45,
         "modifiers": [],
         "signature": "(x,z)"
        },
        {
         "name": "spawn",
-        "line": 41,
+        "line": 46,
         "modifiers": [],
         "signature": "(slot,{id=slot+1,mode,x=0,z=0,heading=0,height=80})"
        },
        {
         "name": "despawn",
-        "line": 44,
+        "line": 49,
         "modifiers": [],
         "signature": "(slot)"
        },
        {
         "name": "setInput",
-        "line": 46,
+        "line": 51,
         "modifiers": [],
         "signature": "(slot,input={})"
        },
        {
         "name": "step",
-        "line": 52,
+        "line": 57,
         "modifiers": [],
         "signature": "(dt,steps=1,count=this.capacity)"
        },
        {
         "name": "read",
-        "line": 53,
+        "line": 58,
         "modifiers": [],
         "signature": "(slot)"
        }
@@ -12948,9 +13041,9 @@
   },
   {
    "file": "dist/world-studio/editor.js",
-   "bytes": 39027,
-   "sha256": "a7ca3fc77f994aae4609e926ff336a354ee4a0aca53f31062a51fdc0ac4fc059",
-   "lines": 355,
+   "bytes": 38961,
+   "sha256": "0b7f236029f557becd07083d9a9bcb18ad1d6695a8a0aeb6b5a6c3b2b8679f49",
+   "lines": 356,
    "role": "World Studio",
    "js": {
     "imports": [
@@ -12968,6 +13061,7 @@
        "createDocument",
        "createObject",
        "validateDocument",
+       "readImport",
        "History",
        "clone",
        "clamp",
@@ -12987,7 +13081,8 @@
       "names": [
        "groundLevel",
        "sceneColliders",
-       "prepareWorldWalk"
+       "prepareWorldWalk",
+       "WORLD_METRES"
       ]
      },
      {
@@ -13370,217 +13465,217 @@
      {
       "kind": "function",
       "name": "leaveScanUi",
-      "line": 90,
+      "line": 91,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "function",
       "name": "renderScan",
-      "line": 94,
+      "line": 95,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "async function",
       "name": "enterScan",
-      "line": 105,
+      "line": 106,
       "exported": false,
       "signature": "(id,{writeUrl=true}={})"
      },
      {
       "kind": "function",
       "name": "renderObjects",
-      "line": 121,
+      "line": 123,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "function",
       "name": "setInputValue",
-      "line": 126,
+      "line": 128,
       "exported": false,
       "signature": "(id,value)"
      },
      {
       "kind": "function",
       "name": "syncInspector",
-      "line": 127,
+      "line": 129,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "function",
       "name": "renderPins",
-      "line": 148,
+      "line": 150,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "function",
       "name": "render",
-      "line": 154,
+      "line": 156,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "function",
       "name": "record",
-      "line": 155,
+      "line": 157,
       "exported": false,
       "signature": "(before)"
      },
      {
       "kind": "function",
       "name": "commit",
-      "line": 156,
+      "line": 158,
       "exported": false,
       "signature": "(action,{rebuild=false}={})"
      },
      {
       "kind": "function",
       "name": "changeObject",
-      "line": 161,
+      "line": 163,
       "exported": false,
       "signature": "(updates)"
      },
      {
       "kind": "function",
       "name": "selectObject",
-      "line": 162,
+      "line": 164,
       "exported": false,
       "signature": "(id,{focus=false,visit=preview}={})"
      },
      {
       "kind": "function",
       "name": "setWorld",
-      "line": 169,
+      "line": 171,
       "exported": false,
       "signature": "(id,{writeUrl=true}={})"
      },
      {
       "kind": "function",
       "name": "setPreview",
-      "line": 180,
+      "line": 183,
       "exported": false,
       "signature": "(value)"
      },
      {
       "kind": "function",
       "name": "showDestination",
-      "line": 186,
+      "line": 189,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "function",
       "name": "nextDestination",
-      "line": 192,
+      "line": 195,
       "exported": false,
       "signature": "(direction)"
      },
      {
       "kind": "function",
       "name": "setTool",
-      "line": 193,
+      "line": 196,
       "exported": false,
       "signature": "(value)"
      },
      {
       "kind": "function",
       "name": "syncMotion",
-      "line": 194,
-      "exported": false,
-      "signature": "()"
-     },
-     {
-      "kind": "function",
-      "name": "undo",
-      "line": 195,
-      "exported": false,
-      "signature": "(redo=false)"
-     },
-     {
-      "kind": "function",
-      "name": "duplicate",
-      "line": 196,
-      "exported": false,
-      "signature": "()"
-     },
-     {
-      "kind": "function",
-      "name": "remove",
       "line": 197,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "function",
-      "name": "addObject",
+      "name": "undo",
       "line": 198,
+      "exported": false,
+      "signature": "(redo=false)"
+     },
+     {
+      "kind": "function",
+      "name": "duplicate",
+      "line": 199,
+      "exported": false,
+      "signature": "()"
+     },
+     {
+      "kind": "function",
+      "name": "remove",
+      "line": 200,
+      "exported": false,
+      "signature": "()"
+     },
+     {
+      "kind": "function",
+      "name": "addObject",
+      "line": 201,
       "exported": false,
       "signature": "(kind)"
      },
      {
       "kind": "function",
       "name": "save",
-      "line": 204,
+      "line": 207,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "function",
       "name": "exportScene",
-      "line": 205,
+      "line": 208,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "function",
       "name": "unavailable",
-      "line": 206,
+      "line": 209,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "async function",
       "name": "uploadWorld",
-      "line": 255,
+      "line": 258,
       "exported": false,
       "signature": "(input)"
      },
      {
       "kind": "const",
       "name": "walk",
-      "line": 291,
+      "line": 292,
       "exported": false,
       "init": "createWalkMode({$:id=>document.getElementById(id),getRenderer:()=>engine,getDocument:()=>…"
      },
      {
       "kind": "let",
       "name": "frameListener",
-      "line": 314,
+      "line": 315,
       "exported": false,
       "init": "null"
      },
      {
       "kind": "let",
       "name": "checkRunning",
-      "line": 314,
+      "line": 315,
       "exported": false,
       "init": "false"
      },
      {
       "kind": "const",
       "name": "sleep",
-      "line": 315,
+      "line": 316,
       "exported": false,
       "init": "ms=>new Promise(r=>setTimeout(r,ms))"
      },
      {
       "kind": "async function",
       "name": "deviceCheck",
-      "line": 316,
+      "line": 317,
       "exported": false,
       "signature": "()"
      }
@@ -13668,518 +13763,522 @@
       "line": 84
      },
      {
-      "id": "attribution",
+      "id": "add-object",
       "line": 85
      },
      {
+      "id": "world-units",
+      "line": 85
+     },
+     {
+      "id": "attribution",
+      "line": 86
+     },
+     {
       "id": "scan-info",
-      "line": 91
-     },
-     {
-      "id": "walk-enter",
-      "line": 91
-     },
-     {
-      "id": "camera-view",
       "line": 92
      },
      {
-      "id": "scan-name",
-      "line": 98
+      "id": "walk-enter",
+      "line": 92
      },
      {
-      "id": "scan-meta",
+      "id": "camera-view",
+      "line": 93
+     },
+     {
+      "id": "scan-name",
       "line": 99
      },
      {
-      "id": "scan-data",
+      "id": "scan-meta",
       "line": 100
      },
      {
+      "id": "scan-data",
+      "line": 101
+     },
+     {
       "id": "properties",
-      "line": 128
+      "line": 130
      },
      {
       "id": "empty-selection",
-      "line": 128
+      "line": 130
      },
      {
       "id": "selected-name",
-      "line": 131
+      "line": 133
      },
      {
       "id": "object-name",
-      "line": 131
+      "line": 133
      },
      {
       "id": "*-*",
-      "line": 132,
+      "line": 134,
       "dynamic": true,
       "tooBroad": true
      },
      {
       "id": "visible",
-      "line": 133
-     },
-     {
-      "id": "locked",
-      "line": 133
-     },
-     {
-      "id": "page-enabled",
-      "line": 133
-     },
-     {
-      "id": "object-color",
-      "line": 134
-     },
-     {
-      "id": "animation",
-      "line": 134
-     },
-     {
-      "id": "page-title",
-      "line": 134
-     },
-     {
-      "id": "page-body",
-      "line": 134
-     },
-     {
-      "id": "lock-note",
       "line": 135
      },
      {
-      "id": "duplicate",
+      "id": "locked",
+      "line": 135
+     },
+     {
+      "id": "page-enabled",
+      "line": 135
+     },
+     {
+      "id": "object-color",
+      "line": 136
+     },
+     {
+      "id": "animation",
+      "line": 136
+     },
+     {
+      "id": "page-title",
+      "line": 136
+     },
+     {
+      "id": "page-body",
+      "line": 136
+     },
+     {
+      "id": "lock-note",
       "line": 137
+     },
+     {
+      "id": "duplicate",
+      "line": 139
      },
      {
       "id": "delete",
-      "line": 137
+      "line": 139
      },
      {
       "id": "original-color",
-      "line": 138
+      "line": 140
      },
      {
       "id": "visit-destination",
-      "line": 138
+      "line": 140
      },
      {
       "id": "landscape-toggle",
-      "line": 140
+      "line": 142
      },
      {
       "id": "grid-toggle",
-      "line": 140
+      "line": 142
      },
      {
       "id": "exposure",
-      "line": 140
+      "line": 142
      },
      {
       "id": "exposure-value",
-      "line": 140
+      "line": 142
      },
      {
       "id": "undo",
-      "line": 143
-     },
-     {
-      "id": "redo",
-      "line": 143
-     },
-     {
-      "id": "snap",
       "line": 145
      },
      {
+      "id": "redo",
+      "line": 145
+     },
+     {
+      "id": "snap",
+      "line": 147
+     },
+     {
       "id": "landscape",
-      "line": 146
+      "line": 148
      },
      {
       "id": "edit-mode",
-      "line": 176
+      "line": 179
      },
      {
       "id": "preview-mode",
-      "line": 176
+      "line": 179
      },
      {
       "id": "destination-kind",
-      "line": 189
+      "line": 192
      },
      {
       "id": "destination-title",
-      "line": 189
+      "line": 192
      },
      {
       "id": "destination-body",
-      "line": 189
+      "line": 192
      },
      {
       "id": "reduce-motion",
-      "line": 194
+      "line": 197
      },
      {
       "id": "play",
-      "line": 194
+      "line": 197
      },
      {
       "id": "add-dialog",
-      "line": 202
+      "line": 205
      },
      {
       "id": "fallback",
-      "line": 206
+      "line": 209
      },
      {
       "id": "canvas",
-      "line": 210
+      "line": 213
      },
      {
       "id": "close-destination",
-      "line": 242
+      "line": 245
      },
      {
       "id": "next-destination",
-      "line": 243
+      "line": 246
      },
      {
       "id": "previous-destination",
-      "line": 243
+      "line": 246
      },
      {
       "id": "overview",
-      "line": 244
-     },
-     {
-      "id": "add-object",
-      "line": 249
+      "line": 247
      },
      {
       "id": "help",
-      "line": 250
+      "line": 253
      },
      {
       "id": "help-dialog",
-      "line": 250
+      "line": 253
      },
      {
       "id": "reset-world",
-      "line": 251
+      "line": 254
      },
      {
       "id": "reset-dialog",
-      "line": 251
+      "line": 254
      },
      {
       "id": "confirm-reset",
-      "line": 251
+      "line": 254
      },
      {
       "id": "save",
-      "line": 253
+      "line": 256
      },
      {
       "id": "export",
-      "line": 253
+      "line": 256
      },
      {
       "id": "import",
-      "line": 253
+      "line": 256
      },
      {
       "id": "import-file",
-      "line": 253
+      "line": 256
      },
      {
       "id": "city-remove",
-      "line": 262
+      "line": 265
      },
      {
       "id": "scan-quality",
-      "line": 312
+      "line": 313
      },
      {
       "id": "scan-device-check",
-      "line": 317
+      "line": 318
      },
      {
       "id": "device-check-result",
-      "line": 334
+      "line": 335
      },
      {
       "id": "device-check-verdict",
-      "line": 334
+      "line": 335
      },
      {
       "id": "device-check-stored",
-      "line": 335
+      "line": 336
      },
      {
       "id": "device-check-dialog",
-      "line": 335
+      "line": 336
      },
      {
       "id": "device-check-copy",
-      "line": 341
+      "line": 342
      }
     ],
     "events": [
      {
       "event": "click",
-      "line": 219,
+      "line": 222,
       "target": "$(\"#world-library\")"
      },
      {
       "event": "click",
-      "line": 220,
+      "line": 223,
       "target": "$(\"#object-list\")"
      },
      {
       "event": "click",
-      "line": 221,
+      "line": 224,
       "target": "$(\"#pins\")"
      },
      {
       "event": "click",
-      "line": 222,
+      "line": 225,
       "target": "$(\"#destinations\")"
      },
      {
       "event": "click",
-      "line": 223,
+      "line": 226,
       "target": "b"
      },
      {
       "event": "change",
-      "line": 224,
+      "line": 227,
       "target": "$(\"#object-name\")"
      },
      {
       "event": "change",
-      "line": 225,
+      "line": 228,
       "target": "input"
      },
      {
       "event": "change",
-      "line": 230,
+      "line": 233,
       "target": "$(\"#visible\")"
      },
      {
       "event": "change",
-      "line": 231,
+      "line": 234,
       "target": "$(\"#locked\")"
      },
      {
       "event": "change",
-      "line": 232,
+      "line": 235,
       "target": "$(\"#object-color\")"
      },
      {
       "event": "click",
-      "line": 233,
+      "line": 236,
       "target": "$(\"#original-color\")"
      },
      {
       "event": "change",
-      "line": 234,
+      "line": 237,
       "target": "$(\"#animation\")"
      },
      {
       "event": "change",
-      "line": 235,
+      "line": 238,
       "target": "$(\"#\"+id)"
      },
      {
       "event": "change",
-      "line": 236,
+      "line": 239,
       "target": "$(\"#landscape-toggle\")"
      },
      {
       "event": "change",
-      "line": 237,
+      "line": 240,
       "target": "$(\"#grid-toggle\")"
      },
      {
       "event": "change",
-      "line": 238,
+      "line": 241,
       "target": "$(\"#exposure\")"
      },
      {
       "event": "input",
-      "line": 239,
+      "line": 242,
       "target": "$(\"#exposure\")"
      },
      {
       "event": "click",
-      "line": 240,
+      "line": 243,
       "target": "$(\"#edit-mode\")"
      },
      {
       "event": "click",
-      "line": 240,
+      "line": 243,
       "target": "$(\"#preview-mode\")"
      },
      {
       "event": "click",
-      "line": 241,
+      "line": 244,
       "target": "$(\"#visit-destination\")"
      },
      {
       "event": "click",
-      "line": 242,
+      "line": 245,
       "target": "$(\"#close-destination\")"
      },
      {
       "event": "click",
-      "line": 243,
+      "line": 246,
       "target": "$(\"#next-destination\")"
      },
      {
       "event": "click",
-      "line": 243,
+      "line": 246,
       "target": "$(\"#previous-destination\")"
      },
      {
       "event": "click",
-      "line": 244,
+      "line": 247,
       "target": "$(\"#overview\")"
      },
      {
       "event": "click",
-      "line": 244,
+      "line": 247,
       "target": "$(\"#focus\")"
      },
      {
       "event": "change",
-      "line": 245,
+      "line": 248,
       "target": "$(\"#camera-view\")"
      },
      {
       "event": "change",
-      "line": 246,
+      "line": 249,
       "target": "$(\"#snap\")"
      },
      {
       "event": "click",
-      "line": 247,
+      "line": 250,
       "target": "$(\"#play\")"
      },
      {
       "event": "change",
-      "line": 247,
+      "line": 250,
       "target": "$(\"#reduce-motion\")"
      },
      {
       "event": "change",
-      "line": 248,
+      "line": 251,
       "target": "systemMotion"
      },
      {
       "event": "visibilitychange",
-      "line": 248,
+      "line": 251,
       "target": "document"
      },
      {
       "event": "click",
-      "line": 249,
+      "line": 252,
       "target": "$(\"#add-object\")"
      },
      {
       "event": "click",
-      "line": 249,
+      "line": 252,
       "target": "b"
      },
      {
       "event": "click",
-      "line": 250,
+      "line": 253,
       "target": "$(\"#help\")"
      },
      {
       "event": "click",
-      "line": 250,
+      "line": 253,
       "target": "b"
      },
      {
       "event": "click",
-      "line": 251,
+      "line": 254,
       "target": "$(\"#reset-world\")"
      },
      {
       "event": "click",
-      "line": 251,
+      "line": 254,
       "target": "$(\"#confirm-reset\")"
      },
      {
       "event": "click",
-      "line": 252,
+      "line": 255,
       "target": "$(\"#duplicate\")"
      },
      {
       "event": "click",
-      "line": 252,
+      "line": 255,
       "target": "$(\"#delete\")"
      },
      {
       "event": "click",
-      "line": 252,
+      "line": 255,
       "target": "$(\"#undo\")"
      },
      {
       "event": "click",
-      "line": 252,
+      "line": 255,
       "target": "$(\"#redo\")"
      },
      {
       "event": "click",
-      "line": 253,
+      "line": 256,
       "target": "$(\"#save\")"
      },
      {
       "event": "click",
-      "line": 253,
+      "line": 256,
       "target": "$(\"#export\")"
      },
      {
       "event": "click",
-      "line": 253,
+      "line": 256,
       "target": "$(\"#import\")"
      },
      {
       "event": "click",
-      "line": 262,
+      "line": 265,
       "target": "$(\"#city-remove\")"
      },
      {
       "event": "change",
-      "line": 263,
+      "line": 266,
       "target": "$(\"#import-file\")"
      },
      {
       "event": "keydown",
-      "line": 267,
+      "line": 268,
       "target": "document"
      },
      {
       "event": "change",
-      "line": 312,
+      "line": 313,
       "target": "$(\"#scan-quality\")"
      },
      {
       "event": "securitypolicyviolation",
-      "line": 320,
+      "line": 321,
       "target": "document"
      },
      {
       "event": "click",
-      "line": 341,
+      "line": 342,
       "target": "$(\"#device-check-copy\")"
      },
      {
       "event": "click",
-      "line": 344,
+      "line": 345,
       "target": "$(\"#scan-device-check\")"
      }
     ],
@@ -14192,15 +14291,15 @@
      {
       "api": "localStorage.setItem",
       "key": "storageKey (Konstante)",
-      "line": 204
+      "line": 207
      }
     ]
    }
   },
   {
    "file": "dist/world-studio/index.html",
-   "bytes": 20339,
-   "sha256": "e17c8aceaae9a67819f6df26f56f4834533fe4044ee318552b3b71d5b2f8a093",
+   "bytes": 20409,
+   "sha256": "933aea2e257405c8e90b4ba0060e47dee9d91ba486e14a56242d7f40b82477e7",
    "lines": 38,
    "role": "World Studio",
    "html": {
@@ -14263,6 +14362,7 @@
      "runtime-resume",
      "pins",
      "scene-label",
+     "world-units",
      "overview",
      "focus",
      "camera-view",
@@ -14290,6 +14390,7 @@
      "object-name",
      "visible",
      "locked",
+     "position-unit",
      "position-x",
      "position-y",
      "position-z",
@@ -14357,9 +14458,9 @@
   },
   {
    "file": "dist/world-studio/model.js",
-   "bytes": 3694,
-   "sha256": "3be243f905c529f15cd92e758c758a1ffd07d2e4a97cb931037c5041d5586846",
-   "lines": 40,
+   "bytes": 4464,
+   "sha256": "d8d14480f6b28d4c7a822cf98efeab21795fcbd618436574663d7c71a8a4c183",
+   "lines": 53,
    "role": "World Studio",
    "js": {
     "imports": [
@@ -14369,6 +14470,15 @@
       "names": [
        "worlds",
        "stopPositions"
+      ]
+     },
+     {
+      "line": 2,
+      "from": "../map-studio/project.js",
+      "names": [
+       "readProject",
+       "MAX_PROJECT_BYTES",
+       "utf8Length"
       ]
      }
     ],
@@ -14381,100 +14491,108 @@
      "createObject",
      "createDocument",
      "validateDocument",
+     "readImport",
      "History"
     ],
     "declarations": [
      {
       "kind": "const",
       "name": "SCHEMA",
-      "line": 2,
+      "line": 3,
       "exported": true,
       "init": "\"motionspec.world.v1\""
      },
      {
       "kind": "const",
       "name": "kinds",
-      "line": 3,
+      "line": 4,
       "exported": true,
       "init": "[\"landmark\",\"box\",\"sphere\",\"ring\",\"panel\",\"text\",\"beacon\"]"
      },
      {
       "kind": "const",
       "name": "clone",
-      "line": 4,
+      "line": 5,
       "exported": true,
       "init": "value=>structuredClone(value)"
      },
      {
       "kind": "const",
       "name": "clamp",
-      "line": 5,
+      "line": 6,
       "exported": true,
       "init": "(value,min,max)=>Math.min(max,Math.max(min,value))"
      },
      {
       "kind": "const",
       "name": "worldById",
-      "line": 6,
+      "line": 7,
       "exported": true,
       "init": "id=>worlds.find(w=>w.id===id)"
      },
      {
       "kind": "function",
       "name": "createObject",
-      "line": 7,
+      "line": 8,
       "exported": true,
       "signature": "(kind,index=0)"
      },
      {
       "kind": "function",
       "name": "createDocument",
-      "line": 13,
+      "line": 14,
       "exported": true,
       "signature": "(world)"
      },
      {
       "kind": "function",
       "name": "validateDocument",
-      "line": 20,
+      "line": 21,
       "exported": true,
       "signature": "(input)"
      },
      {
+      "kind": "function",
+      "name": "readImport",
+      "line": 38,
+      "exported": true,
+      "signature": "(text)"
+     },
+     {
       "kind": "class",
       "name": "History",
-      "line": 35,
+      "line": 48,
       "exported": true
      }
     ],
     "classes": [
      {
       "name": "History",
-      "line": 35,
+      "line": 48,
       "extends": null,
       "exported": true,
       "methods": [
        {
         "name": "constructor",
-        "line": 36,
+        "line": 49,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "record",
-        "line": 37,
+        "line": 50,
         "modifiers": [],
         "signature": "(before,after)"
        },
        {
         "name": "undo",
-        "line": 38,
+        "line": 51,
         "modifiers": [],
         "signature": "(current)"
        },
        {
         "name": "redo",
-        "line": 39,
+        "line": 52,
         "modifiers": [],
         "signature": "(current)"
        }
@@ -14482,12 +14600,12 @@
       "fields": [
        {
         "name": "past",
-        "line": 36,
+        "line": 49,
         "init": "[]"
        },
        {
         "name": "future",
-        "line": 36,
+        "line": 49,
         "init": "[]"
        }
       ]
@@ -14500,9 +14618,9 @@
   },
   {
    "file": "dist/world-studio/renderer.js",
-   "bytes": 34517,
-   "sha256": "c7b196004aa7ef9db2c61fe5f0ee903ea14b06bc6a2d37934e3ee47397b00367",
-   "lines": 393,
+   "bytes": 34565,
+   "sha256": "e45e61ca9f91ef91ea8e65f32e80f56970fff9a30f262b632594247104dc6afc",
+   "lines": 394,
    "role": "World Studio",
    "js": {
     "imports": [
@@ -14633,256 +14751,263 @@
       "signature": "(record)"
      },
      {
+      "kind": "const",
+      "name": "textureContentKey",
+      "line": 55,
+      "exported": false,
+      "init": "record=>JSON.stringify([record.page.title||record.name,record.page.body,record.color])"
+     },
+     {
       "kind": "class",
       "name": "WorldEditorRenderer",
-      "line": 55,
+      "line": 56,
       "exported": true
      }
     ],
     "classes": [
      {
       "name": "WorldEditorRenderer",
-      "line": 55,
+      "line": 56,
       "extends": null,
       "exported": true,
       "methods": [
        {
         "name": "constructor",
-        "line": 56,
+        "line": 57,
         "modifiers": [],
         "signature": "(canvas,callbacks={})"
        },
        {
         "name": "createItem",
-        "line": 99,
+        "line": 100,
         "modifiers": [],
         "signature": "(record,sources)"
        },
        {
         "name": "load",
-        "line": 125,
+        "line": 126,
         "modifiers": [],
         "signature": "(doc,resetCamera=false)"
        },
        {
         "name": "setReach",
-        "line": 144,
+        "line": 145,
         "modifiers": [],
         "signature": "({far,maxDistance,minDistance})"
        },
        {
         "name": "leaveCity",
-        "line": 145,
+        "line": 146,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "loadCity",
-        "line": 146,
+        "line": 147,
         "modifiers": [],
         "signature": "(doc,resetCamera=false)"
        },
        {
         "name": "leaveScan",
-        "line": 162,
+        "line": 163,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "setQuality",
-        "line": 169,
+        "line": 170,
         "modifiers": [],
         "signature": "(tier)"
        },
        {
         "name": "loadScan",
-        "line": 174,
+        "line": 175,
         "modifiers": [],
         "signature": "(scan)"
        },
        {
         "name": "applySourceFrame",
-        "line": 202,
+        "line": 203,
         "modifiers": [],
         "signature": "(time)"
        },
        {
         "name": "scanExtent",
-        "line": 207,
+        "line": 208,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "playSource",
-        "line": 212,
+        "line": 213,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "stopSource",
-        "line": 219,
+        "line": 220,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "applyObject",
-        "line": 225,
+        "line": 226,
         "modifiers": [],
         "signature": "(record)"
        },
        {
         "name": "updateSettings",
-        "line": 239,
+        "line": 240,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "updateRoute",
-        "line": 242,
+        "line": 243,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "updateSelectionBox",
-        "line": 248,
+        "line": 249,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "select",
-        "line": 253,
+        "line": 254,
         "modifiers": [],
         "signature": "(id)"
        },
        {
         "name": "setMode",
-        "line": 259,
+        "line": 260,
         "modifiers": [],
         "signature": "(mode)"
        },
        {
         "name": "setSnap",
-        "line": 260,
-        "modifiers": [],
-        "signature": "(value)"
-       },
-       {
-        "name": "setPreview",
         "line": 261,
         "modifiers": [],
         "signature": "(value)"
        },
        {
-        "name": "setMotion",
+        "name": "setPreview",
         "line": 262,
+        "modifiers": [],
+        "signature": "(value)"
+       },
+       {
+        "name": "setMotion",
+        "line": 263,
         "modifiers": [],
         "signature": "(playing,reduced)"
        },
        {
         "name": "overview",
-        "line": 263,
+        "line": 264,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "focus",
-        "line": 284,
+        "line": 285,
         "modifiers": [],
         "signature": "(id)"
        },
        {
         "name": "cameraView",
-        "line": 290,
+        "line": 291,
         "modifiers": [],
         "signature": "(view)"
        },
        {
         "name": "resize",
-        "line": 297,
+        "line": 298,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "request",
-        "line": 301,
+        "line": 302,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "render",
-        "line": 302,
+        "line": 303,
         "modifiers": [],
         "signature": "(now)"
        },
        {
         "name": "gpuBegin",
-        "line": 327,
+        "line": 328,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "gpuEnd",
-        "line": 331,
+        "line": 332,
         "modifiers": [],
         "signature": "(query)"
        },
        {
         "name": "walkUnits",
-        "line": 341,
+        "line": 342,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "enterRuntime",
-        "line": 346,
+        "line": 347,
         "modifiers": [],
         "signature": "(start,eye)"
        },
        {
         "name": "placeView",
-        "line": 358,
+        "line": 359,
         "modifiers": [],
         "signature": "({position,target,up=[0,1,0],avatar=null})"
        },
        {
         "name": "avatarFor",
-        "line": 366,
+        "line": 367,
         "modifiers": [],
         "signature": "(eyeHeight)"
        },
        {
         "name": "placePlayer",
-        "line": 376,
+        "line": 377,
         "modifiers": [],
         "signature": "({x,z,heading=0,pitch=0},eye)"
        },
        {
         "name": "draw",
-        "line": 377,
+        "line": 378,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "setRenderScale",
-        "line": 378,
+        "line": 379,
         "modifiers": [],
         "signature": "(scale)"
        },
        {
         "name": "showColliders",
-        "line": 379,
+        "line": 380,
         "modifiers": [],
         "signature": "(colliders,y=0)"
        },
        {
         "name": "clearColliders",
-        "line": 384,
+        "line": 385,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "exitRuntime",
-        "line": 385,
+        "line": 386,
         "modifiers": [],
         "signature": "()"
        }
@@ -14890,212 +15015,212 @@
       "fields": [
        {
         "name": "canvas",
-        "line": 57,
+        "line": 58,
         "init": "canvas"
        },
        {
         "name": "callbacks",
-        "line": 57,
+        "line": 58,
         "init": "callbacks"
        },
        {
         "name": "frame",
-        "line": 57,
+        "line": 58,
         "init": "0"
        },
        {
         "name": "playing",
-        "line": 57,
+        "line": 58,
         "init": "false"
        },
        {
         "name": "reduced",
-        "line": 57,
+        "line": 58,
         "init": "false"
        },
        {
         "name": "preview",
-        "line": 57,
+        "line": 58,
         "init": "false"
        },
        {
         "name": "mode",
-        "line": 57,
+        "line": 58,
         "init": "\"translate\""
        },
        {
         "name": "motionTime",
-        "line": 57,
+        "line": 58,
         "init": "0"
        },
        {
         "name": "items",
-        "line": 57,
+        "line": 58,
         "init": "new Map()"
        },
        {
         "name": "available",
-        "line": 57,
+        "line": 58,
         "init": "true"
        },
        {
         "name": "scene",
-        "line": 58,
+        "line": 59,
         "init": "new THREE.Scene()"
        },
        {
         "name": "camera",
-        "line": 58,
+        "line": 59,
         "init": "new THREE.PerspectiveCamera(42,1,.1,250)"
        },
        {
         "name": "rim",
-        "line": 61,
+        "line": 62,
         "init": "new THREE.DirectionalLight(\"#4ade80\",2)"
        },
        {
         "name": "raycaster",
-        "line": 62,
+        "line": 63,
         "init": "new THREE.Raycaster()"
        },
        {
         "name": "renderer",
-        "line": 63,
+        "line": 64,
         "init": "new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:\"low-power\"})"
        },
        {
         "name": "editorPixelRatio",
-        "line": 64,
+        "line": 65,
         "init": "Math.min(window.devicePixelRatio||1,1.5)"
        },
        {
         "name": "renderScale",
-        "line": 64,
+        "line": 65,
         "init": "this.editorPixelRatio"
        },
        {
         "name": "orbit",
-        "line": 66,
+        "line": 67,
         "init": "new OrbitControls(this.camera,canvas)"
        },
        {
         "name": "transform",
-        "line": 70,
+        "line": 71,
         "init": "new TransformControls(this.camera,canvas)"
        },
        {
         "name": "grid",
-        "line": 80,
+        "line": 81,
         "init": "new THREE.GridHelper(26,52,\"#4ade80\",\"#3f3f3f\")"
        },
        {
         "name": "selectionBox",
-        "line": 81,
+        "line": 82,
         "init": "new THREE.Box3Helper(new THREE.Box3(),\"#4ade80\")"
        },
        {
         "name": "pointerStart",
-        "line": 82,
+        "line": 83,
         "init": "{x:e.clientX,y:e.clientY,gizmo:this.transform.axis!==null}"
        },
        {
         "name": "resizeObserver",
-        "line": 95,
+        "line": 96,
         "init": "new ResizeObserver(()=>this.resize())"
        },
        {
         "name": "lastTime",
-        "line": 96,
+        "line": 97,
         "init": "0"
        },
        {
         "name": "doc",
-        "line": 128,
+        "line": 129,
         "init": "doc"
        },
        {
         "name": "content",
-        "line": 128,
+        "line": 129,
         "init": "new THREE.Group()"
        },
        {
         "name": "builtRoot",
-        "line": 129,
+        "line": 130,
         "init": "built.root"
        },
        {
         "name": "city",
-        "line": 145,
+        "line": 146,
         "init": "null"
        },
        {
         "name": "cityDoc",
-        "line": 145,
+        "line": 146,
         "init": "null"
        },
        {
         "name": "selected",
-        "line": 159,
+        "line": 160,
         "init": "null"
        },
        {
         "name": "scan",
-        "line": 163,
+        "line": 164,
         "init": "null"
        },
        {
         "name": "quality",
-        "line": 170,
+        "line": 171,
         "init": "tier===\"high\"?\"high\":\"medium\""
        },
        {
         "name": "scanReach",
-        "line": 183,
+        "line": 184,
         "init": "{far:Math.max(SCAN.far,span*6+4000*!!scan.lighting?.sky),maxDistance:Math.max(SCAN.maxDis…"
        },
        {
         "name": "sourceTime",
-        "line": 217,
+        "line": 218,
         "init": "0"
        },
        {
         "name": "source",
-        "line": 217,
+        "line": 218,
         "init": "true"
        },
        {
         "name": "sourceSaved",
-        "line": 220,
+        "line": 221,
         "init": "null"
        },
        {
         "name": "route",
-        "line": 243,
+        "line": 244,
         "init": "null"
        },
        {
         "name": "saved",
-        "line": 349,
+        "line": 350,
         "init": "{camera:this.camera,position:this.camera.position.clone(),quaternion:this.camera.quaterni…"
        },
        {
         "name": "runtime",
-        "line": 350,
+        "line": 351,
         "init": "true"
        },
        {
         "name": "avatar",
-        "line": 374,
+        "line": 375,
         "init": "group"
        },
        {
         "name": "avatarEye",
-        "line": 374,
+        "line": 375,
         "init": "eyeHeight"
        },
        {
         "name": "colliderDebug",
-        "line": 380,
+        "line": 381,
         "init": "new THREE.Group()"
        }
       ]
@@ -15105,52 +15230,52 @@
     "events": [
      {
       "event": "change",
-      "line": 67,
+      "line": 68,
       "target": "this.orbit"
      },
      {
       "event": "change",
-      "line": 72,
-      "target": "this.transform"
-     },
-     {
-      "event": "dragging-changed",
       "line": 73,
       "target": "this.transform"
      },
      {
-      "event": "objectChange",
+      "event": "dragging-changed",
       "line": 74,
       "target": "this.transform"
      },
      {
-      "event": "pointerdown",
-      "line": 82,
-      "target": "canvas"
+      "event": "objectChange",
+      "line": 75,
+      "target": "this.transform"
      },
      {
-      "event": "pointerup",
+      "event": "pointerdown",
       "line": 83,
       "target": "canvas"
      },
      {
-      "event": "pointercancel",
-      "line": 92,
+      "event": "pointerup",
+      "line": 84,
       "target": "canvas"
      },
      {
-      "event": "dblclick",
+      "event": "pointercancel",
       "line": 93,
       "target": "canvas"
      },
      {
-      "event": "webglcontextlost",
+      "event": "dblclick",
       "line": 94,
       "target": "canvas"
      },
      {
+      "event": "webglcontextlost",
+      "line": 95,
+      "target": "canvas"
+     },
+     {
       "event": "visibilitychange",
-      "line": 96,
+      "line": 97,
       "target": "document"
      }
     ],
@@ -15159,8 +15284,8 @@
   },
   {
    "file": "dist/world-studio/studio.css",
-   "bytes": 27153,
-   "sha256": "a27a204d0dd8b772a06afa9227618a25ae65b43d46e87680a30d64d6cab19f4b",
+   "bytes": 27150,
+   "sha256": "eb06c9f1301c39ff0f644795273574201df183ebdddbf60f1faff981ce1c1adb",
    "lines": 34,
    "role": "World Studio",
    "css": {
@@ -16352,6 +16477,13 @@
    "role": "Drittanbieter (Three.js 0.180.0)"
   },
   {
+   "file": "docs/AUDIT_2026-10-06.md",
+   "bytes": 5300,
+   "sha256": "9ab5a741fe1fcf138244348e3bb5b2b701c7cb6edb1e1dfea3cffad1597ed3ef",
+   "lines": 28,
+   "role": "Dokumentation"
+  },
+  {
    "file": "docs/FINDINGS.md",
    "bytes": 4519,
    "sha256": "e16030eb689aae342b0c50a1d4d9eeb1bd11e467e52ba4c876ac7b6c7cdb79cf",
@@ -16360,9 +16492,9 @@
   },
   {
    "file": "docs/GETTING_STARTED.md",
-   "bytes": 15833,
-   "sha256": "19d61e4039bdd8d91a90b055745329368b4001d4f0dafcb8ea57a41ee34c1fdb",
-   "lines": 204,
+   "bytes": 16985,
+   "sha256": "7308ca6370cb3dd4db769ad96d7798d2d101b6507cf2f3a6faee705cef9cec3d",
+   "lines": 208,
    "role": "Dokumentation"
   },
   {
@@ -16374,9 +16506,9 @@
   },
   {
    "file": "docs/LIMITS.md",
-   "bytes": 15233,
-   "sha256": "533e9672e2358f83dfd8efdf5c2e7559b90dbb284974fe01e68fcd45526f75a6",
-   "lines": 106,
+   "bytes": 16380,
+   "sha256": "cc428f2aa3d73174bd38e61a984696d366560f2b2960084d3d00f27eefe46283",
+   "lines": 110,
    "role": "Dokumentation"
   },
   {
@@ -16388,9 +16520,9 @@
   },
   {
    "file": "docs/RELEASE_STATUS.md",
-   "bytes": 3491,
-   "sha256": "68a27b37a3a9ccf2b97c06068e0d652427767b430ff27e3c2179c94adc60d921",
-   "lines": 41,
+   "bytes": 5946,
+   "sha256": "b80a460e0b41b29ac6e2132d006764446e1d06d9ade2ca3f85dfeb7156f199c9",
+   "lines": 65,
    "role": "Dokumentation"
   },
   {
@@ -16409,9 +16541,9 @@
   },
   {
    "file": "docs/architecture/README.md",
-   "bytes": 15270,
-   "sha256": "f25d618782fa7b007dce628534b5a8f6608fc11132c0fe54d25d94b6e8841831",
-   "lines": 168,
+   "bytes": 16190,
+   "sha256": "806875f4082424cbb946ee73778267176303fed593df9ab144d85ecb5b50241d",
+   "lines": 172,
    "role": "Dokumentation"
   },
   {
@@ -16837,9 +16969,9 @@
   },
   {
    "file": "edge/map-room.mjs",
-   "bytes": 8290,
-   "sha256": "78645288e90507c76a933a9a02b0b6866de923656320d2cbafc930c0106ad104",
-   "lines": 120,
+   "bytes": 9661,
+   "sha256": "06a3f3f78075a827c01964f146c503dee49a8f38f49b1e07be807f4a2f412455",
+   "lines": 144,
    "role": "Edge-Worker (Auslieferung)",
    "js": {
     "imports": [
@@ -16978,7 +17110,7 @@
        },
        {
         "name": "fetch",
-        "line": 33,
+        "line": 37,
         "modifiers": [
          "async"
         ],
@@ -16986,7 +17118,7 @@
        },
        {
         "name": "webSocketMessage",
-        "line": 48,
+        "line": 52,
         "modifiers": [
          "async"
         ],
@@ -16994,25 +17126,25 @@
        },
        {
         "name": "ground",
-        "line": 67,
+        "line": 74,
         "modifiers": [],
         "signature": "(x,z)"
        },
        {
         "name": "loadTerrain",
-        "line": 72,
+        "line": 79,
         "modifiers": [],
         "signature": "(map)"
        },
        {
         "name": "connectionsFrom",
-        "line": 91,
+        "line": 98,
         "modifiers": [],
         "signature": "(ip)"
        },
        {
         "name": "webSocketClose",
-        "line": 92,
+        "line": 99,
         "modifiers": [
          "async"
         ],
@@ -17020,7 +17152,7 @@
        },
        {
         "name": "webSocketError",
-        "line": 93,
+        "line": 100,
         "modifiers": [
          "async"
         ],
@@ -17028,37 +17160,65 @@
        },
        {
         "name": "strike",
-        "line": 95,
+        "line": 102,
         "modifiers": [],
         "signature": "(ws,id)"
        },
        {
         "name": "drop",
-        "line": 102,
+        "line": 109,
         "modifiers": [],
         "signature": "(id)"
        },
        {
         "name": "idOf",
-        "line": 105,
+        "line": 112,
         "modifiers": [],
         "signature": "(ws)"
        },
        {
         "name": "startTicking",
-        "line": 106,
+        "line": 113,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "stopTicking",
-        "line": 107,
+        "line": 114,
         "modifiers": [],
         "signature": "()"
        },
        {
+        "name": "idleDeadline",
+        "line": 115,
+        "modifiers": [],
+        "signature": "(player)"
+       },
+       {
+        "name": "expireIdle",
+        "line": 116,
+        "modifiers": [],
+        "signature": "(sockets=this.ctx.getWebSockets())"
+       },
+       {
+        "name": "scheduleIdleAlarm",
+        "line": 120,
+        "modifiers": [
+         "async"
+        ],
+        "signature": "()"
+       },
+       {
+        "name": "alarm",
+        "line": 126,
+        "modifiers": [
+         "async"
+        ],
+        "signature": "()"
+       },
+       {
         "name": "tick",
-        "line": 108,
+        "line": 127,
         "modifiers": [],
         "signature": "()"
        }
@@ -17142,12 +17302,12 @@
        },
        {
         "name": "terrainFor",
-        "line": 75,
+        "line": 82,
         "init": "map"
        },
        {
         "name": "terrainFailed",
-        "line": 86,
+        "line": 93,
         "init": "{map,at:this.now()}"
        }
       ]
@@ -17906,9 +18066,16 @@
   },
   {
    "file": "package.json",
-   "bytes": 1434,
-   "sha256": "a19df8d3b3d90213c3bad07eec3b84711d7d540cc5cedbc403b6ad13a583244e",
-   "lines": 25,
+   "bytes": 1562,
+   "sha256": "ba5ad16c8610e0603c24e3445b5d855114d09af78358f36521d7a91941c58084",
+   "lines": 26,
+   "role": "Projekt"
+  },
+  {
+   "file": "rust-toolchain.toml",
+   "bytes": 88,
+   "sha256": "9cbeb062ec3a97a5b5b76aacde94f5dcb034ed98f32af151480764de2e03d6f9",
+   "lines": null,
    "role": "Projekt"
   },
   {
@@ -18234,16 +18401,16 @@
   },
   {
    "file": "scripts/build-wasm.sh",
-   "bytes": 443,
-   "sha256": "7944e0c94aab4868e0516cb69e57886a8f1147adfdaa6554b10debe5d9d77f63",
+   "bytes": 452,
+   "sha256": "ffcb6a0bf5ae22a1d6fb301badd38040a6c0430cf1152261ee7be81bf74abb83",
    "lines": null,
    "role": "Werkzeug"
   },
   {
    "file": "scripts/check.mjs",
-   "bytes": 1959,
-   "sha256": "6dd6d246d0f34c72302cb814172d14a96c05bfda7f2b2ef1bf312f3cc964915c",
-   "lines": 27,
+   "bytes": 6874,
+   "sha256": "50da85fbe8c0afd7941ccd13009352d0f67e1598be3508ef3e1180aa41d5e041",
+   "lines": 127,
    "role": "Werkzeug",
    "js": {
     "imports": [
@@ -18274,46 +18441,43 @@
       "line": 4,
       "from": "node:url",
       "names": [
-       "fileURLToPath"
+       "fileURLToPath",
+       "pathToFileURL"
       ]
      }
     ],
-    "exports": [],
+    "exports": [
+     "relativeModuleReferences",
+     "checkProject"
+    ],
     "declarations": [
-     {
-      "kind": "const",
-      "name": "root",
-      "line": 5,
-      "exported": false,
-      "init": "fileURLToPath(new URL(\"../\",import.meta.url))"
-     },
      {
       "kind": "async function",
       "name": "walk",
-      "line": 6,
+      "line": 5,
       "exported": false,
       "signature": "(dir)"
      },
      {
-      "kind": "let",
-      "name": "checked",
-      "line": 7,
+      "kind": "function",
+      "name": "tokens",
+      "line": 9,
       "exported": false,
-      "init": "0"
+      "signature": "(source)"
      },
      {
-      "kind": "const",
-      "name": "rootHtml",
-      "line": 24,
-      "exported": false,
-      "init": "await readFile(path.join(root,\"dist/index.html\"),\"utf8\")"
+      "kind": "function",
+      "name": "relativeModuleReferences",
+      "line": 70,
+      "exported": true,
+      "signature": "(source)"
      },
      {
-      "kind": "const",
-      "name": "studioHtml",
-      "line": 24,
-      "exported": false,
-      "init": "await readFile(path.join(root,\"dist/studio/index.html\"),\"utf8\")"
+      "kind": "async function",
+      "name": "checkProject",
+      "line": 97,
+      "exported": true,
+      "signature": "(root)"
      }
     ],
     "classes": [],
@@ -18749,8 +18913,8 @@
   },
   {
    "file": "scripts/public-tests.mjs",
-   "bytes": 1283,
-   "sha256": "bbc33b0b4a6e82b597acbeb012dbe0b5a2a25dff87f249f0ec4758aae5868867",
+   "bytes": 1297,
+   "sha256": "bac0b3e629c8d4c4e06ec6322b28330ec796085a72165bde593ceac611f9b0a1",
    "lines": 21,
    "role": "Werkzeug",
    "js": {
@@ -18784,7 +18948,7 @@
       "name": "suites",
       "line": 6,
       "exported": false,
-      "init": "[\"world-studio\",\"map-studio\",\"map-history\",\"map-enhance\",\"map-v2\",\"map-runtime\",\"physics\"…"
+      "init": "[\"build-tools\",\"world-studio\",\"map-studio\",\"map-history\",\"map-enhance\",\"map-v2\",\"map-runt…"
      },
      {
       "kind": "const",
@@ -18802,9 +18966,9 @@
   },
   {
    "file": "scripts/serve.mjs",
-   "bytes": 9555,
-   "sha256": "25b0b207d8725cc4cdd346a27025bd3d69927e29e139f89697c7ff0f894491e6",
-   "lines": 110,
+   "bytes": 10421,
+   "sha256": "f1f46eafec6f2d22479977c316529a7b3872c4c77c89648a5f7f332f26d716c4",
+   "lines": 123,
    "role": "Werkzeug",
    "js": {
     "imports": [
@@ -18933,7 +19097,7 @@
       "name": "mime",
       "line": 34,
       "exported": false,
-      "init": "{\".html\":\"text/html; charset=utf-8\",\".js\":\"text/javascript; charset=utf-8\",\".css\":\"text/c…"
+      "init": "{\".html\":\"text/html; charset=utf-8\",\".js\":\"text/javascript; charset=utf-8\",\".mjs\":\"text/j…"
      },
      {
       "kind": "async function",
@@ -19396,8 +19560,8 @@
   },
   {
    "file": "sim/src/lib.rs",
-   "bytes": 17514,
-   "sha256": "e4e9aefd22d5f050559c48df64838bcba79719dbe116f3b99c53527a98dfc9ea",
+   "bytes": 17586,
+   "sha256": "cc0bb5618af324b5edf0dbfafc742e9b5488b4dd620a7f8eb943183d1e8e1cfd",
    "lines": null,
    "role": "Rust-Simulationskern"
   },
@@ -19470,10 +19634,370 @@
    }
   },
   {
+   "file": "tests/browser/agent-check.mjs",
+   "bytes": 2952,
+   "sha256": "ba3b1a81dc0cc57aa57717bba669c1c50ad87a425914e38a41b8d239f90e6450",
+   "lines": 42,
+   "role": "Browsertest",
+   "js": {
+    "imports": [
+     {
+      "line": 2,
+      "from": "node:assert/strict",
+      "names": [
+       "assert"
+      ]
+     },
+     {
+      "line": 3,
+      "from": "node:child_process",
+      "names": [
+       "execFile"
+      ]
+     },
+     {
+      "line": 4,
+      "from": "node:util",
+      "names": [
+       "promisify"
+      ]
+     },
+     {
+      "line": 5,
+      "from": "node:fs/promises",
+      "names": [
+       "mkdir",
+       "writeFile"
+      ]
+     },
+     {
+      "line": 6,
+      "from": "node:url",
+      "names": [
+       "fileURLToPath"
+      ]
+     },
+     {
+      "line": 7,
+      "from": "node:path",
+      "names": [
+       "path"
+      ]
+     },
+     {
+      "line": 8,
+      "from": "../../scripts/serve.mjs",
+      "names": [
+       "createDevServer"
+      ]
+     }
+    ],
+    "exports": [],
+    "declarations": [
+     {
+      "kind": "const",
+      "name": "run",
+      "line": 10,
+      "exported": false,
+      "init": "promisify(execFile)"
+     },
+     {
+      "kind": "const",
+      "name": "bin",
+      "line": 10,
+      "exported": false,
+      "init": "process.env.AGENT_BROWSER_BIN"
+     },
+     {
+      "kind": "const",
+      "name": "dir",
+      "line": 12,
+      "exported": false,
+      "init": "fileURLToPath(new URL(\"../../.browser-artifacts/agent-check/\",import.meta.url))"
+     },
+     {
+      "kind": "const",
+      "name": "session",
+      "line": 14,
+      "exported": false,
+      "init": "`ourark-ci-${process.pid}`"
+     },
+     {
+      "kind": "const",
+      "name": "server",
+      "line": 14,
+      "exported": false,
+      "init": "createDevServer()"
+     },
+     {
+      "kind": "const",
+      "name": "evidence",
+      "line": 15,
+      "exported": false,
+      "init": "{ok:false,scope:\"agent-browser visual startup only\"}"
+     },
+     {
+      "kind": "const",
+      "name": "command",
+      "line": 17,
+      "exported": false,
+      "init": "async(...args)=>{const{stdout,stderr}=await run(bin,[\"--session\",session,...args],{timeou…"
+     }
+    ],
+    "classes": [],
+    "domIds": [],
+    "events": [],
+    "storage": []
+   }
+  },
+  {
+   "file": "tests/browser/audit-regressions.browser.mjs",
+   "bytes": 16341,
+   "sha256": "cb08b67fe0503f2799bd027bbceeb7ec9c6fcda7d2baae82df1700b6b29e7b9a",
+   "lines": 181,
+   "role": "Browsertest",
+   "js": {
+    "imports": [
+     {
+      "line": 3,
+      "from": "node:assert/strict",
+      "names": [
+       "assert"
+      ]
+     },
+     {
+      "line": 4,
+      "from": "node:module",
+      "names": [
+       "createRequire"
+      ]
+     },
+     {
+      "line": 5,
+      "from": "node:fs/promises",
+      "names": [
+       "readFile",
+       "mkdir",
+       "writeFile"
+      ]
+     },
+     {
+      "line": 6,
+      "from": "node:child_process",
+      "names": [
+       "execFileSync"
+      ]
+     },
+     {
+      "line": 7,
+      "from": "node:path",
+      "names": [
+       "path"
+      ]
+     },
+     {
+      "line": 8,
+      "from": "node:url",
+      "names": [
+       "fileURLToPath"
+      ]
+     },
+     {
+      "line": 9,
+      "from": "../../scripts/serve.mjs",
+      "names": [
+       "createDevServer"
+      ]
+     },
+     {
+      "line": 154,
+      "from": "/worldport/core.mjs",
+      "names": [
+       "(dynamisch)"
+      ],
+      "dynamic": true
+     },
+     {
+      "line": 154,
+      "from": "/worldport/osm.mjs",
+      "names": [
+       "(dynamisch)"
+      ],
+      "dynamic": true
+     }
+    ],
+    "exports": [],
+    "declarations": [
+     {
+      "kind": "const",
+      "name": "root",
+      "line": 11,
+      "exported": false,
+      "init": "fileURLToPath(new URL(\"../../\",import.meta.url))"
+     },
+     {
+      "kind": "const",
+      "name": "require",
+      "line": 11,
+      "exported": false,
+      "init": "createRequire(import.meta.url)"
+     },
+     {
+      "kind": "const",
+      "name": "artifacts",
+      "line": 12,
+      "exported": false,
+      "init": "path.join(root,\".browser-artifacts/audit-regressions\")"
+     },
+     {
+      "kind": "const",
+      "name": "evidence",
+      "line": 14,
+      "exported": false,
+      "init": "{suite:\"public-audit-regressions\",startedAt:new Date().toISOString(),ok:false,commit:exec…"
+     },
+     {
+      "kind": "let",
+      "name": "browser",
+      "line": 17,
+      "exported": false,
+      "init": ""
+     },
+     {
+      "kind": "let",
+      "name": "server",
+      "line": 17,
+      "exported": false,
+      "init": ""
+     },
+     {
+      "kind": "let",
+      "name": "origin",
+      "line": 17,
+      "exported": false,
+      "init": ""
+     },
+     {
+      "kind": "let",
+      "name": "phase",
+      "line": 17,
+      "exported": false,
+      "init": "\"setup\""
+     },
+     {
+      "kind": "let",
+      "name": "downloadCount",
+      "line": 17,
+      "exported": false,
+      "init": "0"
+     },
+     {
+      "kind": "const",
+      "name": "args",
+      "line": 18,
+      "exported": false,
+      "init": "process.platform===\"linux\"?[\"--use-angle=swiftshader\",\"--enable-unsafe-swiftshader\",\"--ig…"
+     },
+     {
+      "kind": "function",
+      "name": "playwright",
+      "line": 19,
+      "exported": false,
+      "signature": "()"
+     },
+     {
+      "kind": "async function",
+      "name": "open",
+      "line": 27,
+      "exported": false,
+      "signature": "(route)"
+     },
+     {
+      "kind": "async function",
+      "name": "check",
+      "line": 49,
+      "exported": false,
+      "signature": "(name,route,fn)"
+     },
+     {
+      "kind": "async function",
+      "name": "exported",
+      "line": 55,
+      "exported": false,
+      "signature": "(page)"
+     },
+     {
+      "kind": "async function",
+      "name": "importMap",
+      "line": 60,
+      "exported": false,
+      "signature": "(page,data,name=\"audit.map.json\")"
+     },
+     {
+      "kind": "async function",
+      "name": "waitName",
+      "line": 63,
+      "exported": false,
+      "signature": "(page,name)"
+     },
+     {
+      "kind": "async function",
+      "name": "saveMap",
+      "line": 64,
+      "exported": false,
+      "signature": "(page)"
+     }
+    ],
+    "classes": [],
+    "domIds": [
+     {
+      "id": "project-name",
+      "line": 63
+     },
+     {
+      "id": "save",
+      "line": 64
+     },
+     {
+      "id": "status",
+      "line": 64
+     },
+     {
+      "id": "notice",
+      "line": 103
+     },
+     {
+      "id": "count",
+      "line": 109
+     },
+     {
+      "id": "world-title",
+      "line": 120
+     },
+     {
+      "id": "runtime-position",
+      "line": 127
+     },
+     {
+      "id": "object-name",
+      "line": 140
+     }
+    ],
+    "events": [],
+    "storage": [
+     {
+      "api": "localStorage.setItem",
+      "key": "ourark.perf",
+      "line": 30
+     }
+    ]
+   }
+  },
+  {
    "file": "tests/browser/baseline.browser.mjs",
-   "bytes": 18380,
-   "sha256": "7b70475cbad8f02d616df9f8066048632174a03c620eb0718c5c7ada56457a96",
-   "lines": 219,
+   "bytes": 18285,
+   "sha256": "0d1f6e78b5db051508640c490f9d6cd1fd547e1f217cde831ec75479866d652c",
+   "lines": 218,
    "role": "Browsertest",
    "js": {
     "imports": [
@@ -19506,7 +20030,7 @@
       ]
      },
      {
-      "line": 102,
+      "line": 101,
       "from": "node:fs/promises",
       "names": [
        "(dynamisch)"
@@ -19526,91 +20050,91 @@
      {
       "kind": "const",
       "name": "origin",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "close",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "browser",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await launch(playwright)"
      },
      {
       "kind": "const",
       "name": "results",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "step",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "context",
-      "line": 10,
+      "line": 9,
       "exported": false,
       "init": "await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})"
      },
      {
       "kind": "const",
       "name": "page",
-      "line": 11,
+      "line": 10,
       "exported": false,
       "init": "await context.newPage()"
      },
      {
       "kind": "const",
       "name": "errors",
-      "line": 11,
+      "line": 10,
       "exported": false,
       "init": "[]"
      },
      {
       "kind": "const",
       "name": "shot",
-      "line": 14,
+      "line": 13,
       "exported": false,
       "init": "name=>page.screenshot({path:path.join(artifactDir,name)})"
      },
      {
       "kind": "const",
       "name": "text",
-      "line": 15,
+      "line": 14,
       "exported": false,
       "init": "id=>page.locator(`#${id}`).textContent()"
      },
      {
       "kind": "const",
       "name": "notice",
-      "line": 16,
+      "line": 15,
       "exported": false,
       "init": "async()=>(await text(\"notice\")).trim()"
      },
      {
       "kind": "const",
       "name": "pointCount",
-      "line": 17,
+      "line": 16,
       "exported": false,
       "init": "async()=>Number(await text(\"count\"))"
      },
      {
       "kind": "const",
       "name": "failed",
-      "line": 219,
+      "line": 218,
       "exported": false,
       "init": "results.filter(r=>!r.ok).length"
      }
@@ -19619,23 +20143,23 @@
     "domIds": [
      {
       "id": "map-name",
-      "line": 81
+      "line": 80
      },
      {
       "id": "count",
-      "line": 94
+      "line": 93
      },
      {
       "id": "notice",
-      "line": 112
+      "line": 111
      },
      {
       "id": "status",
-      "line": 121
+      "line": 120
      },
      {
       "id": "project-name",
-      "line": 139
+      "line": 138
      }
     ],
     "events": [],
@@ -19643,16 +20167,16 @@
      {
       "api": "indexedDB.open",
       "key": "(siehe DB_NAME)",
-      "line": 147
+      "line": 146
      }
     ]
    }
   },
   {
    "file": "tests/browser/city.browser.mjs",
-   "bytes": 6153,
-   "sha256": "9bcdf697eb55be7971437e4df5f3c6add39075b4e9ffc18ad95497d5d40d45e6",
-   "lines": 73,
+   "bytes": 6049,
+   "sha256": "f6708cdd83c8d94cb0db773eda363845b75e0319c9944caecd5922ae0efbb502",
+   "lines": 72,
    "role": "Browsertest",
    "js": {
     "imports": [
@@ -19688,44 +20212,220 @@
      {
       "kind": "const",
       "name": "origin",
-      "line": 8,
+      "line": 7,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "close",
-      "line": 8,
+      "line": 7,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "browser",
-      "line": 8,
+      "line": 7,
       "exported": false,
       "init": "await launch(playwright)"
      },
      {
       "kind": "const",
       "name": "results",
-      "line": 8,
+      "line": 7,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "step",
-      "line": 8,
+      "line": 7,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "page",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await(await browser.newContext({viewport:{width:1440,height:900},deviceScaleFactor:2})).n…"
+     },
+     {
+      "kind": "const",
+      "name": "errors",
+      "line": 8,
+      "exported": false,
+      "init": "[]"
+     },
+     {
+      "kind": "const",
+      "name": "shot",
+      "line": 10,
+      "exported": false,
+      "init": "name=>page.screenshot({path:path.join(artifactDir,name)})"
+     },
+     {
+      "kind": "const",
+      "name": "BUDGET",
+      "line": 11,
+      "exported": false,
+      "init": "1000/60"
+     },
+     {
+      "kind": "const",
+      "name": "measure",
+      "line": 12,
+      "exported": false,
+      "init": "ms=>page.evaluate(ms=>new Promise(res=>{const t=[];let last=0;const end=performance.now()…"
+     },
+     {
+      "kind": "const",
+      "name": "stats",
+      "line": 13,
+      "exported": false,
+      "init": "()=>page.evaluate(()=>({...globalThis.__MOTIONSPEC_RENDER_STATS__}))"
+     },
+     {
+      "kind": "const",
+      "name": "shapes",
+      "line": 16,
+      "exported": false,
+      "init": "[[[-8,-8],[8,-8],[8,-2],[-2,-2],[-2,8],[-8,8]],[[-9,-6],[9,-6],[9,6],[-9,6]],[[-8,-8],[8,…"
+     },
+     {
+      "kind": "const",
+      "name": "colors",
+      "line": 17,
+      "exported": false,
+      "init": "[\"#5eead4\",\"#72a8ef\",\"#f3c969\",\"#d5b5ff\",\"#eaf1fb\"]"
+     },
+     {
+      "kind": "const",
+      "name": "points",
+      "line": 18,
+      "exported": false,
+      "init": "Array.from({length:2000},(_,i)=>({id:`b ${i}`,name:`Block ${i}`,type:\"building\",x:(i%45)*…"
+     },
+     {
+      "kind": "const",
+      "name": "doc",
+      "line": 19,
+      "exported": false,
+      "init": "{schema:\"motionspec.map.v3\",name:\"Stadt 2000\",map:{width:1900,depth:1900,color:\"#101f34\",…"
+     },
+     {
+      "kind": "const",
+      "name": "failed",
+      "line": 72,
+      "exported": false,
+      "init": "results.filter(r=>!r.ok).length"
+     }
+    ],
+    "classes": [],
+    "domIds": [
+     {
+      "id": "title",
+      "line": 27
+     },
+     {
+      "id": "point-height",
+      "line": 33
+     },
+     {
+      "id": "runtime-perf",
+      "line": 49
+     }
+    ],
+    "events": [],
+    "storage": []
+   }
+  },
+  {
+   "file": "tests/browser/collision.browser.mjs",
+   "bytes": 7275,
+   "sha256": "45f4054b51da0dc6697a7befd16732ddf6eca43f2c7935ad6eafe0e17173fca5",
+   "lines": 102,
+   "role": "Browsertest",
+   "js": {
+    "imports": [
+     {
+      "line": 3,
+      "from": "node:path",
+      "names": [
+       "path"
+      ]
+     },
+     {
+      "line": 4,
+      "from": "./harness.mjs",
+      "names": [
+       "loadPlaywright",
+       "startServer",
+       "launch",
+       "recorder",
+       "assert",
+       "artifactDir"
+      ]
+     }
+    ],
+    "exports": [],
+    "declarations": [
+     {
+      "kind": "const",
+      "name": "playwright",
+      "line": 6,
+      "exported": false,
+      "init": "loadPlaywright()"
+     },
+     {
+      "kind": "const",
+      "name": "origin",
+      "line": 7,
+      "exported": false,
+      "init": "await startServer()"
+     },
+     {
+      "kind": "const",
+      "name": "close",
+      "line": 7,
+      "exported": false,
+      "init": "await startServer()"
+     },
+     {
+      "kind": "const",
+      "name": "browser",
+      "line": 7,
+      "exported": false,
+      "init": "await launch(playwright)"
+     },
+     {
+      "kind": "const",
+      "name": "results",
+      "line": 7,
+      "exported": false,
+      "init": "recorder()"
+     },
+     {
+      "kind": "const",
+      "name": "step",
+      "line": 7,
+      "exported": false,
+      "init": "recorder()"
+     },
+     {
+      "kind": "const",
+      "name": "context",
+      "line": 8,
+      "exported": false,
+      "init": "await browser.newContext({viewport:{width:1440,height:900}})"
+     },
+     {
+      "kind": "const",
+      "name": "page",
+      "line": 9,
+      "exported": false,
+      "init": "await context.newPage()"
      },
      {
       "kind": "const",
@@ -19743,240 +20443,64 @@
      },
      {
       "kind": "const",
-      "name": "BUDGET",
-      "line": 12,
-      "exported": false,
-      "init": "1000/60"
-     },
-     {
-      "kind": "const",
-      "name": "measure",
-      "line": 13,
-      "exported": false,
-      "init": "ms=>page.evaluate(ms=>new Promise(res=>{const t=[];let last=0;const end=performance.now()…"
-     },
-     {
-      "kind": "const",
-      "name": "stats",
-      "line": 14,
-      "exported": false,
-      "init": "()=>page.evaluate(()=>({...globalThis.__MOTIONSPEC_RENDER_STATS__}))"
-     },
-     {
-      "kind": "const",
-      "name": "shapes",
-      "line": 17,
-      "exported": false,
-      "init": "[[[-8,-8],[8,-8],[8,-2],[-2,-2],[-2,8],[-8,8]],[[-9,-6],[9,-6],[9,6],[-9,6]],[[-8,-8],[8,…"
-     },
-     {
-      "kind": "const",
-      "name": "colors",
-      "line": 18,
-      "exported": false,
-      "init": "[\"#5eead4\",\"#72a8ef\",\"#f3c969\",\"#d5b5ff\",\"#eaf1fb\"]"
-     },
-     {
-      "kind": "const",
-      "name": "points",
-      "line": 19,
-      "exported": false,
-      "init": "Array.from({length:2000},(_,i)=>({id:`b ${i}`,name:`Block ${i}`,type:\"building\",x:(i%45)*…"
-     },
-     {
-      "kind": "const",
-      "name": "doc",
-      "line": 20,
-      "exported": false,
-      "init": "{schema:\"motionspec.map.v3\",name:\"Stadt 2000\",map:{width:1900,depth:1900,color:\"#101f34\",…"
-     },
-     {
-      "kind": "const",
-      "name": "failed",
-      "line": 73,
-      "exported": false,
-      "init": "results.filter(r=>!r.ok).length"
-     }
-    ],
-    "classes": [],
-    "domIds": [
-     {
-      "id": "title",
-      "line": 28
-     },
-     {
-      "id": "point-height",
-      "line": 34
-     },
-     {
-      "id": "runtime-perf",
-      "line": 50
-     }
-    ],
-    "events": [],
-    "storage": []
-   }
-  },
-  {
-   "file": "tests/browser/collision.browser.mjs",
-   "bytes": 7379,
-   "sha256": "a8d1f14a27966fb7a5addd491b6e655534863211474c08993a64196e8235da25",
-   "lines": 103,
-   "role": "Browsertest",
-   "js": {
-    "imports": [
-     {
-      "line": 3,
-      "from": "node:path",
-      "names": [
-       "path"
-      ]
-     },
-     {
-      "line": 4,
-      "from": "./harness.mjs",
-      "names": [
-       "loadPlaywright",
-       "startServer",
-       "launch",
-       "recorder",
-       "assert",
-       "artifactDir"
-      ]
-     }
-    ],
-    "exports": [],
-    "declarations": [
-     {
-      "kind": "const",
-      "name": "playwright",
-      "line": 6,
-      "exported": false,
-      "init": "loadPlaywright()"
-     },
-     {
-      "kind": "const",
-      "name": "origin",
-      "line": 8,
-      "exported": false,
-      "init": "await startServer()"
-     },
-     {
-      "kind": "const",
-      "name": "close",
-      "line": 8,
-      "exported": false,
-      "init": "await startServer()"
-     },
-     {
-      "kind": "const",
-      "name": "browser",
-      "line": 8,
-      "exported": false,
-      "init": "await launch(playwright)"
-     },
-     {
-      "kind": "const",
-      "name": "results",
-      "line": 8,
-      "exported": false,
-      "init": "recorder()"
-     },
-     {
-      "kind": "const",
-      "name": "step",
-      "line": 8,
-      "exported": false,
-      "init": "recorder()"
-     },
-     {
-      "kind": "const",
-      "name": "context",
-      "line": 9,
-      "exported": false,
-      "init": "await browser.newContext({viewport:{width:1440,height:900}})"
-     },
-     {
-      "kind": "const",
-      "name": "page",
-      "line": 10,
-      "exported": false,
-      "init": "await context.newPage()"
-     },
-     {
-      "kind": "const",
-      "name": "errors",
-      "line": 10,
-      "exported": false,
-      "init": "[]"
-     },
-     {
-      "kind": "const",
-      "name": "shot",
-      "line": 12,
-      "exported": false,
-      "init": "name=>page.screenshot({path:path.join(artifactDir,name)})"
-     },
-     {
-      "kind": "const",
       "name": "runtimeState",
-      "line": 13,
+      "line": 12,
       "exported": false,
       "init": "()=>page.evaluate(()=>document.body.dataset.runtime??\"editing\")"
      },
      {
       "kind": "const",
       "name": "waitState",
-      "line": 14,
+      "line": 13,
       "exported": false,
       "init": "s=>page.waitForFunction(s=>(document.body.dataset.runtime??\"editing\")===s,s,{timeout:5000…"
      },
      {
       "kind": "const",
       "name": "noticeText",
-      "line": 15,
+      "line": 14,
       "exported": false,
       "init": "()=>page.textContent(\"#notice\")"
      },
      {
       "kind": "const",
       "name": "point",
-      "line": 17,
+      "line": 16,
       "exported": false,
       "init": "(id,name,over={})=>({id,name,type:\"building\",x:0,z:0,width:10,depth:6,height:6,rotation:0…"
      },
      {
       "kind": "const",
       "name": "project",
-      "line": 18,
+      "line": 17,
       "exported": false,
       "init": "(name,points,spawn=null)=>({schema:\"motionspec.map.v2\",name,map:{width:60,depth:60,color:…"
      },
      {
       "kind": "async function",
       "name": "importProject",
-      "line": 19,
+      "line": 18,
       "exported": false,
       "signature": "(doc)"
      },
      {
       "kind": "async function",
       "name": "enterAndReport",
-      "line": 23,
+      "line": 22,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "async function",
       "name": "outlineRatio",
-      "line": 29,
+      "line": 28,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "const",
       "name": "failed",
-      "line": 103,
+      "line": 102,
       "exported": false,
       "init": "results.filter(r=>!r.ok).length"
      }
@@ -19985,19 +20509,19 @@
     "domIds": [
      {
       "id": "title",
-      "line": 21
+      "line": 20
      },
      {
       "id": "notice",
-      "line": 25
+      "line": 24
      },
      {
       "id": "point-solid",
-      "line": 43
+      "line": 42
      },
      {
       "id": "point-interactive",
-      "line": 43
+      "line": 42
      }
     ],
     "events": [],
@@ -20006,9 +20530,9 @@
   },
   {
    "file": "tests/browser/enhance.browser.mjs",
-   "bytes": 5159,
-   "sha256": "a3e4eee442cd76abec505d1f5c8d9bda139f43efffb6ab31d6b050e87e5d5f61",
-   "lines": 58,
+   "bytes": 5055,
+   "sha256": "69619e6a941ca03d481b08ea444a56c681a0995a0f6a50445a87747f7da62ad4",
+   "lines": 57,
    "role": "Browsertest",
    "js": {
     "imports": [
@@ -20051,105 +20575,105 @@
      {
       "kind": "const",
       "name": "seen",
-      "line": 10,
+      "line": 9,
       "exported": false,
       "init": "[]"
      },
      {
       "kind": "let",
       "name": "reply",
-      "line": 10,
+      "line": 9,
       "exported": false,
       "init": "{status:200,body:{}}"
      },
      {
       "kind": "const",
       "name": "origin",
-      "line": 11,
+      "line": 10,
       "exported": false,
       "init": "createServer((req,res)=>{let body=\"\";req.on(\"data\",c=>body+=c);req.on(\"end\",()=>{seen.pus…"
      },
      {
       "kind": "const",
       "name": "configured",
-      "line": 13,
+      "line": 12,
       "exported": false,
       "init": "await startServer({enhance:{url:`http://127.0.0.1:${origin.address().port}`,token:\"z\".rep…"
      },
      {
       "kind": "const",
       "name": "plain",
-      "line": 13,
+      "line": 12,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "browser",
-      "line": 14,
+      "line": 13,
       "exported": false,
       "init": "await launch(playwright)"
      },
      {
       "kind": "const",
       "name": "results",
-      "line": 14,
+      "line": 13,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "step",
-      "line": 14,
+      "line": 13,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "page",
-      "line": 15,
+      "line": 14,
       "exported": false,
       "init": "await(await browser.newContext({viewport:{width:1440,height:900}})).newPage()"
      },
      {
       "kind": "const",
       "name": "errors",
-      "line": 15,
+      "line": 14,
       "exported": false,
       "init": "[]"
      },
      {
       "kind": "const",
       "name": "pngBase64",
-      "line": 17,
+      "line": 16,
       "exported": false,
       "init": "(w,h,fill)=>page.evaluate(async([w,h,fill])=>{const c=new OffscreenCanvas(w,h),g=c.getCon…"
      },
      {
       "kind": "const",
       "name": "name",
-      "line": 18,
+      "line": 17,
       "exported": false,
       "init": "()=>page.textContent(\"#map-name\")"
      },
      {
       "kind": "async function",
       "name": "importImage",
-      "line": 19,
+      "line": 18,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "const",
       "name": "noticeMatching",
-      "line": 24,
+      "line": 23,
       "exported": false,
       "init": "re=>page.waitForFunction(re=>new RegExp(re).test(document.getElementById(\"notice\").textCo…"
      },
      {
       "kind": "const",
       "name": "failed",
-      "line": 58,
+      "line": 57,
       "exported": false,
       "init": "results.filter(r=>!r.ok).length"
      }
@@ -20158,11 +20682,11 @@
     "domIds": [
      {
       "id": "map-name",
-      "line": 22
+      "line": 21
      },
      {
       "id": "notice",
-      "line": 24
+      "line": 23
      }
     ],
     "events": [],
@@ -20171,9 +20695,9 @@
   },
   {
    "file": "tests/browser/footprint.browser.mjs",
-   "bytes": 5074,
-   "sha256": "8364d2b0a63339853073f571e53753ac48a2ef126b832c6a31749babec9bc660",
-   "lines": 60,
+   "bytes": 4970,
+   "sha256": "9ecdd906a0964c49e8a84fe0125030af6b768912b8023f684d38b83ee899e1ab",
+   "lines": 59,
    "role": "Browsertest",
    "js": {
     "imports": [
@@ -20216,105 +20740,105 @@
      {
       "kind": "const",
       "name": "origin",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "close",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "browser",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await launch(playwright)"
      },
      {
       "kind": "const",
       "name": "results",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "step",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "page",
-      "line": 10,
+      "line": 9,
       "exported": false,
       "init": "await(await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})).…"
      },
      {
       "kind": "const",
       "name": "errors",
-      "line": 10,
+      "line": 9,
       "exported": false,
       "init": "[]"
      },
      {
       "kind": "const",
       "name": "shot",
-      "line": 12,
+      "line": 11,
       "exported": false,
       "init": "name=>page.screenshot({path:path.join(artifactDir,name)})"
      },
      {
       "kind": "const",
       "name": "waitState",
-      "line": 13,
+      "line": 12,
       "exported": false,
       "init": "s=>page.waitForFunction(s=>(document.body.dataset.runtime??\"editing\")===s,s,{timeout:5000…"
      },
      {
       "kind": "const",
       "name": "pose",
-      "line": 14,
+      "line": 13,
       "exported": false,
       "init": "async()=>{const[,x,z,h]=/X (-?[\\d.]+) · Z (-?[\\d.]+) · (\\d+)°/.exec(await page.textConten…"
      },
      {
       "kind": "const",
       "name": "hold",
-      "line": 15,
+      "line": 14,
       "exported": false,
       "init": "async(code,ms)=>{await page.keyboard.down(code);await page.waitForTimeout(ms);await page.…"
      },
      {
       "kind": "const",
       "name": "exportJson",
-      "line": 16,
+      "line": 15,
       "exported": false,
       "init": "async()=>{const[d]=await Promise.all([page.waitForEvent(\"download\"),page.click(\"#export\")…"
      },
      {
       "kind": "const",
       "name": "L",
-      "line": 21,
+      "line": 20,
       "exported": false,
       "init": "[[-5,-5],[5,-5],[5,-1],[-1,-1],[-1,5],[-5,5]]"
      },
      {
       "kind": "const",
       "name": "doc",
-      "line": 22,
+      "line": 21,
       "exported": false,
       "init": "{schema:\"motionspec.map.v3\",name:\"Grundriss\",map:{width:80,depth:80,color:\"#101f34\",image…"
      },
      {
       "kind": "const",
       "name": "failed",
-      "line": 60,
+      "line": 59,
       "exported": false,
       "init": "results.filter(r=>!r.ok).length"
      }
@@ -20323,19 +20847,19 @@
     "domIds": [
      {
       "id": "title",
-      "line": 29
+      "line": 28
      },
      {
       "id": "runtime-hint",
-      "line": 47
+      "line": 46
      },
      {
       "id": "notice",
-      "line": 55
+      "line": 54
      },
      {
       "id": "point-width",
-      "line": 55
+      "line": 54
      }
     ],
     "events": [],
@@ -20344,9 +20868,9 @@
   },
   {
    "file": "tests/browser/harness.mjs",
-   "bytes": 3676,
-   "sha256": "bfa354b93816548d76abdc8828f7768cd00a5932ee71d5821c663d0c3115263f",
-   "lines": 65,
+   "bytes": 4397,
+   "sha256": "79bcef63454670a6abe37bf3805ede802ba8685c908a0f71b541fd71ee941a78",
+   "lines": 75,
    "role": "Browsertest",
    "js": {
     "imports": [
@@ -20383,6 +20907,7 @@
      "artifactDir",
      "loadPlaywright",
      "startServer",
+     "browserArgs",
      "launch",
      "environment",
      "drawnRatio",
@@ -20414,42 +20939,49 @@
      {
       "kind": "async function",
       "name": "startServer",
-      "line": 18,
+      "line": 22,
       "exported": true,
       "signature": "(options)"
      },
      {
+      "kind": "function",
+      "name": "browserArgs",
+      "line": 31,
+      "exported": true,
+      "signature": "(platform=process.platform)"
+     },
+     {
       "kind": "async function",
       "name": "launch",
-      "line": 26,
+      "line": 36,
       "exported": true,
       "signature": "(playwright,extraArgs=[])"
      },
      {
       "kind": "async function",
       "name": "environment",
-      "line": 35,
+      "line": 45,
       "exported": true,
       "signature": "(page)"
      },
      {
       "kind": "async function",
       "name": "drawnRatio",
-      "line": 43,
+      "line": 53,
       "exported": true,
       "signature": "(page,selector=\"#canvas\",background=[11,18,36])"
      },
      {
       "kind": "function",
       "name": "recorder",
-      "line": 54,
+      "line": 64,
       "exported": true,
       "signature": "()"
      },
      {
       "kind": "const",
       "name": "assert",
-      "line": 65,
+      "line": 75,
       "exported": true,
       "init": "(condition,message)=>{if(!condition)throw new Error(message);}"
      }
@@ -20461,7 +20993,7 @@
      {
       "api": "localStorage.setItem",
       "key": "ourark.perf",
-      "line": 31
+      "line": 41
      }
     ]
    }
@@ -20475,9 +21007,9 @@
   },
   {
    "file": "tests/browser/kart-perf.browser.mjs",
-   "bytes": 18833,
-   "sha256": "3d5ed0cdb0671be83467b6f4423ec8d1500a5d7c5b9261b9ae2caee139e0f5b9",
-   "lines": 264,
+   "bytes": 18758,
+   "sha256": "ffc0fa70c48799d0fc3276cf52141b021d2f162cbaff7c095bc8fe0f09633095",
+   "lines": 263,
    "role": "Browsertest",
    "js": {
     "imports": [
@@ -20531,161 +21063,161 @@
      {
       "kind": "const",
       "name": "BASELINE",
-      "line": 14,
+      "line": 13,
       "exported": false,
       "init": "fileURLToPath(new URL(\"./kart-perf.baseline.json\",import.meta.url))"
      },
      {
       "kind": "const",
       "name": "UPDATE",
-      "line": 15,
+      "line": 14,
       "exported": false,
       "init": "process.env.KART_BASELINE===\"update\""
      },
      {
       "kind": "const",
       "name": "MEASURE_MS",
-      "line": 16,
+      "line": 15,
       "exported": false,
       "init": "6000"
      },
      {
       "kind": "const",
       "name": "MODE_MS",
-      "line": 16,
+      "line": 15,
       "exported": false,
       "init": "4000"
      },
      {
       "kind": "const",
       "name": "ONLY",
-      "line": 18,
+      "line": 17,
       "exported": false,
       "init": "process.env.KART_ONLY??null"
      },
      {
       "kind": "const",
       "name": "TARGETS",
-      "line": 20,
+      "line": 19,
       "exported": true,
       "init": "Object.freeze({desktop:{fps:58,p95Ms:20.8,drawCalls:600,gpuMB:256,firstFrameMs:2000,first…"
      },
      {
       "kind": "const",
       "name": "TOLERANCE",
-      "line": 27,
+      "line": 26,
       "exported": false,
       "init": "{bytes:1.05,drawCalls:1.10,triangles:1.10,gpuMB:1.05,fps:.85,p95Ms:1.5,firstFrameMs:1.5,a…"
      },
      {
       "kind": "const",
       "name": "DEVICES",
-      "line": 28,
+      "line": 27,
       "exported": false,
       "init": "{desktop:{context:{viewport:{width:1440,height:900},deviceScaleFactor:2},throttle:1},phon…"
      },
      {
       "kind": "const",
       "name": "origin",
-      "line": 33,
+      "line": 32,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "close",
-      "line": 33,
+      "line": 32,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "browser",
-      "line": 33,
+      "line": 32,
       "exported": false,
       "init": "await launch(playwright,[\"--enable-precise-memory-info\"])"
      },
      {
       "kind": "const",
       "name": "results",
-      "line": 33,
+      "line": 32,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "step",
-      "line": 33,
+      "line": 32,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "errors",
-      "line": 34,
+      "line": 33,
       "exported": false,
       "init": "[]"
      },
      {
       "kind": "const",
       "name": "runs",
-      "line": 34,
+      "line": 33,
       "exported": false,
       "init": "{}"
      },
      {
       "kind": "function",
       "name": "probes",
-      "line": 38,
+      "line": 37,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "async function",
       "name": "open",
-      "line": 111,
+      "line": 110,
       "exported": false,
       "signature": "(map,device)"
      },
      {
       "kind": "const",
       "name": "fmt",
-      "line": 137,
+      "line": 136,
       "exported": false,
       "init": "(v,d=1)=>Number.isFinite(v)?v.toFixed(d):String(v)"
      },
      {
       "kind": "const",
       "name": "round",
-      "line": 138,
+      "line": 137,
       "exported": false,
       "init": "o=>Object.fromEntries(Object.entries(o).map(([k,v])=>[k,typeof v===\"number\"?Math.round(v*…"
      },
      {
       "kind": "function",
       "name": "targetReport",
-      "line": 139,
+      "line": 138,
       "exported": false,
       "signature": "(device,m)"
      },
      {
       "kind": "async function",
       "name": "measureRun",
-      "line": 148,
+      "line": 147,
       "exported": false,
       "signature": "(map,device)"
      },
      {
       "kind": "function",
       "name": "compareRun",
-      "line": 175,
+      "line": 174,
       "exported": false,
       "signature": "(id,b,r)"
      },
      {
       "kind": "const",
       "name": "failed",
-      "line": 264,
+      "line": 263,
       "exported": false,
       "init": "results.filter(r=>!r.ok).length"
      }
@@ -20694,11 +21226,11 @@
     "domIds": [
      {
       "id": "kart-canvas",
-      "line": 104
+      "line": 103
      },
      {
       "id": "kart-status",
-      "line": 226
+      "line": 225
      }
     ],
     "events": [],
@@ -20706,16 +21238,16 @@
      {
       "api": "localStorage.setItem",
       "key": "ourark.kart.telemetry",
-      "line": 39
+      "line": 38
      }
     ]
    }
   },
   {
    "file": "tests/browser/perf-meter.browser.mjs",
-   "bytes": 4305,
-   "sha256": "5716a43135c8304c2941386a9146c78656189bcfc9cac1ac708f4996effaccfe",
-   "lines": 47,
+   "bytes": 4201,
+   "sha256": "939eb1ad2d30c1a8952e4b55842422ac0644d6a2dc28bf0a4597f8cbbc9d97d2",
+   "lines": 46,
    "role": "Browsertest",
    "js": {
     "imports": [
@@ -20758,77 +21290,77 @@
      {
       "kind": "const",
       "name": "origin",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "close",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "browser",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await launch(playwright)"
      },
      {
       "kind": "const",
       "name": "results",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "step",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "context",
-      "line": 10,
+      "line": 9,
       "exported": false,
       "init": "await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})"
      },
      {
       "kind": "const",
       "name": "page",
-      "line": 12,
+      "line": 11,
       "exported": false,
       "init": "await context.newPage()"
      },
      {
       "kind": "const",
       "name": "errors",
-      "line": 12,
+      "line": 11,
       "exported": false,
       "init": "[]"
      },
      {
       "kind": "const",
       "name": "value",
-      "line": 14,
+      "line": 13,
       "exported": false,
       "init": "label=>page.evaluate(label=>{for(const dt of document.querySelectorAll(\".perf-grid dt\"))i…"
      },
      {
       "kind": "const",
       "name": "download",
-      "line": 15,
+      "line": 14,
       "exported": false,
       "init": "async act=>{const[d]=await Promise.all([page.waitForEvent(\"download\"),page.click(`.perf-h…"
      },
      {
       "kind": "const",
       "name": "failed",
-      "line": 47,
+      "line": 46,
       "exported": false,
       "init": "results.filter(r=>!r.ok).length"
      }
@@ -20841,9 +21373,9 @@
   },
   {
    "file": "tests/browser/perf.browser.mjs",
-   "bytes": 5896,
-   "sha256": "6e920452c738186781cb2f59ebbbf4cb4f22671523c0ad7e2ea1506e75fc7b4e",
-   "lines": 64,
+   "bytes": 5792,
+   "sha256": "fb77e70dec789a3f239e003bee87c82a9ec1bce7dfa8052c0168f246e97972cd",
+   "lines": 63,
    "role": "Browsertest",
    "js": {
     "imports": [
@@ -20879,77 +21411,77 @@
      {
       "kind": "const",
       "name": "origin",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "close",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "browser",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await launch(playwright)"
      },
      {
       "kind": "const",
       "name": "results",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "step",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "errors",
-      "line": 10,
+      "line": 9,
       "exported": false,
       "init": "[]"
      },
      {
       "kind": "const",
       "name": "BUDGET",
-      "line": 11,
+      "line": 10,
       "exported": false,
       "init": "1000/60"
      },
      {
       "kind": "const",
       "name": "measure",
-      "line": 13,
+      "line": 12,
       "exported": false,
       "init": "(page,ms)=>page.evaluate(ms=>new Promise(res=>{const t=[];let last=0;const end=performanc…"
      },
      {
       "kind": "const",
       "name": "scale",
-      "line": 14,
+      "line": 13,
       "exported": false,
       "init": "async page=>Number((/·\\s*([\\d,]+)×/.exec(await page.textContent(\"#runtime-perf\"))?.[1]??\"…"
      },
      {
       "kind": "async function",
       "name": "openWalk",
-      "line": 15,
+      "line": 14,
       "exported": false,
       "signature": "(options,{throttle=1}={})"
      },
      {
       "kind": "const",
       "name": "failed",
-      "line": 64,
+      "line": 63,
       "exported": false,
       "init": "results.filter(r=>!r.ok).length"
      }
@@ -20958,11 +21490,11 @@
     "domIds": [
      {
       "id": "runtime-perf",
-      "line": 21
+      "line": 20
      },
      {
       "id": "canvas",
-      "line": 29
+      "line": 28
      }
     ],
     "events": [],
@@ -21249,9 +21781,9 @@
   },
   {
    "file": "tests/browser/runtime.browser.mjs",
-   "bytes": 11304,
-   "sha256": "c7f5419edc44725b70713545d03845107157da37e1cb3fa7727f54aecc9659c1",
-   "lines": 127,
+   "bytes": 11200,
+   "sha256": "56e6f4da228d71f734851aa62ba64d4e10aa7a66ade891639426166a67c105da",
+   "lines": 126,
    "role": "Browsertest",
    "js": {
     "imports": [
@@ -21283,7 +21815,7 @@
       ]
      },
      {
-      "line": 27,
+      "line": 26,
       "from": "node:fs/promises",
       "names": [
        "(dynamisch)"
@@ -21303,112 +21835,112 @@
      {
       "kind": "const",
       "name": "origin",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "close",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "browser",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await launch(playwright)"
      },
      {
       "kind": "const",
       "name": "results",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "step",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "context",
-      "line": 10,
+      "line": 9,
       "exported": false,
       "init": "await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})"
      },
      {
       "kind": "const",
       "name": "page",
-      "line": 20,
+      "line": 19,
       "exported": false,
       "init": "await context.newPage()"
      },
      {
       "kind": "const",
       "name": "errors",
-      "line": 20,
+      "line": 19,
       "exported": false,
       "init": "[]"
      },
      {
       "kind": "const",
       "name": "shot",
-      "line": 22,
+      "line": 21,
       "exported": false,
       "init": "name=>page.screenshot({path:path.join(artifactDir,name)})"
      },
      {
       "kind": "const",
       "name": "state",
-      "line": 23,
+      "line": 22,
       "exported": false,
       "init": "()=>page.evaluate(()=>document.body.dataset.runtime??\"editing\")"
      },
      {
       "kind": "const",
       "name": "waitState",
-      "line": 24,
+      "line": 23,
       "exported": false,
       "init": "s=>page.waitForFunction(s=>(document.body.dataset.runtime??\"editing\")===s,s,{timeout:5000…"
      },
      {
       "kind": "const",
       "name": "exportJson",
-      "line": 25,
+      "line": 24,
       "exported": false,
       "init": "async()=>{const[d]=await Promise.all([page.waitForEvent(\"download\"),page.click(\"#export\")…"
      },
      {
       "kind": "const",
       "name": "editorState",
-      "line": 28,
+      "line": 27,
       "exported": false,
       "init": "()=>page.evaluate(()=>({undo:document.getElementById(\"undo\").disabled,redo:document.getEl…"
      },
      {
       "kind": "const",
       "name": "canvasPng",
-      "line": 29,
+      "line": 28,
       "exported": false,
       "init": "()=>page.locator(\"#canvas\").screenshot()"
      },
      {
       "kind": "const",
       "name": "idleRaf",
-      "line": 30,
+      "line": 29,
       "exported": false,
       "init": "async(ms=600)=>{const a=await page.evaluate(()=>window.__probe.raf);await page.waitForTim…"
      },
      {
       "kind": "const",
       "name": "failed",
-      "line": 127,
+      "line": 126,
       "exported": false,
       "init": "results.filter(r=>!r.ok).length"
      }
@@ -21417,39 +21949,39 @@
     "domIds": [
      {
       "id": "undo",
-      "line": 28
+      "line": 27
      },
      {
       "id": "redo",
-      "line": 28
+      "line": 27
      },
      {
       "id": "selected-name",
-      "line": 28
+      "line": 27
      },
      {
       "id": "count",
-      "line": 28
+      "line": 27
      },
      {
       "id": "status",
-      "line": 28
+      "line": 27
      },
      {
       "id": "projection",
-      "line": 28
+      "line": 27
      },
      {
       "id": "runtime-hud",
-      "line": 42
+      "line": 41
      },
      {
       "id": "runtime-state",
-      "line": 42
+      "line": 41
      },
      {
       "id": "notice",
-      "line": 95
+      "line": 94
      }
     ],
     "events": [],
@@ -21458,9 +21990,9 @@
   },
   {
    "file": "tests/browser/scan-world.browser.mjs",
-   "bytes": 23743,
-   "sha256": "c2f0c642adcad831fd1afc6bbb5dbc918911a6572f4b94db79be474fc3b102cd",
-   "lines": 241,
+   "bytes": 23639,
+   "sha256": "bd39e67035339acad31117d524a7e86b9eef3432e7febce41f94b3e138161bd8",
+   "lines": 240,
    "role": "Browsertest",
    "js": {
     "imports": [
@@ -21511,112 +22043,112 @@
      {
       "kind": "const",
       "name": "origin",
-      "line": 12,
+      "line": 11,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "close",
-      "line": 12,
+      "line": 11,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "browser",
-      "line": 12,
+      "line": 11,
       "exported": false,
       "init": "await launch(playwright)"
      },
      {
       "kind": "const",
       "name": "results",
-      "line": 12,
+      "line": 11,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "step",
-      "line": 12,
+      "line": 11,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "perf",
-      "line": 13,
+      "line": 12,
       "exported": false,
       "init": "process.env.SCAN_PERF===\"1\""
      },
      {
       "kind": "const",
       "name": "viewport",
-      "line": 13,
+      "line": 12,
       "exported": false,
       "init": "perf?{width:1920,height:1080}:{width:1440,height:900}"
      },
      {
       "kind": "const",
       "name": "page",
-      "line": 14,
+      "line": 13,
       "exported": false,
       "init": "await(await browser.newContext({viewport,deviceScaleFactor:1})).newPage()"
      },
      {
       "kind": "const",
       "name": "errors",
-      "line": 14,
+      "line": 13,
       "exported": false,
       "init": "[]"
      },
      {
       "kind": "const",
       "name": "shot",
-      "line": 16,
+      "line": 15,
       "exported": false,
       "init": "name=>page.screenshot({path:path.join(artifactDir,name)})"
      },
      {
       "kind": "const",
       "name": "waitState",
-      "line": 17,
+      "line": 16,
       "exported": false,
       "init": "s=>page.waitForFunction(s=>(document.body.dataset.runtime??\"editing\")===s,s,{timeout:8000…"
      },
      {
       "kind": "const",
       "name": "pose",
-      "line": 18,
+      "line": 17,
       "exported": false,
       "init": "async()=>{const text=await page.textContent(\"#runtime-position\"),[,x,z,h]=/X (-?[\\d.]+) ·…"
      },
      {
       "kind": "const",
       "name": "stats",
-      "line": 19,
+      "line": 18,
       "exported": false,
       "init": "()=>page.evaluate(()=>globalThis.__MOTIONSPEC_RENDER_STATS__)"
      },
      {
       "kind": "const",
       "name": "inRoom",
-      "line": 21,
+      "line": 20,
       "exported": false,
       "init": "p=>p.x>-.5&&p.x<4.2&&p.z>-.8&&p.z<5.4"
      },
      {
       "kind": "const",
       "name": "hold",
-      "line": 22,
+      "line": 21,
       "exported": false,
       "init": "async(code,ms)=>{await page.keyboard.down(code);await page.waitForTimeout(ms);await page.…"
      },
      {
       "kind": "const",
       "name": "failed",
-      "line": 241,
+      "line": 240,
       "exported": false,
       "init": "results.filter(r=>!r.ok).length"
      }
@@ -21625,23 +22157,23 @@
     "domIds": [
      {
       "id": "scan-meta",
-      "line": 34
+      "line": 33
      },
      {
       "id": "canvas",
-      "line": 91
+      "line": 90
      },
      {
       "id": "runtime-perf",
-      "line": 115
+      "line": 114
      },
      {
       "id": "device-check-dialog",
-      "line": 205
+      "line": 204
      },
      {
       "id": "device-check-stored",
-      "line": 205
+      "line": 204
      }
     ],
     "events": [],
@@ -21650,9 +22182,9 @@
   },
   {
    "file": "tests/browser/walking.browser.mjs",
-   "bytes": 6906,
-   "sha256": "51f113932b697c954fab3b09a68d41b3de04f704cff127b28d02c506f9aac6e1",
-   "lines": 90,
+   "bytes": 6802,
+   "sha256": "32f2ab0f5c60bcf55e228cb75cae9341d7539dcfe266aaf296abd2584901896c",
+   "lines": 89,
    "role": "Browsertest",
    "js": {
     "imports": [
@@ -21695,112 +22227,112 @@
      {
       "kind": "const",
       "name": "origin",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "close",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "browser",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await launch(playwright)"
      },
      {
       "kind": "const",
       "name": "results",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "step",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "context",
-      "line": 10,
+      "line": 9,
       "exported": false,
       "init": "await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})"
      },
      {
       "kind": "const",
       "name": "page",
-      "line": 11,
+      "line": 10,
       "exported": false,
       "init": "await context.newPage()"
      },
      {
       "kind": "const",
       "name": "errors",
-      "line": 11,
+      "line": 10,
       "exported": false,
       "init": "[]"
      },
      {
       "kind": "const",
       "name": "shot",
-      "line": 13,
+      "line": 12,
       "exported": false,
       "init": "name=>page.screenshot({path:path.join(artifactDir,name)})"
      },
      {
       "kind": "const",
       "name": "waitState",
-      "line": 14,
+      "line": 13,
       "exported": false,
       "init": "s=>page.waitForFunction(s=>(document.body.dataset.runtime??\"editing\")===s,s,{timeout:5000…"
      },
      {
       "kind": "const",
       "name": "pose",
-      "line": 16,
+      "line": 15,
       "exported": false,
       "init": "async()=>{const[,x,z,h]=/X (-?[\\d.]+) · Z (-?[\\d.]+) · (\\d+)°/.exec(await page.textConten…"
      },
      {
       "kind": "const",
       "name": "hold",
-      "line": 17,
+      "line": 16,
       "exported": false,
       "init": "async(code,ms)=>{await page.keyboard.down(code);await page.waitForTimeout(ms);await page.…"
      },
      {
       "kind": "const",
       "name": "exportJson",
-      "line": 18,
+      "line": 17,
       "exported": false,
       "init": "async()=>{const[d]=await Promise.all([page.waitForEvent(\"download\"),page.click(\"#export\")…"
      },
      {
       "kind": "const",
       "name": "point",
-      "line": 20,
+      "line": 19,
       "exported": false,
       "init": "(id,name,over={})=>({id,name,type:\"building\",x:0,z:0,width:10,depth:6,height:6,rotation:0…"
      },
      {
       "kind": "const",
       "name": "doc",
-      "line": 21,
+      "line": 20,
       "exported": false,
       "init": "{schema:\"motionspec.map.v2\",name:\"Laufstrecke\",map:{width:80,depth:80,color:\"#101f34\",ima…"
      },
      {
       "kind": "const",
       "name": "failed",
-      "line": 90,
+      "line": 89,
       "exported": false,
       "init": "results.filter(r=>!r.ok).length"
      }
@@ -21809,19 +22341,19 @@
     "domIds": [
      {
       "id": "title",
-      "line": 29
+      "line": 28
      },
      {
       "id": "runtime-info",
-      "line": 65
+      "line": 64
      },
      {
       "id": "runtime-info-name",
-      "line": 65
+      "line": 64
      },
      {
       "id": "runtime-info-data",
-      "line": 65
+      "line": 64
      }
     ],
     "events": [],
@@ -21830,9 +22362,9 @@
   },
   {
    "file": "tests/browser/world-upload.browser.mjs",
-   "bytes": 14956,
-   "sha256": "e2be345a0363ec5731b611c1abbe60a204227114cf5fd7bdd7dec94be36a40db",
-   "lines": 144,
+   "bytes": 14852,
+   "sha256": "11ab567c402ee2fb78c5aa6e02f11cd500d40a4462e66a134690ac37ee476a54",
+   "lines": 143,
    "role": "Browsertest",
    "js": {
     "imports": [
@@ -21856,7 +22388,7 @@
       ]
      },
      {
-      "line": 114,
+      "line": 113,
       "from": "../../dist/worldport/osm.mjs",
       "names": [
        "(dynamisch)"
@@ -21864,7 +22396,7 @@
       "dynamic": true
      },
      {
-      "line": 131,
+      "line": 130,
       "from": "../../dist/worldport/osm.mjs",
       "names": [
        "(dynamisch)"
@@ -21884,133 +22416,133 @@
      {
       "kind": "const",
       "name": "origin",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "close",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "browser",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "await launch(playwright)"
      },
      {
       "kind": "const",
       "name": "results",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "step",
-      "line": 9,
+      "line": 8,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "page",
-      "line": 10,
+      "line": 9,
       "exported": false,
       "init": "await(await browser.newContext({viewport:{width:1440,height:900},deviceScaleFactor:2})).n…"
      },
      {
       "kind": "const",
       "name": "errors",
-      "line": 10,
+      "line": 9,
       "exported": false,
       "init": "[]"
      },
      {
       "kind": "const",
       "name": "shot",
-      "line": 12,
+      "line": 11,
       "exported": false,
       "init": "name=>page.screenshot({path:path.join(artifactDir,name)})"
      },
      {
       "kind": "const",
       "name": "BUDGET",
-      "line": 13,
+      "line": 12,
       "exported": false,
       "init": "1000/60"
      },
      {
       "kind": "const",
       "name": "measure",
-      "line": 14,
+      "line": 13,
       "exported": false,
       "init": "ms=>page.evaluate(ms=>new Promise(res=>{const t=[];let last=0;const end=performance.now()…"
      },
      {
       "kind": "const",
       "name": "stats",
-      "line": 15,
+      "line": 14,
       "exported": false,
       "init": "()=>page.evaluate(()=>({...globalThis.__MOTIONSPEC_RENDER_STATS__}))"
      },
      {
       "kind": "const",
       "name": "waitState",
-      "line": 16,
+      "line": 15,
       "exported": false,
       "init": "s=>page.waitForFunction(s=>(document.body.dataset.runtime??\"editing\")===s,s,{timeout:8000…"
      },
      {
       "kind": "const",
       "name": "pose",
-      "line": 17,
+      "line": 16,
       "exported": false,
       "init": "async()=>{const[,x,z,h]=/X (-?[\\d.]+) · Z (-?[\\d.]+) · (\\d+)°/.exec(await page.textConten…"
      },
      {
       "kind": "const",
       "name": "hold",
-      "line": 18,
+      "line": 17,
       "exported": false,
       "init": "async(code,ms)=>{await page.keyboard.down(code);await page.waitForTimeout(ms);await page.…"
      },
      {
       "kind": "const",
       "name": "shapes",
-      "line": 21,
+      "line": 20,
       "exported": false,
       "init": "[[[-8,-8],[8,-8],[8,-2],[-2,-2],[-2,8],[-8,8]],[[-9,-6],[9,-6],[9,6],[-9,6]],[[-8,-8],[8,…"
      },
      {
       "kind": "const",
       "name": "colors",
-      "line": 22,
+      "line": 21,
       "exported": false,
       "init": "[\"#5eead4\",\"#72a8ef\",\"#f3c969\",\"#d5b5ff\",\"#eaf1fb\"]"
      },
      {
       "kind": "const",
       "name": "points",
-      "line": 23,
+      "line": 22,
       "exported": false,
       "init": "Array.from({length:2000},(_,i)=>({id:`b ${i}`,name:`Block ${i}`,type:\"building\",x:(i%45)*…"
      },
      {
       "kind": "const",
       "name": "city",
-      "line": 24,
+      "line": 23,
       "exported": false,
       "init": "{schema:\"motionspec.map.v3\",name:\"Teststadt 2000\",map:{width:1900,depth:1900,color:\"#101f…"
      },
      {
       "kind": "const",
       "name": "failed",
-      "line": 144,
+      "line": 143,
       "exported": false,
       "init": "results.filter(r=>!r.ok).length"
      }
@@ -22019,51 +22551,51 @@
     "domIds": [
      {
       "id": "world-title",
-      "line": 31
+      "line": 30
      },
      {
       "id": "object-count",
-      "line": 32
+      "line": 31
      },
      {
       "id": "notice",
-      "line": 32
+      "line": 31
      },
      {
       "id": "city-building-name",
-      "line": 49
+      "line": 48
      },
      {
       "id": "city-building-data",
-      "line": 49
+      "line": 48
      },
      {
       "id": "runtime-perf",
-      "line": 59
+      "line": 58
      },
      {
       "id": "runtime-hint",
-      "line": 73
+      "line": 72
      },
      {
       "id": "runtime-info-type",
-      "line": 75
+      "line": 74
      },
      {
       "id": "runtime-info-name",
-      "line": 75
+      "line": 74
      },
      {
       "id": "runtime-info-data",
-      "line": 75
+      "line": 74
      },
      {
       "id": "attribution",
-      "line": 117
+      "line": 116
      },
      {
       "id": "title",
-      "line": 125
+      "line": 124
      }
     ],
     "events": [],
@@ -22072,9 +22604,9 @@
   },
   {
    "file": "tests/browser/world-walk.browser.mjs",
-   "bytes": 6566,
-   "sha256": "b8963fd7b03c08df2d96a1292e5c88026a1305e3a8d8e0c27ed41f47ecc6ab56",
-   "lines": 76,
+   "bytes": 6462,
+   "sha256": "35dfe63ce0d9229c5406ab114b0be910712454d2e7af56d6568b7735e8fafacf",
+   "lines": 75,
    "role": "Browsertest",
    "js": {
     "imports": [
@@ -22124,98 +22656,98 @@
      {
       "kind": "const",
       "name": "origin",
-      "line": 10,
+      "line": 9,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "close",
-      "line": 10,
+      "line": 9,
       "exported": false,
       "init": "await startServer()"
      },
      {
       "kind": "const",
       "name": "browser",
-      "line": 10,
+      "line": 9,
       "exported": false,
       "init": "await launch(playwright)"
      },
      {
       "kind": "const",
       "name": "results",
-      "line": 10,
+      "line": 9,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "step",
-      "line": 10,
+      "line": 9,
       "exported": false,
       "init": "recorder()"
      },
      {
       "kind": "const",
       "name": "page",
-      "line": 11,
+      "line": 10,
       "exported": false,
       "init": "await(await browser.newContext({viewport:{width:1440,height:900},acceptDownloads:true})).…"
      },
      {
       "kind": "const",
       "name": "errors",
-      "line": 11,
+      "line": 10,
       "exported": false,
       "init": "[]"
      },
      {
       "kind": "const",
       "name": "shot",
-      "line": 13,
+      "line": 12,
       "exported": false,
       "init": "name=>page.screenshot({path:path.join(artifactDir,name)})"
      },
      {
       "kind": "const",
       "name": "state",
-      "line": 14,
+      "line": 13,
       "exported": false,
       "init": "()=>page.evaluate(()=>document.body.dataset.runtime??\"editing\")"
      },
      {
       "kind": "const",
       "name": "waitState",
-      "line": 15,
+      "line": 14,
       "exported": false,
       "init": "s=>page.waitForFunction(s=>(document.body.dataset.runtime??\"editing\")===s,s,{timeout:8000…"
      },
      {
       "kind": "const",
       "name": "pose",
-      "line": 16,
+      "line": 15,
       "exported": false,
       "init": "async()=>{const[,x,z,h]=/X (-?[\\d.]+) · Z (-?[\\d.]+) · (\\d+)°/.exec(await page.textConten…"
      },
      {
       "kind": "const",
       "name": "hold",
-      "line": 17,
+      "line": 16,
       "exported": false,
       "init": "async(code,ms)=>{await page.keyboard.down(code);await page.waitForTimeout(ms);await page.…"
      },
      {
       "kind": "const",
       "name": "exportJson",
-      "line": 18,
+      "line": 17,
       "exported": false,
       "init": "async()=>{const[d]=await Promise.all([page.waitForEvent(\"download\"),page.click(\"#export\")…"
      },
      {
       "kind": "const",
       "name": "failed",
-      "line": 76,
+      "line": 75,
       "exported": false,
       "init": "results.filter(r=>!r.ok).length"
      }
@@ -22224,37 +22756,121 @@
     "domIds": [
      {
       "id": "runtime-perf",
-      "line": 26
+      "line": 25
      },
      {
       "id": "pins",
-      "line": 27
+      "line": 26
      },
      {
       "id": "canvas-help",
-      "line": 27
+      "line": 26
      },
      {
       "id": "runtime-hint",
-      "line": 51
+      "line": 50
      },
      {
       "id": "runtime-info",
-      "line": 53
+      "line": 52
      },
      {
       "id": "runtime-info-type",
-      "line": 53
+      "line": 52
      },
      {
       "id": "runtime-info-name",
-      "line": 53
+      "line": 52
      },
      {
       "id": "runtime-info-data",
-      "line": 53
+      "line": 52
      }
     ],
+    "events": [],
+    "storage": []
+   }
+  },
+  {
+   "file": "tests/build-tools.test.mjs",
+   "bytes": 4387,
+   "sha256": "8bdfb9af794f582aa7e08450157096b9ba6071b5c17841fa0d96169a5bcf1aea",
+   "lines": 81,
+   "role": "Node-Test",
+   "js": {
+    "imports": [
+     {
+      "line": 1,
+      "from": "node:test",
+      "names": [
+       "test"
+      ]
+     },
+     {
+      "line": 2,
+      "from": "node:assert/strict",
+      "names": [
+       "assert"
+      ]
+     },
+     {
+      "line": 3,
+      "from": "node:fs/promises",
+      "names": [
+       "mkdtemp",
+       "mkdir",
+       "writeFile",
+       "rm"
+      ]
+     },
+     {
+      "line": 4,
+      "from": "node:os",
+      "names": [
+       "tmpdir"
+      ]
+     },
+     {
+      "line": 5,
+      "from": "node:path",
+      "names": [
+       "path"
+      ]
+     },
+     {
+      "line": 6,
+      "from": "node:child_process",
+      "names": [
+       "spawnSync"
+      ]
+     },
+     {
+      "line": 7,
+      "from": "node:url",
+      "names": [
+       "fileURLToPath"
+      ]
+     },
+     {
+      "line": 8,
+      "from": "../scripts/check.mjs",
+      "names": [
+       "relativeModuleReferences",
+       "checkProject"
+      ]
+     },
+     {
+      "line": 9,
+      "from": "./browser/harness.mjs",
+      "names": [
+       "browserArgs"
+      ]
+     }
+    ],
+    "exports": [],
+    "declarations": [],
+    "classes": [],
+    "domIds": [],
     "events": [],
     "storage": []
    }
@@ -22395,9 +23011,9 @@
   },
   {
    "file": "tests/car.test.mjs",
-   "bytes": 3260,
-   "sha256": "78c0af852943ef0b8161378b424d1c00df744e292bd44c75a5e425c3c8ec2baa",
-   "lines": 50,
+   "bytes": 3860,
+   "sha256": "40aa252426eed74581d27e815de141d6e909d858ca6294c50bc0442d47fdf163",
+   "lines": 59,
    "role": "Node-Test",
    "js": {
     "imports": [
@@ -22762,9 +23378,9 @@
   },
   {
    "file": "tests/edge.test.mjs",
-   "bytes": 47168,
-   "sha256": "ccc57c0586cb633f7ba324d57b18bb8f6c4049761d2995518f868ecd48712186",
-   "lines": 572,
+   "bytes": 51050,
+   "sha256": "693b3bbadf5a8a8821d276bfc6a83e4ab1da29a20b0180d70c8dae39595e3ada",
+   "lines": 615,
    "role": "Node-Test",
    "js": {
     "imports": [
@@ -22814,7 +23430,8 @@
       "from": "../edge/map-room.mjs",
       "names": [
        "MapRoom",
-       "MAX_PER_IP"
+       "MAX_PER_IP",
+       "IDLE_MS"
       ]
      },
      {
@@ -22957,22 +23574,22 @@
     "events": [
      {
       "event": "message",
-      "line": 556,
+      "line": 599,
       "target": "ws"
      },
      {
       "event": "open",
-      "line": 556,
+      "line": 599,
       "target": "ws"
      },
      {
       "event": "open",
-      "line": 568,
+      "line": 611,
       "target": "ws"
      },
      {
       "event": "open",
-      "line": 570,
+      "line": 613,
       "target": "ws"
      }
     ],
@@ -23324,9 +23941,9 @@
   },
   {
    "file": "tests/kart.test.mjs",
-   "bytes": 5743,
-   "sha256": "ca291c86a7ca68449f59540fdbf0311981b1d3e7e794131767fb39b9d0c8b6e8",
-   "lines": 89,
+   "bytes": 6923,
+   "sha256": "22e5ffadfaea95d8d7404deb91ade98f8f0cf1c8a816d27affdaac10b08fdf7f",
+   "lines": 107,
    "role": "Node-Test",
    "js": {
     "imports": [
@@ -23368,7 +23985,8 @@
       "names": [
        "Kart",
        "Race",
-       "KART"
+       "KART",
+       "isForwardOnTrack"
       ]
      }
     ],
@@ -23558,9 +24176,9 @@
   },
   {
    "file": "tests/map-history.test.mjs",
-   "bytes": 5916,
-   "sha256": "681f17a558841dc3e250e8b57a54ee130d6cba04ee250d922899a9c77c703302",
-   "lines": 97,
+   "bytes": 8260,
+   "sha256": "c45200ae6b935d3bf1eead8f3bac558d8e99cd893fd0a1ec30f5479be0109036",
+   "lines": 130,
    "role": "Node-Test",
    "js": {
     "imports": [
@@ -23582,6 +24200,20 @@
        "History",
        "HISTORY_LIMIT"
       ]
+     },
+     {
+      "line": 3,
+      "from": "../dist/map-studio/history.js",
+      "names": [
+       "ProjectHistory"
+      ]
+     },
+     {
+      "line": 4,
+      "from": "../dist/map-studio/project.js",
+      "names": [
+       "serializeProject"
+      ]
      }
     ],
     "exports": [],
@@ -23589,35 +24221,35 @@
      {
       "kind": "const",
       "name": "image",
-      "line": 5,
+      "line": 7,
       "exported": false,
       "init": "(name,fill)=>({name,dataUrl:\"data:image/png;base64,\"+fill.repeat(200_000)})"
      },
      {
       "kind": "const",
       "name": "withImage",
-      "line": 6,
+      "line": 8,
       "exported": false,
       "init": "(doc,img)=>({...copy(doc),map:{...doc.map,image:img&&{...img}}})"
      },
      {
       "kind": "const",
       "name": "edit",
-      "line": 7,
+      "line": 9,
       "exported": false,
       "init": "(doc,height)=>{const next=copy(doc);next.points[0].height=height;return next;}"
      },
      {
       "kind": "const",
       "name": "imageBytes",
-      "line": 8,
+      "line": 10,
       "exported": false,
       "init": "history=>[...history.images.values()].reduce((sum,entry)=>sum+entry.dataUrl.length,0)"
      },
      {
       "kind": "const",
       "name": "retainsDataUrl",
-      "line": 9,
+      "line": 11,
       "exported": false,
       "init": "history=>[...history.past,...history.future].some(entry=>JSON.stringify(entry).includes(\"…"
      }
@@ -23630,9 +24262,9 @@
   },
   {
    "file": "tests/map-project.test.mjs",
-   "bytes": 13017,
-   "sha256": "fe281abbb58ad5afc132a9cbbc30be170e8853c6b39ab28117d5b2df81da82bd",
-   "lines": 142,
+   "bytes": 14347,
+   "sha256": "72b4e766ba417c6d6267caa9eedd07b17b19b060c82f3999187687dcdb1886ed",
+   "lines": 160,
    "role": "Node-Test",
    "js": {
     "imports": [
@@ -23675,6 +24307,7 @@
        "listLocal",
        "loadProject",
        "SaveConflict",
+       "SaveRevisionLimit",
        "projectKey",
        "LEGACY_WORLD_ID"
       ]
@@ -24802,9 +25435,9 @@
   },
   {
    "file": "tests/plane.test.mjs",
-   "bytes": 3326,
-   "sha256": "55ef1689688f8d426596ecde12e9e197edb4045158d4cb7cbb21661232a1ae9b",
-   "lines": 52,
+   "bytes": 4119,
+   "sha256": "a8eeff8b19690eb95b291706d19fe8a921fece65cc847653b41d9cfaf0761764",
+   "lines": 61,
    "role": "Node-Test",
    "js": {
     "imports": [
@@ -24993,9 +25626,9 @@
   },
   {
    "file": "tests/repository.test.mjs",
-   "bytes": 3368,
-   "sha256": "2e912fd3a8f147351c535ae592ced9abe64e2a0e9f9bc5110fc34153dbc49d6f",
-   "lines": 44,
+   "bytes": 5594,
+   "sha256": "597030695a721b12886b5b5be41b973a1845c2d2a945bf439cd2ade7e8a72383",
+   "lines": 79,
    "role": "Node-Test",
    "js": {
     "imports": [
@@ -25462,9 +26095,9 @@
   },
   {
    "file": "tests/sim-wasm.test.mjs",
-   "bytes": 5110,
-   "sha256": "56065ca191a574c477905c8861a3b20990080d40ac2d98fad40937e37329f660",
-   "lines": 71,
+   "bytes": 7990,
+   "sha256": "6478a2b5526fac3f9540ab7987a924b2151ce7c2ff7d9ff239896984ef04232e",
+   "lines": 117,
    "role": "Node-Test",
    "js": {
     "imports": [
@@ -25874,9 +26507,9 @@
   },
   {
    "file": "tests/world-studio.test.mjs",
-   "bytes": 3947,
-   "sha256": "8fbcf13ae987ab6c878321f688b77a6f6308ec967e16730652f8e3c296585b27",
-   "lines": 45,
+   "bytes": 8662,
+   "sha256": "1e9795292ea70fe10f35c7818eca7ea3caaa77039ea4877cebbb729f25989093",
+   "lines": 114,
    "role": "Node-Test",
    "js": {
     "imports": [
@@ -25889,48 +26522,65 @@
      },
      {
       "line": 2,
+      "from": "node:fs/promises",
+      "names": [
+       "readFile"
+      ]
+     },
+     {
+      "line": 3,
       "from": "../dist/worlds/data.js",
       "names": [
        "worlds"
       ]
      },
      {
-      "line": 3,
+      "line": 4,
       "from": "../dist/worlds/scene.js",
       "names": [
        "buildWorld"
       ]
      },
      {
-      "line": 4,
+      "line": 5,
       "from": "../dist/worlds/vendor/three.module.js",
       "names": [
        "THREE"
       ]
      },
      {
-      "line": 5,
+      "line": 6,
       "from": "../dist/worlds/vendor/TransformControls.js",
       "names": [
        "TransformControls"
       ]
      },
      {
-      "line": 6,
+      "line": 7,
       "from": "../dist/world-studio/model.js",
       "names": [
        "createDocument",
        "createObject",
        "validateDocument",
+       "readImport",
        "History",
        "clone"
       ]
      },
      {
-      "line": 7,
+      "line": 8,
       "from": "../dist/world-studio/renderer.js",
       "names": [
        "WorldEditorRenderer"
+      ]
+     },
+     {
+      "line": 9,
+      "from": "../dist/map-studio/project.js",
+      "names": [
+       "readProject",
+       "serializeProject",
+       "MAX_PROJECT_BYTES"
       ]
      }
     ],
@@ -25939,21 +26589,27 @@
      {
       "kind": "let",
       "name": "meshCount",
-      "line": 9,
+      "line": 78,
       "exported": false,
       "init": "0"
      },
      {
       "kind": "const",
       "name": "controls",
-      "line": 41,
+      "line": 110,
       "exported": false,
       "init": "new TransformControls(new THREE.PerspectiveCamera())"
      }
     ],
     "classes": [],
     "domIds": [],
-    "events": [],
+    "events": [
+     {
+      "event": "dispose",
+      "line": 59,
+      "target": "original"
+     }
+    ],
     "storage": []
    }
   },
@@ -26260,8 +26916,8 @@
   {
    "script": "dist/world-studio/editor.js",
    "page": "dist/world-studio/index.html",
-   "referenced": 83,
-   "htmlIds": 130,
+   "referenced": 84,
+   "htmlIds": 132,
    "dynamicPrefixes": [],
    "missingInHtml": [],
    "unusedInScript": [
@@ -26287,6 +26943,7 @@
     "runtime-paused",
     "runtime-pause-reason",
     "runtime-resume",
+    "position-unit",
     "position-x",
     "position-y",
     "position-z",

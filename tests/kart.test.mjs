@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {decodeHeightFile,decodeBinaryFile} from '../dist/runtime/assets/codec.js';
 import {Track,sampleClosedSpline,smoothClosed,featureHeight} from '../dist/kart/track.js';
-import {Kart,Race,KART} from '../dist/kart/kart.js';
+import {Kart,Race,KART,isForwardOnTrack} from '../dist/kart/kart.js';
 
 const DT=1/60;
 const circle=(r,n=16)=>Array.from({length:n},(_,i)=>{const a=i/n*Math.PI*2;return [Math.sin(a)*r,-Math.cos(a)*r];});
@@ -84,6 +84,24 @@ function drive(kart,track,seconds,throttle=1,onStep=()=>{}){
   assert.equal(race.lapTimes.length,0,'jumping from sector 0 to 3 and back is not a lap');
   for(const s of [30,55,80,2])race.update(1,s);
   assert.equal(race.lapTimes.length,1);assert.equal(race.lap,2);
+}
+{ // Heading alone is not movement direction: the brake pedal can reverse even at low speed.
+  const north={tx:0,tz:-1};
+  assert.equal(isForwardOnTrack({heading:0,speed:5},north),true);
+  assert.equal(isForwardOnTrack({heading:0,speed:-5},north),false);
+  assert.equal(isForwardOnTrack({heading:0,speed:-.1},north),false);
+  assert.equal(isForwardOnTrack({heading:Math.PI,speed:5},north),false);
+  assert.equal(isForwardOnTrack({heading:Math.PI,speed:-5},north),true);
+  assert.equal(isForwardOnTrack({heading:Math.PI,speed:0},north),true,'stationary is not wrong-way travel');
+}
+{ // Repeated wrong-way circuits must never accumulate the next checkpoint or finish a lap.
+  const race=new Race({length:100,sectors:4,laps:1});
+  for(let lap=0;lap<3;lap++)for(const s of [90,60,30,10])race.update(1,s,false);
+  assert.equal(race.finished,false);assert.equal(race.sector,0);assert.deepEqual(race.lapTimes,[]);
+  assert.equal(race.wrongWay,true);
+  for(const s of [30,55,80,2])race.update(1,s,true);
+  assert.equal(race.finished,true,'forward ordered checkpoints still complete the race');
+  assert.equal(race.wrongWay,false);assert.equal(race.lapTimes.length,1);
 }
 
 console.log("PASS: synthetic kart track, driving, barriers, braking, slopes, ramp flight and lap timing. External-map race regression is excluded; see PUBLIC_SOURCE.json.");

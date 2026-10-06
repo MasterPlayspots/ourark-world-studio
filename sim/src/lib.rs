@@ -173,7 +173,7 @@ fn step_car(e: &mut Entity, x: &mut Extra, inp: &Input, dt: f32) {
     let (fx, fz) = (e.heading.sin(), -e.heading.cos());
     let (nx, nz) = (e.pos[0] + fx * x.speed * dt, e.pos[2] + fz * x.speed * dt);
     let dir = if x.speed == 0.0 { 1.0 } else { sign(x.speed) };
-    let grade = (ground(nx + fx * car::PROBE * dir, nz + fz * car::PROBE * dir) - ground(nx, nz)) / car::PROBE * dir;
+    let grade = (ground(nx + fx * car::PROBE * dir, nz + fz * car::PROBE * dir) - ground(nx, nz)) / car::PROBE;
     if on_ground && grade > car::MAX_GRADE && x.speed.abs() > 0.1 {
         x.speed = 0.0;
         return;
@@ -349,7 +349,7 @@ fn step_plane(e: &mut Entity, x: &mut Extra, inp: &Input, dt: f32) {
     if e.pos[1] <= floor {
         let gentle = x.vy > -plane::LANDING_SINK && e.roll.abs() < plane::LANDING_BANK && e.pitch > -0.2 && floor - prev_y < 1.5;
         e.pos[1] = floor;
-        if on_ground || gentle {
+        if gentle {
             on_ground = true;
             x.vy = 0.0;
             e.pitch = e.pitch.max(0.0);
@@ -388,6 +388,7 @@ pub extern "C" fn sim_tick() -> u32 { unsafe { TICK } }
 pub extern "C" fn sim_set_terrain(w: u32, d: u32, cell: f32, scale: f32) -> u32 {
     // checked_mul: on wasm32 usize is 32 bits, so 65536 × 65536 would wrap to 0 and pass a plain comparison.
     match (w as usize).checked_mul(d as usize) { Some(n) if n <= GRID_MAX && w >= 2 && d >= 2 => {} _ => return 0 }
+    if !cell.is_finite() || cell <= 0.0 || !scale.is_finite() || scale < 0.0 { return 0; }
     unsafe { TERRAIN = Terrain { w: w as usize, d: d as usize, cell, scale }; }
     1
 }

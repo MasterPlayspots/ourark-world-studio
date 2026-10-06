@@ -1,4 +1,5 @@
 import {worlds,stopPositions} from '../worlds/data.js';
+import {readProject,MAX_PROJECT_BYTES,utf8Length} from '../map-studio/project.js';
 export const SCHEMA='motionspec.world.v1';
 export const kinds=['landmark','box','sphere','ring','panel','text','beacon'];
 export const clone=value=>structuredClone(value);
@@ -31,6 +32,18 @@ export function validateDocument(input) {
       animation:['none','spin','float'].includes(o.animation)?o.animation:'none',page:{enabled:o.page?.enabled===true,title:text(o.page?.title,120),body:text(o.page?.body,1200)}};
   });
   return {schema:SCHEMA,world:input.world,objects,settings:{landscape:input.settings?.landscape!==false,grid:input.settings?.grid!==false,exposure:clamp(Number(input.settings?.exposure)||1.1,.5,2)},selected:ids.has(input.selected)?input.selected:objects[0]?.id||null};
+}
+// One import path for the UI and tests. Map envelopes use the Map Studio validator;
+// the uploaded-world view consumes their payload, while project identity stays in Map Studio.
+export function readImport(text){
+  const bytes=utf8Length(text);
+  if(bytes>MAX_PROJECT_BYTES)throw new Error('Choose a file smaller than 16 MB.');
+  const input=JSON.parse(text),schema=input?.schema??'';
+  if(/^motionspec\.map\.v\d+$/.test(schema)||/^ourark\.map-project\.v\d+$/.test(schema)){
+    return {kind:'map',doc:readProject(input).doc};
+  }
+  if(bytes>1024*1024)throw new Error('Choose a scene smaller than 1 MB, or a Map Studio project.');
+  return {kind:'scene',doc:validateDocument(input)};
 }
 export class History {
   constructor(){this.past=[];this.future=[];}

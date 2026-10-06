@@ -1,5 +1,6 @@
-import {demoDocument,validateDocument,newPoint,copy,editableShell,History,categories,MAX_POINTS,MAX_MAP_METRES,resizePoint,MAX_IMAGE_BYTES,MAX_UPLOAD_BYTES,movePoint,withType,enhanceTarget,enhancedName} from './model.js';
-import {loadLocal,saveLocal,listLocal,loadProject,SaveConflict} from './storage.js';
+import {demoDocument,validateDocument,newPoint,copy,editableShell,categories,MAX_POINTS,MAX_MAP_METRES,resizePoint,MAX_IMAGE_BYTES,MAX_UPLOAD_BYTES,movePoint,withType,enhanceTarget,enhancedName} from './model.js';
+import {ProjectHistory} from './history.js';
+import {loadLocal,saveLocal,listLocal,loadProject,SaveConflict,SaveRevisionLimit} from './storage.js';
 import {readProject,serializeProject,projectBytes,checkEditBudget,newWorldId,MAX_PROJECT_BYTES,budgetText,mb} from './project.js';
 import {prepareWalk} from '../runtime/map-adapter.js';
 import {mapFitsNetwork,ROOM_BOUND} from '../runtime/net/protocol.js';
@@ -10,7 +11,7 @@ const $=id=>document.getElementById(id);
 // meta: project identity around the map payload (worldId, revision, …; contracts/map-project-v1.md).
 let dragPoints=null,dragIndex=-1;
 let doc=demoDocument(),meta={worldId:newWorldId(),revision:0},docBytes=projectBytes(doc,meta),selected=doc.points[0].id,mode='2d',renderer=null,dirty=false,revision=0,placing=false,dragBefore=null,noticeTimer,importing=false;
-const history=new History(),labelPool=[],rows=new Map();
+const history=new ProjectHistory(),labelPool=[],rows=new Map();
 // Large maps (PR D): at most MAX_LABELS name labels are shown — those nearest to the middle of the view — from a
 // fixed pool of buttons; the point list only updates rows that changed.
 const MAX_LABELS=60;let pointById=new Map(),rowOrder='',pressedRow=null;
@@ -32,7 +33,7 @@ function mutate(action,message){
   if(dragging()){notice(DRAG_BUSY);return;}
   // Only the shell is copied: actions replace points, they never change one in place (points are frozen).
   const before=doc,draft=editableShell(doc);
-  try{action(draft);const next=validateDocument(draft),bytes=projectBytes(next,meta);checkEditBudget(docBytes,bytes);if(history.record(before,next)){doc=next;docBytes=bytes;markChanged();}render();if(message)notice(message);}
+  try{action(draft);const next=validateDocument(draft),bytes=projectBytes(next,meta);checkEditBudget(docBytes,bytes);if(history.record({doc:before,meta},{doc:next,meta})){doc=next;docBytes=bytes;markChanged();}render();if(message)notice(message);}
   catch(error){notice(error.message);render();}
 }
 function editPoint(key,value){if(!current())return;if(current().locked&&key!=='locked'){notice('Punkt zuerst entsperren.');renderInspector();return;}mutate(d=>{const i=d.points.findIndex(p=>p.id===selected);d.points[i]=key==='type'?withType(d.points[i],value):key==='width'||key==='depth'?resizePoint(d.points[i],key,value):{...d.points[i],[key]:value};});}
@@ -103,7 +104,7 @@ function add(x=0,z=0){
 }
 function setPlacing(value){placing=value;$('place').setAttribute('aria-pressed',String(value));renderer?.setPlacing(value);$('controls').textContent=value?'Auf die Karte klicken, um einen Punkt zu setzen · Escape beendet':mode==='2d'?'Punkt ziehen · freie Fläche verschieben · Scrollen zum Zoomen':'Achsen ziehen · freie Fläche drehen · Rechtsklick verschieben · Scrollen zum Zoomen';}
 function setMode(value){mode=value;setPlacing(false);$('view-2d').setAttribute('aria-pressed',String(value==='2d'));$('view-3d').setAttribute('aria-pressed',String(value==='3d'));$('projection').textContent=value==='2d'?'ORTHOGRAFISCH / 2D':'PERSPEKTIVE / 3D';document.querySelector('.compass').hidden=value==='3d';renderer?.setMode(value);}
-function stepHistory(direction){if(!editing())return;if(dragging()){notice(DRAG_BUSY);return;}setPlacing(false);const next=history[direction](doc);if(!next)return;doc=next;docBytes=projectBytes(doc,meta);markChanged();render();renderer?.resize();}
+function stepHistory(direction){if(!editing())return;if(dragging()){notice(DRAG_BUSY);return;}setPlacing(false);const next=history[direction]({doc,meta});if(!next)return;doc=next.doc;meta=next.meta;docBytes=projectBytes(doc,meta);markChanged();render();renderer?.resize();}
 // A file of the same world (or an old file without world id) replaces the document as one undoable step and keeps
 // the local revision, so the next save is not refused. Another world opens separately: with a fresh history (Undo
 // must not carry its content into the other key) and only when nothing unsaved would be lost. → opened?
@@ -114,8 +115,8 @@ function openProject(next,nextMeta,message,{saved=false}={}){
     history.past=[];history.future=[];history.release();doc=next;meta=nextMeta;selected=doc.points[0]?.id??null;
     if(saved){dirty=false;revision++;setStatus(`Lokales Kartenprojekt geöffnet · Revision ${meta.revision}`);}else markChanged();
   }else{
-    meta={...nextMeta,revision:meta.revision};
-    if(history.record(doc,next)){doc=next;selected=doc.points[0]?.id??null;markChanged();}
+    const importedMeta={...nextMeta,revision:meta.revision};
+    if(history.record({doc,meta},{doc:next,meta:importedMeta})){doc=next;meta=importedMeta;selected=doc.points[0]?.id??null;markChanged();}
   }
   docBytes=projectBytes(doc,meta);render();renderer?.overview();
   notice(docBytes>MAX_PROJECT_BYTES?`${message} Achtung: ${mb(docBytes)} MB, über ${budgetText()} – bitte verkleinern; bis dahin nur als Sicherung exportierbar.`:message);
@@ -184,7 +185,7 @@ $('save').onclick=async()=>{
     // Meanwhile another project may have been opened: its revision is not this save's.
     if(meta.worldId===savedMeta.worldId){meta={...meta,revision:stored};docBytes=projectBytes(doc,meta);}
     if(revision===savedRevision){dirty=false;setStatus(`In diesem Browser gespeichert · Revision ${stored}`);}notice('Kartenprojekt lokal gespeichert.');
-  }catch(error){notice(error instanceof SaveConflict?error.message:'Lokales Speichern fehlgeschlagen. Bitte das Projekt als Datei exportieren.');}
+  }catch(error){notice(error instanceof SaveConflict||error instanceof SaveRevisionLimit?error.message:'Lokales Speichern fehlgeschlagen. Bitte das Projekt als Datei exportieren.');}
   finally{$('save').disabled=false;}
 };
 // Export always writes the complete project (also when older data is over budget: a lossless backup), but says
@@ -208,10 +209,10 @@ $('project-file').onchange=e=>withImport(e.target,async file=>{
   openProject(next,nextMeta,nextMeta.worldId===meta.worldId?'Kartenprojekt geöffnet.':'Kartenprojekt geöffnet. Es wird getrennt von anderen Projekten in diesem Browser gespeichert (Import → „In diesem Browser gespeichert“).');
 });
 $('points-file').onchange=e=>withImport(e.target,async file=>{
-  if(file.size>2*1024*1024)throw new Error('Punktdatei: maximal 2 MB.');const points=JSON.parse(await file.text());assertEditing();if(!Array.isArray(points))throw new Error('Die Punktdatei muss eine JSON-Liste enthalten.');
+  if(file.size>2*1024*1024)throw new Error('Punktdatei: maximal 2 MB.');const points=JSON.parse(await file.text());assertEditing();if(dragging())throw new Error(`${DRAG_BUSY} Bitte die Punktdatei danach erneut importieren.`);if(!Array.isArray(points))throw new Error('Die Punktdatei muss eine JSON-Liste enthalten.');
   if(doc.points.length+points.length>MAX_POINTS)throw new Error(`Zusammen sind maximal ${MAX_POINTS.toLocaleString('de-DE')} Punkte möglich.`);
   const additions=points.map((p,i)=>{if(!p||typeof p!=='object'||Array.isArray(p))throw new Error('Ungültiger Punkt.');return {...newPoint(doc.points.length+i+1),...p};});
-  const next=validateDocument({...doc,points:[...doc.points,...additions]}),bytes=projectBytes(next,meta);checkEditBudget(docBytes,bytes);if(history.record(doc,next)){doc=next;docBytes=bytes;selected=additions[0]?.id??selected;markChanged();render();}notice(`${additions.length} Infrastrukturpunkte ergänzt.`);
+  const next=validateDocument({...doc,points:[...doc.points,...additions]}),bytes=projectBytes(next,meta);checkEditBudget(docBytes,bytes);if(history.record({doc,meta},{doc:next,meta})){doc=next;docBytes=bytes;selected=additions[0]?.id??selected;markChanged();render();}notice(`${additions.length} Infrastrukturpunkte ergänzt.`);
 });
 window.addEventListener('keydown',e=>{
   if(!editing())return;
@@ -254,7 +255,7 @@ try{
     end:()=>{
       if(dragBefore){
         try{const next=validateDocument(doc),bytes=projectBytes(next,meta);checkEditBudget(docBytes,bytes);
-          if(history.record(dragBefore,next)){doc=next;docBytes=bytes;markChanged();}else doc=dragBefore;}
+          if(history.record({doc:dragBefore,meta},{doc:next,meta})){doc=next;docBytes=bytes;markChanged();}else doc=dragBefore;}
         catch(error){doc=dragBefore;notice(error.message);}
       }
       dragBefore=null;dragPoints=null;render();

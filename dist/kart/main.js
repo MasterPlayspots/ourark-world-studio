@@ -2,7 +2,7 @@
 // The map is a data bundle (assets/<name>.json + height grid + photo), so further maps can be dropped in.
 import * as THREE from '../worlds/vendor/three.module.js';
 import {Track} from './track.js';
-import {Kart,Race} from './kart.js';
+import {Kart,Race,isForwardOnTrack} from './kart.js';
 import {Plane} from './plane.js';
 import {Pedestrian,FOOT} from './pedestrian.js';
 import {KartInsights} from './insights.js';
@@ -502,7 +502,7 @@ async function main(){
     if(phase==='countdown'){countdown-=STEP;if(countdown<=0){phase='racing';hud.text('banner','LOS!');setTimeout(()=>{if(phase==='racing')hud.show('banner',false);},900);}}
     if(phase==='racing'){
       const st=kart.state,p=track.project(st.x,st.z,st.hint,undefined,raceProj);
-      const forward=Math.sin(st.heading)*p.tx-Math.cos(st.heading)*p.tz>-.2||Math.abs(st.speed)<2;
+      const forward=isForwardOnTrack(st,p);
       race.update(STEP,st.s,forward);
       if(race.finished){phase='finished';showResult();}
     }

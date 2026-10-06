@@ -1,4 +1,4 @@
-// Optional real-browser harness. The repository has no npm dependencies, so
+// Extended browser harness. The repository has no npm dependencies, so
 // playwright-core is resolved from PLAYWRIGHT_CORE (path to a playwright-core
 // package directory) or from a normal node_modules lookup.
 import {createRequire} from 'node:module';
@@ -11,8 +11,12 @@ export const artifactDir=fileURLToPath(new URL('../../.browser-artifacts/',impor
 
 export function loadPlaywright(){
   const candidates=[process.env.PLAYWRIGHT_CORE,'playwright-core','playwright'].filter(Boolean);
-  for(const name of candidates){try{return require(name);}catch{}}
-  return null;
+  const failures=[];
+  for(const name of candidates){
+    try{const loaded=require(name);if(!loaded.chromium?.launch)throw new Error('Package has no Chromium launcher');return loaded;}
+    catch(error){failures.push(`${name}: ${error.message}`);}
+  }
+  throw new Error(`Playwright and Chromium are required for browser tests. Install them separately and set PLAYWRIGHT_CORE, optionally CHROMIUM_PATH. No checks were run. ${failures.join(' | ')}`);
 }
 
 export async function startServer(options){
@@ -21,11 +25,17 @@ export async function startServer(options){
   return {server,origin:`http://127.0.0.1:${server.address().port}`,close:()=>new Promise(r=>server.close(r))};
 }
 
-// Real GPU WebGL (ANGLE) instead of a software fallback, so rendered pixels are meaningful.
+// Linux uses software WebGL for functional checks. Hardware-specific performance budgets in
+// the extended suites need their original device profile; software results are not GPU evidence.
 // extraArgs: additional Chromium switches for one suite (e.g. --enable-precise-memory-info for heap sampling).
+export function browserArgs(platform=process.platform){
+  if(platform==='linux')return ['--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist'];
+  if(platform==='darwin')return ['--use-angle=metal','--ignore-gpu-blocklist','--enable-gpu'];
+  return ['--ignore-gpu-blocklist'];
+}
 export async function launch(playwright,extraArgs=[]){
   await mkdir(artifactDir,{recursive:true});
-  const browser=await playwright.chromium.launch({headless:process.env.HEADED!=='1',executablePath:process.env.CHROMIUM_PATH||undefined,args:['--use-angle=metal','--ignore-gpu-blocklist','--enable-gpu',...extraArgs]});
+  const browser=await playwright.chromium.launch({headless:process.env.HEADED!=='1',executablePath:process.env.CHROMIUM_PATH||undefined,args:[...browserArgs(),...extraArgs]});
   // The live performance meter stays off in the suites (no overlay in pixel checks, no extra animation loop).
   const newContext=browser.newContext.bind(browser);
   browser.newContext=async(...args)=>{const context=await newContext(...args);await context.addInitScript(()=>{try{localStorage.setItem('ourark.perf','0');}catch{}});return context;};
