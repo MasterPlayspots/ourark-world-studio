@@ -1,0 +1,18 @@
+[package]
+name = "ourark-sim"
+version = "0.1.0"
+edition = "2021"
+description = "Deterministic f32 vehicle simulation (car, aeroplane, on foot) in WASM linear memory — sim state layout v1."
+license = "MIT"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+path = "src/lib.rs"
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

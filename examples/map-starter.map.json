@@ -1,0 +1,20 @@
+{
+  "schema": "ourark.map-project.v1",
+  "worldId": "example-campus",
+  "revision": 0,
+  "payload": {
+    "schema": "motionspec.map.v3",
+    "name": "First editable campus",
+    "map": {"width": 120, "depth": 80, "color": "#1c1c1c", "image": null},
+    "runtime": {"spawn": {"x": 0, "z": 20, "heading": 0}},
+    "points": [
+      {
+        "id": "building-001", "name": "Workshop", "type": "building",
+        "x": 0, "z": 0, "width": 12, "depth": 8, "height": 6,
+        "rotation": 0, "color": "#5eead4", "visible": true, "locked": false,
+        "solid": true, "interactive": true,
+        "data": {"assetId": "building-001", "purpose": "Replace this with your own project data"}
+      }
+    ]
+  }
+}

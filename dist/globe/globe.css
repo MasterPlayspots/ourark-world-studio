@@ -1,0 +1,31 @@
+/* Globe page: full-screen Cesium view with glass HUD panels (same language as the kart page). */
+html,body.globe-page{margin:0;height:100%;overflow:hidden;background:#000;color:var(--ink,#f5f5f7);font:13px/1.4 var(--font,ui-sans-serif,system-ui,-apple-system,sans-serif)}
+#globe{position:fixed;inset:0;outline:none}
+#globe .cesium-widget-credits{display:none}
+.globe-hud{position:fixed;z-index:10;background:rgba(12,14,18,.62);border:1px solid rgba(255,255,255,.12);border-radius:12px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.globe-top{top:12px;left:12px;display:flex;gap:10px;align-items:center;padding:8px 14px}
+.globe-back{color:#9aa6b4;text-decoration:none}.globe-back:hover{color:#fff}
+#globe-status{color:#4ade80;font-size:12px}
+.globe-search{top:12px;left:50%;transform:translateX(-50%);width:min(420px,calc(100vw - 340px));padding:0}
+.globe-search input{width:100%;box-sizing:border-box;padding:9px 14px;background:none;border:0;color:inherit;font:inherit;outline:none}
+.globe-search ul{list-style:none;margin:0;padding:4px;border-top:1px solid rgba(255,255,255,.1);max-height:50vh;overflow:auto}
+.globe-search li button{display:block;width:100%;text-align:left;padding:7px 10px;background:none;border:0;border-radius:8px;color:inherit;font:inherit;cursor:pointer}
+.globe-search li button:hover,.globe-search li button:focus{background:rgba(255,255,255,.08)}
+.globe-search li small{color:#9aa6b4}
+.globe-places{top:60px;left:12px;display:flex;flex-wrap:wrap;gap:6px;padding:6px;max-width:calc(100vw - 24px)}
+.globe-places button,.globe-modes button{padding:6px 10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:inherit;font:inherit;cursor:pointer}
+.globe-places button:hover,.globe-modes button:hover{border-color:#4ade80}
+.globe-modes{bottom:34px;left:50%;transform:translateX(-50%);display:flex;flex-wrap:wrap;justify-content:center;gap:6px;padding:6px;max-width:calc(100vw - 24px)}
+.globe-modes button[aria-pressed="true"]{border-color:#4ade80;background:rgba(74,222,128,.14)}
+.globe-modes kbd{font:11px var(--mono,ui-monospace,monospace);color:#9aa6b4;margin-left:2px}
+.globe-stats{top:12px;right:12px;display:flex;gap:14px;padding:8px 14px;font-family:var(--mono,ui-monospace,monospace);font-variant-numeric:tabular-nums}
+.globe-help{top:110px;left:12px;width:min(380px,calc(100vw - 24px));padding:10px 14px}
+.globe-help h2{margin:0 0 6px;font-size:14px}.globe-help p{margin:6px 0;color:#d5dbe2}
+.globe-attribution{position:fixed;bottom:6px;left:12px;right:12px;z-index:9;display:flex;gap:10px;justify-content:space-between;color:rgba(255,255,255,.72);font-size:10.5px;text-shadow:0 1px 2px #000;pointer-events:none}
+#globe-credits{pointer-events:auto}#globe-credits img{vertical-align:middle;max-height:14px}#globe-credits a{color:inherit}
+@media (max-width:820px){
+  .globe-search{top:60px;width:calc(100vw - 24px)}
+  .globe-places{top:108px}
+  .globe-stats{top:auto;bottom:86px;right:50%;transform:translateX(50%);gap:8px;font-size:11px;padding:6px 10px}
+  .globe-help{top:156px}
+}

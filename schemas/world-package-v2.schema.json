@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:motionspec:world-package:v2:manifest",
+  "$comment": "DRAFT manifest contract only. Not supported by the current v1 importer. Hash, payload, ID and capability validation are additional runtime requirements.",
+  "title": "MotionSpec complete world package manifest \u2014 draft v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "version",
+    "world",
+    "coordinates",
+    "entry",
+    "requires",
+    "files"
+  ],
+  "properties": {
+    "schema": {
+      "const": "motionspec.world-package.v2"
+    },
+    "version": {
+      "const": 2
+    },
+    "world": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "revision"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "coordinates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "units",
+        "up",
+        "forward",
+        "handedness"
+      ],
+      "properties": {
+        "units": {
+          "const": "meters"
+        },
+        "up": {
+          "const": "+Y"
+        },
+        "forward": {
+          "const": "-Z"
+        },
+        "handedness": {
+          "const": "right"
+        }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "world"
+      ],
+      "properties": {
+        "world": {
+          "$ref": "#/$defs/path"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/path"
+          },
+          "uniqueItems": true
+        },
+        "vehiclePresets": {
+          "$ref": "#/$defs/path"
+        },
+        "characterPresets": {
+          "$ref": "#/$defs/path"
+        }
+      }
+    },
+    "requires": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runtime",
+        "capabilities"
+      ],
+      "properties": {
+        "runtime": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "bytes",
+          "sha256",
+          "mediaType"
+        ],
+        "properties": {
+          "path": {
+            "$ref": "#/$defs/path"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "mediaType": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\)(?!.*:)[A-Za-z0-9_./ -]+$",
+      "description": "Relative payload path. Runtime validation must reject symlinks, duplicate normalized paths, hidden traversal and oversized archive expansion."
+    }
+  }
+}

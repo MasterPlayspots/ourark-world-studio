@@ -1,0 +1,22 @@
+/* Black-Glass-Schicht (2026-09-30): wird auf allen Studio-Seiten zuletzt geladen.
+   Setzt nur Farben, Flächen und Logo-Größe; Layout bleibt in den Seiten-Stylesheets. */
+:root{color-scheme:dark;--bg:#000;--panel:rgba(28,28,30,.55);--panel2:rgba(44,44,46,.6);--surface:rgba(44,44,46,.5);--line:rgba(255,255,255,.09);--line-soft:rgba(255,255,255,.06);--ink:#f5f5f7;--muted:#a1a1a6;--muted2:#8e8e93;--glass-blur:saturate(180%) blur(24px);--glass-edge:inset 0 1px 0 rgba(255,255,255,.06)}
+html{background:#000}
+body{background:radial-gradient(1200px 700px at 12% -10%,rgba(255,255,255,.07),transparent 60%),radial-gradient(900px 600px at 100% 110%,rgba(255,255,255,.045),transparent 60%),#000;background-attachment:fixed;color:var(--ink)}
+
+.topbar,.inspector,.sidebar,aside,.statusbar,.transport,.workspace-footer,.toolbar,.workspace-toolbar,.spatial-toolbar,.timeline,dialog{background:var(--panel);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);box-shadow:var(--glass-edge);border-color:var(--line)}
+.topbar{position:relative;z-index:5}
+.stage,.viewport,.scene-wrapper{background:radial-gradient(ellipse at 50% 35%,#161618,#000 75%)}
+
+button{background:rgba(255,255,255,.06);border-color:var(--line)}
+button:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.18)}
+input:not([type=checkbox]):not([type=color]):not([type=range]),select,textarea{background:rgba(0,0,0,.35);border-color:var(--line)}
+dialog::backdrop{background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+
+/* Logo ohne Schriftzug, dafür größer */
+.brand{gap:0}
+.brand svg,.brand .brand-mark{width:46px;height:46px;flex-shrink:0}
+
+@media (max-width:760px){
+  .brand svg,.brand .brand-mark{width:40px;height:40px}
+}

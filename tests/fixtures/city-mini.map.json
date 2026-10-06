@@ -1,0 +1,363 @@
+{
+ "schema": "motionspec.map.v3",
+ "name": "Test-Stadt (synthetisch)",
+ "map": {
+  "width": 300,
+  "depth": 300,
+  "color": "#1f5f8b"
+ },
+ "runtime": {},
+ "attribution": "Synthetische Testdaten",
+ "points": [
+  {
+   "id": "a",
+   "name": "Block a",
+   "type": "building",
+   "x": 40,
+   "z": 40,
+   "width": 30,
+   "depth": 40,
+   "height": 10,
+   "rotation": 0,
+   "color": "#cccccc",
+   "visible": true,
+   "locked": false,
+   "solid": true,
+   "interactive": true,
+   "data": {
+    "Quelle": "synthetisch (Test)"
+   },
+   "footprint": [
+    [
+     -15,
+     -20
+    ],
+    [
+     15,
+     -20
+    ],
+    [
+     15,
+     20
+    ],
+    [
+     -15,
+     20
+    ]
+   ]
+  },
+  {
+   "id": "b",
+   "name": "Block b",
+   "type": "building",
+   "x": 90,
+   "z": 40,
+   "width": 24,
+   "depth": 30,
+   "height": 18,
+   "rotation": 15,
+   "color": "#cccccc",
+   "visible": true,
+   "locked": false,
+   "solid": true,
+   "interactive": true,
+   "data": {
+    "Quelle": "synthetisch (Test)"
+   },
+   "footprint": [
+    [
+     -12,
+     -15
+    ],
+    [
+     12,
+     -15
+    ],
+    [
+     12,
+     15
+    ],
+    [
+     -12,
+     15
+    ]
+   ]
+  },
+  {
+   "id": "c",
+   "name": "Block c",
+   "type": "building",
+   "x": 40,
+   "z": 110,
+   "width": 36,
+   "depth": 24,
+   "height": 7,
+   "rotation": 0,
+   "color": "#cccccc",
+   "visible": true,
+   "locked": false,
+   "solid": true,
+   "interactive": true,
+   "data": {
+    "Quelle": "synthetisch (Test)"
+   },
+   "footprint": [
+    [
+     -18,
+     -12
+    ],
+    [
+     18,
+     -12
+    ],
+    [
+     18,
+     12
+    ],
+    [
+     -18,
+     12
+    ]
+   ]
+  },
+  {
+   "id": "d",
+   "name": "Block d",
+   "type": "building",
+   "x": 100,
+   "z": 115,
+   "width": 20,
+   "depth": 20,
+   "height": 32,
+   "rotation": -10,
+   "color": "#cccccc",
+   "visible": true,
+   "locked": false,
+   "solid": true,
+   "interactive": true,
+   "data": {
+    "Quelle": "synthetisch (Test)"
+   },
+   "footprint": [
+    [
+     -10,
+     -10
+    ],
+    [
+     10,
+     -10
+    ],
+    [
+     10,
+     10
+    ],
+    [
+     -10,
+     10
+    ]
+   ]
+  },
+  {
+   "id": "e",
+   "name": "Block e",
+   "type": "building",
+   "x": 160,
+   "z": 60,
+   "width": 40,
+   "depth": 28,
+   "height": 12,
+   "rotation": 0,
+   "color": "#cccccc",
+   "visible": true,
+   "locked": false,
+   "solid": true,
+   "interactive": true,
+   "data": {
+    "Quelle": "synthetisch (Test)"
+   },
+   "footprint": [
+    [
+     -20,
+     -14
+    ],
+    [
+     20,
+     -14
+    ],
+    [
+     20,
+     14
+    ],
+    [
+     -20,
+     14
+    ]
+   ]
+  },
+  {
+   "id": "f",
+   "name": "Block f",
+   "type": "building",
+   "x": 165,
+   "z": 140,
+   "width": 30,
+   "depth": 50,
+   "height": 9,
+   "rotation": 30,
+   "color": "#cccccc",
+   "visible": true,
+   "locked": false,
+   "solid": true,
+   "interactive": true,
+   "data": {
+    "Quelle": "synthetisch (Test)"
+   },
+   "footprint": [
+    [
+     -15,
+     -25
+    ],
+    [
+     15,
+     -25
+    ],
+    [
+     15,
+     25
+    ],
+    [
+     -15,
+     25
+    ]
+   ]
+  }
+ ],
+ "surfaces": [
+  {
+   "kind": "land",
+   "points": [
+    [
+     0,
+     0
+    ],
+    [
+     220,
+     0
+    ],
+    [
+     220,
+     300
+    ],
+    [
+     0,
+     300
+    ]
+   ]
+  },
+  {
+   "kind": "beach",
+   "points": [
+    [
+     220,
+     0
+    ],
+    [
+     250,
+     0
+    ],
+    [
+     250,
+     300
+    ],
+    [
+     220,
+     300
+    ]
+   ]
+  },
+  {
+   "kind": "water",
+   "points": [
+    [
+     250,
+     0
+    ],
+    [
+     300,
+     0
+    ],
+    [
+     300,
+     300
+    ],
+    [
+     250,
+     300
+    ]
+   ]
+  },
+  {
+   "kind": "park",
+   "points": [
+    [
+     20,
+     170
+    ],
+    [
+     110,
+     170
+    ],
+    [
+     110,
+     240
+    ],
+    [
+     20,
+     240
+    ]
+   ]
+  },
+  {
+   "kind": "road",
+   "width": 14,
+   "points": [
+    [
+     0,
+     80
+    ],
+    [
+     220,
+     80
+    ]
+   ]
+  },
+  {
+   "kind": "road",
+   "width": 10,
+   "points": [
+    [
+     130,
+     0
+    ],
+    [
+     130,
+     300
+    ]
+   ]
+  },
+  {
+   "kind": "path",
+   "width": 3,
+   "points": [
+    [
+     20,
+     160
+    ],
+    [
+     200,
+     200
+    ]
+   ]
+  }
+ ]
+}

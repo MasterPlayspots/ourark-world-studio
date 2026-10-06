@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="theme-color" content="#000000">
+<meta name="description" content="Kart fahren auf echtem Gelände: Festung Rosenberg, Kronach.">
+<title>Kart — Ourark World Studio</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='8'%20fill='%2317100f'/%3E%3Ccircle%20cx='11'%20cy='16'%20r='4.6'%20fill='none'%20stroke='%23f5f5f7'%20stroke-width='2'/%3E%3Cpath%20d='M22%2011%2026%2019.5%2018%2019.5Z'%20fill='none'%20stroke='%234ade80'%20stroke-width='2'%20stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/motionspec-theme.css">
+<link rel="stylesheet" href="/glass.css">
+<link rel="stylesheet" href="./kart.css">
+<link rel="stylesheet" href="/runtime/perf-meter.css"><script type="module" src="/runtime/perf-meter.js"></script>
+<script type="module" src="./main.js"></script>
+</head>
+<body class="kart-page">
+<canvas id="kart-canvas" tabindex="0" aria-label="Rennstrecke, 3D-Ansicht"></canvas>
+<header class="kart-hud kart-top">
+  <a class="kart-back" href="/world-studio/">← Welten</a>
+  <strong id="kart-title">Kart</strong>
+  <span id="kart-status" role="status"></span>
+</header>
+<div class="kart-hud kart-stats" aria-live="off">
+  <span id="kart-lap">Runde 1/3</span><span id="kart-time">0:00.00</span><span id="kart-best">Beste –</span><span id="kart-speed">0 km/h</span>
+</div>
+<div id="kart-banner" class="kart-banner" role="status" hidden></div>
+<div id="kart-wrong" class="kart-wrong" hidden>Falsche Richtung</div>
+<section id="kart-overlay" class="kart-overlay" hidden>
+  <h1 id="kart-heading">Rosenberg-Ring</h1>
+  <p id="kart-intro">3 Runden um die Kernburg, mit zwei Schanzen und zwei Buckeln.</p>
+  <p class="kart-keys"><kbd>W</kbd>/<kbd>↑</kbd> Gas · <kbd>S</kbd>/<kbd>↓</kbd> Bremse &amp; rückwärts · <kbd>A</kbd><kbd>D</kbd>/<kbd>←</kbd><kbd>→</kbd> lenken<br><kbd>R</kbd> zurück auf die Strecke · <kbd>1</kbd>/<kbd>2</kbd> Kamera · <kbd>Esc</kbd> Pause · <kbd>Enter</kbd> Start<br><kbd>F</kbd> Flugzeug: <kbd>W</kbd>/<kbd>S</kbd> steigen/sinken · <kbd>A</kbd>/<kbd>D</kbd> Kurve · <kbd>Q</kbd>/<kbd>E</kbd> Seitenruder · <kbd>Shift</kbd>/<kbd>Leertaste</kbd> Gas<br><kbd>L</kbd> zu Fuß: <kbd>W</kbd>/<kbd>S</kbd> gehen · <kbd>A</kbd>/<kbd>D</kbd> seitwärts · <kbd>Q</kbd>/<kbd>E</kbd>/<kbd>←</kbd><kbd>→</kbd> drehen · Maus ziehen = umsehen · <kbd>Shift</kbd> rennen · <kbd>Leertaste</kbd> springen<br><kbd>I</kbd> Live-Insights: Ort, Tempo, Bildrate nach Ort, alle Sitzungen</p>
+  <button id="kart-start" class="kart-start">Rennen starten</button>
+  <p class="kart-hint">Vor dem Start kannst du frei üben.</p>
+  <nav class="kart-maps" aria-label="Strecke wählen"><a href="?map=rosenberg" data-map="rosenberg">Rosenberg-Ring</a><a href="?map=kronach" data-map="kronach">Altstadt-Kreuz</a></nav>
+</section>
+<button id="kart-view" class="kart-hud kart-view" aria-label="Kamera wechseln">Kamera</button>
+<button id="kart-fly" class="kart-hud kart-fly">Flugzeug</button>
+<button id="kart-walk" class="kart-hud kart-walk">Zu Fuß</button>
+<button id="kart-insights" class="kart-hud kart-insights-btn" aria-pressed="false" title="Live-Insights (I)">Insights</button>
+<div class="kart-touch" aria-hidden="true">
+  <div class="kart-touch-group"><button data-touch="x:-1">◀</button><button data-touch="x:1">▶</button></div>
+  <div class="kart-touch-group"><button data-touch="z:-1">Bremse</button><button data-touch="z:1">Gas</button></div>
+</div>
+<footer id="kart-attribution" class="kart-attribution"></footer>
+</body>
+</html>

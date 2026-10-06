@@ -1,0 +1,12 @@
+import {execFileSync} from 'node:child_process';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=fileURLToPath(new URL('../',import.meta.url));
+if(execFileSync('git',['status','--porcelain'],{cwd:root,encoding:'utf8'}).trim())throw new Error('Commit your changes before packaging.');
+const sha=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),release=path.join(root,'releases');await mkdir(release,{recursive:true});
+const archive=execFileSync('git',['archive','--format=zip','--prefix=ourark-world-studio/','HEAD'],{cwd:root,maxBuffer:64*1024*1024});
+const name=`ourark-world-studio-${sha.slice(0,8)}.zip`;await writeFile(path.join(release,name),archive);
+await writeFile(path.join(release,name+'.sha256'),createHash('sha256').update(archive).digest('hex')+'  '+name+'\n');
+console.log(path.join(release,name));

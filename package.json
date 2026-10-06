@@ -1,0 +1,25 @@
+{
+  "name": "ourark-world-studio",
+  "version": "0.5.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Ourark World Studio: MIT browser map and world editors, reusable simulation and runtime source, with explicit optional integrations.",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs",
+    "check": "node scripts/check.mjs",
+    "test": "node scripts/public-tests.mjs",
+    "verify": "npm run check && npm test && npm run docs:architecture:check",
+    "package": "node scripts/package-source.mjs",
+    "test:browser": "node tests/browser/baseline.browser.mjs && node tests/browser/runtime.browser.mjs && node tests/browser/collision.browser.mjs && node tests/browser/walking.browser.mjs && node tests/browser/enhance.browser.mjs && node tests/browser/perf.browser.mjs && node tests/browser/world-walk.browser.mjs && node tests/browser/footprint.browser.mjs && node tests/browser/city.browser.mjs && node tests/browser/world-upload.browser.mjs && node tests/browser/perf-meter.browser.mjs",
+    "docs:architecture": "node scripts/architecture-index.mjs",
+    "docs:architecture:check": "node scripts/architecture-index.mjs --check",
+    "build:wasm": "bash scripts/build-wasm.sh",
+    "verify:source": "node scripts/verify-public-source.mjs",
+    "test:browser:public": "node tests/browser/public-smoke.browser.mjs"
+  }
+}

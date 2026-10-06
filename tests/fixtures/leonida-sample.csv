@@ -1,0 +1,6 @@
+source,record_no,id,name,lat,lng,description,tags,externalLink,igPhoto_url,igPhoto_credit,videoLink,motion_heading,motion_fov_angle,calc_kategorie,calc_naechster_nachbar_dist
+screenshots,0,screenshots_001,Leonida Keys,-7612.0,-4428.0,,"Screenshots; Leonida Keys; S2/46",,assets/photos/a.jpg,Rockstar Games / 05/06/2025,,40,70,Screenshots,120.5
+trailer1,1,trailer1_002,Grassrivers,-5026.0,-3115.5,"Swamp, ""airboat"" scene","Trailer 1; Grass Rivers; T1/09",https://localhost/x,assets/photos/b.png,Rockstar Games - Trailer 1,https://localhost/v,0,70,Trailer 1,88
+leaks,2,leak_vb_001,Americas 2022,454.9,2009.693,,"Leaks; Vice Beach; L1/15",https://localhost/leak,,,,,,,
+markers,3,custom_1,Custom Location 1,1500,2500,This is a custom marker,custom; test,,,,,,,,
+gtadb_source_public,4,,,,,,,,,,,,,,
