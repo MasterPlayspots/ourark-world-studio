@@ -84,3 +84,5 @@ npm run verify
 The public repository is intended to become the maintained home for released core changes and community pull requests. Private integrations should consume an identified public revision. Avoid maintaining separate manual copies of the core; see [CONTRIBUTING](CONTRIBUTING.md).
 
 This project uses Three.js and Cesium. Makepad inspired the goal of an understandable developer-facing repository; no Makepad runtime is integrated. There is no general avatar builder, full asset-inclusive world archive exporter, shared editor persistence or authored 4D timeline in this release.
+
+See the [source-repository comparison and selective improvements](docs/UPSTREAM_COMPARISON_2026-10-06.md) for the upstream boundary and remaining validation work.

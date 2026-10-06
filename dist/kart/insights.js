@@ -1,8 +1,8 @@
 // Live insights for the kart page: where you are (WGS84, UTM, height above sea level), how fast, in which mode,
 // what the browser really renders there (frame time, draw calls, triangles, memory), a map of the measured frame
 // rate along your own way and — from the server — the same values over all sessions of the last 24 hours.
-// Every second one sample is taken; batches go anonymously to POST /api/kart-telemetry (session id per page
-// load, no account, no IP stored; switch off in the panel). Toggle: I or the „Insights“ button, ?insights=1.
+// Local samples are taken every second. Sharing with POST /api/kart-telemetry requires opt-in and includes
+// a per-page session id, device details, positions and performance. Toggle: I or the „Insights“ button, ?insights=1.
 
 export const SAMPLE_MS=1000,SEND_MS=15000,FETCH_MS=30000,CELL=20,TELEMETRY_FORMAT='ourark.kart-telemetry.v1';
 const STORE_KEY='ourark.kart.telemetry',OPEN_KEY='ourark.kart.insights';
@@ -63,7 +63,8 @@ export class KartInsights{
     this.session=hex16();this.seq=0;this.queue=[];this.intervals=[];this.last=0;this.lastSample=performance.now();this.lastSend=performance.now();
     this.samples=[];this.grid=new PlaceGrid();this.distance=0;this.marks=[];this.server=null;this.serverAt=0;this.sent=0;this.sendErrors=0;
     this.buildCells=buildingCells(blockers);
-    try{this.enabled=localStorage.getItem(STORE_KEY)!=='0';}catch{this.enabled=true;}
+    // Share samples only after an explicit choice; local insights remain available.
+    try{this.enabled=localStorage.getItem(STORE_KEY)==='1';}catch{this.enabled=false;}
     this.device={gpu:gpuName(renderer),mobile:matchMedia('(pointer:coarse)').matches,dpr:devicePixelRatio,cores:navigator.hardwareConcurrency??null,memoryGB:navigator.deviceMemory??null};
     this.buildPanel();
     let open=new URLSearchParams(location.search).get('insights')==='1';
@@ -127,7 +128,7 @@ export class KartInsights{
 <h3>LOD &amp; GPU</h3><dl class="ki-lod"></dl>
 <h3>Alle Sitzungen · 24 h</h3><dl class="ki-all"></dl>
 <h3>Laden</h3><dl class="ki-load"></dl>
-<label class="ki-send"><input type="checkbox"> Anonyme Messwerte senden <span class="ki-sent"></span></label>`;
+<label class="ki-send"><input type="checkbox"> Messwerte teilen <span class="ki-sent"></span></label>`;
     document.body.append(p);this.panel=p;
     p.querySelector('.ki-close').addEventListener('click',()=>this.setOpen(false));
     const box=p.querySelector('.ki-send input');box.checked=this.enabled;

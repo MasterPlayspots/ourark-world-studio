@@ -37,3 +37,5 @@ These are known implementation boundaries, not missing secrets that should be co
 ## Historical compatibility names
 
 Some machine-readable identifiers retain `motionspec` for compatibility with existing projects and browser storage. The layer scene JSON also retains `makepadConnected: false`, including the read_dashboard_scene tool response. This is an explicit absence flag, not a dependency or integration. Public titles and download names identify Ourark World Studio. No Makepad runtime is connected.
+
+Kart performance sharing is opt-in: only a saved `ourark.kart.telemetry=1` enables it automatically. Missing, invalid or unavailable storage leaves sharing disabled. Local measurements and the insights panel still work; the panel switch controls sharing separately from realtime. See the [upstream comparison](UPSTREAM_COMPARISON_2026-10-06.md).
