@@ -1,7 +1,7 @@
 <!-- GENERIERT von scripts/architecture-index.mjs — nicht von Hand bearbeiten. Neu erzeugen: npm run docs:architecture -->
 # Symbolregister — jede Variable, Funktion, Klasse und Eigenschaft
 
-Basis: Commit `8ea9e35` plus Arbeitsbaum. Ablageregel und Deutung: [README.md](README.md).
+Basis: Commit `024b057` plus Arbeitsbaum. Ablageregel und Deutung: [README.md](README.md).
 
 Erfasst werden alle Deklarationen auf Modulebene (`const`/`let`/`var`/`function`/`class`, auch destrukturiert), jede Klassenmethode, jedes Instanzfeld (`this.x=`), alle Imports und Exporte, jede DOM-ID, die ein Skript anspricht, jede Event-Bindung sowie Speicher-Schlüssel. Lokale Variablen innerhalb von Funktionsrümpfen sind absichtlich nicht aufgeführt, weil sie nicht über die Funktion hinaus wirken.
 

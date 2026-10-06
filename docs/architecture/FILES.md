@@ -1,16 +1,16 @@
 <!-- GENERIERT von scripts/architecture-index.mjs — nicht von Hand bearbeiten. Neu erzeugen: npm run docs:architecture -->
 # Dateiregister — jede Datei, Byte für Byte
 
-Basis: Commit `8ea9e35` plus Arbeitsbaum. Ablageregel und Deutung: [README.md](README.md).
+Basis: Commit `024b057` plus Arbeitsbaum. Ablageregel und Deutung: [README.md](README.md).
 
-535 Dateien, 16.360.751 Bytes gesamt. Davon Drittanbieter unter vendor/ 14.613.655 Bytes, übrige Dateien 1.747.096 Bytes.
+536 Dateien, 16.412.633 Bytes gesamt. Davon Drittanbieter unter vendor/ 14.613.655 Bytes, übrige Dateien 1.798.978 Bytes.
 Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen zwei Ständen überein, ist die Datei Byte für Byte gleich.
 
 ## Übersicht nach Rolle
 
 | Rolle | Dateien | Bytes |
 |---|---:|---:|
-| Projekt | 12 | 240.654 |
+| Projekt | 12 | 240.776 |
 | Deployment-Konfiguration | 1 | 3.503 |
 | Implementierter Formatvertrag | 3 | 10.082 |
 | Entwurfs-Vertrag (nicht implementiert) | 3 | 9.364 |
@@ -24,7 +24,7 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | Datenimport | 3 | 35.392 |
 | Welt-Vorlagen (geteilt) | 7 | 30.105 |
 | Drittanbieter (Three.js 0.180.0) | 7 | 2.246.075 |
-| Dokumentation | 11 | 95.568 |
+| Dokumentation | 12 | 147.328 |
 | Edge-Worker (Auslieferung) | 9 | 50.709 |
 | Einstiegsbeispiel | 2 | 2.604 |
 | Werkzeug | 13 | 75.998 |
@@ -44,7 +44,7 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | `LICENSE` | 1.069 | 21 | Projekt | `946978d5f4a89e607d97827a9f38641a8896e6c71e6426a2bd201032ca0790ec` |  |
 | `LICENSE_SCOPE.md` | 1.419 | 15 | Projekt | `9222dc91b6fab5b0afd99654cc5784f0161a88987c6fceec178c4b7c79678c4a` |  |
 | `PUBLIC_SOURCE.json` | 217.939 | 5388 | Projekt | `93ba71cb94374973f933414777f103934c4561e02d0b1abe674d94f52c3491f8` |  |
-| `README.md` | 6.775 | 85 | Projekt | `10ed202882d135bbe4b4937646dcc1e524193ad783056efba0bf3da6a412de02` |  |
+| `README.md` | 6.897 | 86 | Projekt | `7d3533e07ccf4b4ff4b64c8563f25321393780b0bc95ef248d30240d9c3e9c3f` |  |
 | `THIRD_PARTY_NOTICES.md` | 2.034 | 22 | Projekt | `ecfa3a3bb8cebe9218506c7da8e9cc42b756ed8c883dc474082d53431363e873` |  |
 | `contracts/map-project-v1.md` | 4.703 | 60 | Implementierter Formatvertrag | `2b885594c1c919fadad32539d16bf378a1a55e65a4bd7ffa6d5b316603d6ae9e` |  |
 | `contracts/net-protocol-v1.md` | 3.902 | 49 | Implementierter Formatvertrag | `ba5fc413137dc35a38d28f20260b72425e33c1a713767ef60e5d9a6bad3a4fa4` |  |
@@ -470,7 +470,8 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | `docs/MAP_STUDIO.md` | 3.175 | 41 | Dokumentation | `b73bd435abee6ced2d356abdf8dce964bde874b4ee1b5d69d4a1ab419d7f9264` |  |
 | `docs/RELEASE_STATUS.md` | 5.946 | 65 | Dokumentation | `b80a460e0b41b29ac6e2132d006764446e1d06d9ade2ca3f85dfeb7156f199c9` |  |
 | `docs/ROADMAP.md` | 1.353 | 11 | Dokumentation | `27ebd848a1d7300a2f8a446026ecc1073b025db21b89febc2b1a1fd102e66305` |  |
-| `docs/VALUE_AND_VALIDATION.md` | 16.811 | 101 | Dokumentation | `6c2869531a7cd1e351322729ebf98a62379baa51490b9ad33ad320f06aab7e8b` |  |
+| `docs/TECHNOLOGY_AND_USE_CASES.de.md` | 51.368 | 471 | Dokumentation | `6ec22940915e068d0d1498b2e0b3bc2efc6d054b64b96d6b27095ce68b166896` |  |
+| `docs/VALUE_AND_VALIDATION.md` | 17.203 | 103 | Dokumentation | `2dc0425bfd9f0bf3c372ca8aa8f79f6d687c621ee450e717514bc9c3946f7b3c` |  |
 | `docs/architecture/README.md` | 16.190 | 172 | Dokumentation | `806875f4082424cbb946ee73778267176303fed593df9ab144d85ecb5b50241d` |  |
 | `docs/validation/RESULT_TEMPLATE.md` | 4.379 | 80 | Dokumentation | `0a019ec54a0d4369a7a7af6f72dbb412be9af0f6e4210d840e354384dfea40a8` |  |
 | `edge/app.mjs` | 12.787 | 148 | Edge-Worker (Auslieferung) | `4641bfc5d79e95f31b54439cc9cb5ae95418c731a0dbf4b32206d9b100e181de` |  |

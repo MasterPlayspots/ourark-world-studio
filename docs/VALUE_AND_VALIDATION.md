@@ -2,6 +2,8 @@
 
 This document separates what the code provides from the benefits that still need to be demonstrated with users. The reviewed implementation is described in [FINDINGS](FINDINGS.md), [Map Studio](MAP_STUDIO.md) and the [architecture](architecture/README.md). The protocols and thresholds below are **proposed experiments, not completed results or published performance guarantees**.
 
+The [detailed technology and use-case review (German)](TECHNOLOGY_AND_USE_CASES.de.md) maps the released modules to twelve application opportunities, distinguishes missing integration from missing validation, and adds device, simulation, GPU and hosted-network pilot plans. Its source links are pinned to the audited public implementation; all proposed benefit thresholds remain unmeasured.
+
 ## What someone can build on today
 
 | Existing capability | Concrete technical value | User benefit still to test |
