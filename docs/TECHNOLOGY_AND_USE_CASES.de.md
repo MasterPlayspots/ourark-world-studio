@@ -2,6 +2,8 @@
 
 **Detailed review in German · 6 October 2026 · implementation baseline `024b05719a5dd84f47c1bdb2ba2794db63ff904c`.**
 
+**Nachtrag:** Die unten beschriebene Telemetrie-Voreinstellung gehört zum untersuchten Ausgangsstand. Mit der [selektiven Upstream-Übernahme](UPSTREAM_COMPARISON_2026-10-06.md) wird das Teilen von Kart-Messwerten opt-in; lokale Messungen bleiben verfügbar.
+
 This source-grounded review distinguishes implemented editor behavior, optional integration code and future contracts. It covers twelve application opportunities, four initial pilot protocols and separate device, WASM, GPU and hosted-network tests. Every benefit threshold is proposed, not an achieved customer result. For the English entry points, see [Added value and validation](VALUE_AND_VALIDATION.md), [Limits](LIMITS.md) and [Integrations](INTEGRATIONS.md).
 
 Vollständige Einordnung der enthaltenen Technik, ihrer Integrationsgrenzen und der noch offenen Praxistests. Erstellt für Kevin Fröba.

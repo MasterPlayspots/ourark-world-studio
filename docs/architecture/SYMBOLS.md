@@ -1,7 +1,7 @@
 <!-- GENERIERT von scripts/architecture-index.mjs — nicht von Hand bearbeiten. Neu erzeugen: npm run docs:architecture -->
 # Symbolregister — jede Variable, Funktion, Klasse und Eigenschaft
 
-Basis: Commit `024b057` plus Arbeitsbaum. Ablageregel und Deutung: [README.md](README.md).
+Basis: Commit `fcc573c` plus Arbeitsbaum. Ablageregel und Deutung: [README.md](README.md).
 
 Erfasst werden alle Deklarationen auf Modulebene (`const`/`let`/`var`/`function`/`class`, auch destrukturiert), jede Klassenmethode, jedes Instanzfeld (`this.x=`), alle Imports und Exporte, jede DOM-ID, die ein Skript anspricht, jede Event-Bindung sowie Speicher-Schlüssel. Lokale Variablen innerhalb von Funktionsrümpfen sind absichtlich nicht aufgeführt, weil sie nicht über die Funktion hinaus wirken.
 
@@ -298,7 +298,7 @@ Titel: Kart integration — Ourark World Studio · Skripte: inline/Modul · Styl
 
 ## `dist/kart/insights.js`
 
-17.102 Bytes · 222 Zeilen · Kart und Gelände
+17.187 Bytes · 223 Zeilen · Kart und Gelände
 
 **Exporte:** `SAMPLE_MS`, `SEND_MS`, `FETCH_MS`, `CELL`, `TELEMETRY_FORMAT`, `utmToGeo`, `localToGeo`, `frameStats`, `median`, `PlaceGrid`, `fpsColor`, `observations`, `KartInsights`
 
@@ -324,8 +324,8 @@ Titel: Kart integration — Ourark World Studio · Skripte: inline/Modul · Styl
 | 55 | const | `fmt` |  | `(v,d=0)=>v==null\|\|!Number.isFinite(v)?"–":v.toLocaleString("de-DE",{minimumFractionDigits…` |
 | 56 | const | `MODE_LABEL` |  | `{kart:"Kart",plane:"Flugzeug",walk:"Zu Fuß"}` |
 | 58 | class | `KartInsights` | ✓ |  |
-| 206 | function | `gpuName` |  | `(renderer)` |
-| 210 | function | `buildingCells` |  | `(blockers)` |
+| 207 | function | `gpuName` |  | `(renderer)` |
+| 211 | function | `buildingCells` |  | `(blockers)` |
 
 **Klasse `PlaceGrid`** (Zeile 32)
 
@@ -346,16 +346,16 @@ Titel: Kart integration — Ourark World Studio · Skripte: inline/Modul · Styl
 | Zeile | Methode | Modifikatoren | Parameter |
 |---:|---|---|---|
 | 61 | `constructor` |  | `({meta,mapName,renderer,state,image,blockers=[],track=null,button=null})` |
-| 77 | `mark` |  | `(name)` |
-| 79 | `frame` |  | `(now)` |
-| 87 | `sample` |  | `(now)` |
-| 100 | `flush` |  | `(leaving)` |
-| 110 | `fetchServer` | async | `()` |
-| 113 | `setOpen` |  | `(open)` |
-| 118 | `buildPanel` |  | `()` |
-| 137 | `paint` |  | `(s,stats)` |
-| 182 | `areaAround` |  | `(x,z)` |
-| 187 | `drawMap` |  | `(st,server)` |
+| 78 | `mark` |  | `(name)` |
+| 80 | `frame` |  | `(now)` |
+| 88 | `sample` |  | `(now)` |
+| 101 | `flush` |  | `(leaving)` |
+| 111 | `fetchServer` | async | `()` |
+| 114 | `setOpen` |  | `(open)` |
+| 119 | `buildPanel` |  | `()` |
+| 138 | `paint` |  | `(s,stats)` |
+| 183 | `areaAround` |  | `(x,z)` |
+| 188 | `drawMap` |  | `(st,server)` |
 
 | Zeile | Instanzfeld | Erster Wert |
 |---:|---|---|
@@ -382,31 +382,31 @@ Titel: Kart integration — Ourark World Studio · Skripte: inline/Modul · Styl
 | 64 | `sent` | `0` |
 | 64 | `sendErrors` | `0` |
 | 65 | `buildCells` | `buildingCells(blockers)` |
-| 66 | `enabled` | `localStorage.getItem(STORE_KEY)!=="0"` |
-| 67 | `device` | `{gpu:gpuName(renderer),mobile:matchMedia("(pointer:coarse)").matches,dpr:devicePixelRatio…` |
-| 82 | `lastCalls` | `info.calls` |
-| 82 | `lastTris` | `info.triangles` |
-| 114 | `open` | `open` |
-| 131 | `panel` | `p` |
-| 135 | `map` | `p.querySelector(".ki-map")` |
-| 135 | `ctx` | `this.map.getContext("2d")` |
+| 67 | `enabled` | `localStorage.getItem(STORE_KEY)==="1"` |
+| 68 | `device` | `{gpu:gpuName(renderer),mobile:matchMedia("(pointer:coarse)").matches,dpr:devicePixelRatio…` |
+| 83 | `lastCalls` | `info.calls` |
+| 83 | `lastTris` | `info.triangles` |
+| 115 | `open` | `open` |
+| 132 | `panel` | `p` |
+| 136 | `map` | `p.querySelector(".ki-map")` |
+| 136 | `ctx` | `this.map.getContext("2d")` |
 
 **Event-Bindungen**
 
 | Zeile | Ereignis | Ziel |
 |---:|---|---|
-| 75 | `visibilitychange` | `document` |
-| 132 | `click` | `p.querySelector(".ki-close")` |
-| 134 | `change` | `box` |
+| 76 | `visibilitychange` | `document` |
+| 133 | `click` | `p.querySelector(".ki-close")` |
+| 135 | `change` | `box` |
 
 **Speicherzugriffe**
 
 | Zeile | API | Schlüssel |
 |---:|---|---|
-| 66 | `localStorage.getItem` | `STORE_KEY (Konstante)` |
-| 70 | `localStorage.getItem` | `OPEN_KEY (Konstante)` |
-| 115 | `localStorage.setItem` | `OPEN_KEY (Konstante)` |
-| 134 | `localStorage.setItem` | `STORE_KEY (Konstante)` |
+| 67 | `localStorage.getItem` | `STORE_KEY (Konstante)` |
+| 71 | `localStorage.getItem` | `OPEN_KEY (Konstante)` |
+| 116 | `localStorage.setItem` | `OPEN_KEY (Konstante)` |
+| 135 | `localStorage.setItem` | `STORE_KEY (Konstante)` |
 
 ## `dist/kart/integration.html`
 
@@ -3700,7 +3700,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 ## `tests/browser/audit-regressions.browser.mjs`
 
-16.616 Bytes · 186 Zeilen · Browsertest
+19.999 Bytes · 222 Zeilen · Browsertest
 
 **Imports**
 
@@ -3715,6 +3715,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | 9 | `../../scripts/serve.mjs` | `createDevServer` |
 | 159 | `/worldport/core.mjs` | `(dynamisch)` |
 | 159 | `/worldport/osm.mjs` | `(dynamisch)` |
+| 189 | `/kart/insights.js` | `(dynamisch)` |
 
 **Modulebene**
 
@@ -3746,6 +3747,8 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | Zeile | API | Schlüssel |
 |---:|---|---|
 | 31 | `localStorage.setItem` | `ourark.perf` |
+| 185 | `localStorage.setItem` | `ourark.kart.telemetry` |
+| 207 | `localStorage.getItem` | `ourark.kart.telemetry` |
 
 ## `tests/browser/baseline.browser.mjs`
 

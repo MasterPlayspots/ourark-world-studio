@@ -1,36 +1,36 @@
 <!-- GENERIERT von scripts/architecture-index.mjs — nicht von Hand bearbeiten. Neu erzeugen: npm run docs:architecture -->
 # Dateiregister — jede Datei, Byte für Byte
 
-Basis: Commit `024b057` plus Arbeitsbaum. Ablageregel und Deutung: [README.md](README.md).
+Basis: Commit `fcc573c` plus Arbeitsbaum. Ablageregel und Deutung: [README.md](README.md).
 
-536 Dateien, 16.412.633 Bytes gesamt. Davon Drittanbieter unter vendor/ 14.613.655 Bytes, übrige Dateien 1.798.978 Bytes.
+537 Dateien, 16.423.815 Bytes gesamt. Davon Drittanbieter unter vendor/ 14.613.655 Bytes, übrige Dateien 1.810.160 Bytes.
 Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen zwei Ständen überein, ist die Datei Byte für Byte gleich.
 
 ## Übersicht nach Rolle
 
 | Rolle | Dateien | Bytes |
 |---|---:|---:|
-| Projekt | 12 | 240.776 |
+| Projekt | 12 | 240.940 |
 | Deployment-Konfiguration | 1 | 3.503 |
 | Implementierter Formatvertrag | 3 | 10.082 |
 | Entwurfs-Vertrag (nicht implementiert) | 3 | 9.364 |
 | Layereditor / geteilte Styles | 7 | 101.765 |
 | Globus | 6 | 49.053 |
 | Drittanbieter (CesiumJS 1.138.0) | 326 | 12.367.580 |
-| Kart und Gelände | 10 | 115.634 |
+| Kart und Gelände | 10 | 115.719 |
 | Map Studio | 8 | 103.850 |
 | Runtime (Begehmodus) | 30 | 185.082 |
 | World Studio | 7 | 130.733 |
 | Datenimport | 3 | 35.392 |
 | Welt-Vorlagen (geteilt) | 7 | 30.105 |
 | Drittanbieter (Three.js 0.180.0) | 7 | 2.246.075 |
-| Dokumentation | 12 | 147.328 |
+| Dokumentation | 13 | 154.878 |
 | Edge-Worker (Auslieferung) | 9 | 50.709 |
 | Einstiegsbeispiel | 2 | 2.604 |
 | Werkzeug | 13 | 75.998 |
 | Rust-Simulationskern | 3 | 18.107 |
 | Node-Test | 49 | 307.777 |
-| Browsertest | 18 | 181.116 |
+| Browsertest | 18 | 184.499 |
 
 ## Alle Dateien
 
@@ -44,7 +44,7 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | `LICENSE` | 1.069 | 21 | Projekt | `946978d5f4a89e607d97827a9f38641a8896e6c71e6426a2bd201032ca0790ec` |  |
 | `LICENSE_SCOPE.md` | 1.419 | 15 | Projekt | `9222dc91b6fab5b0afd99654cc5784f0161a88987c6fceec178c4b7c79678c4a` |  |
 | `PUBLIC_SOURCE.json` | 217.939 | 5388 | Projekt | `93ba71cb94374973f933414777f103934c4561e02d0b1abe674d94f52c3491f8` |  |
-| `README.md` | 6.897 | 86 | Projekt | `7d3533e07ccf4b4ff4b64c8563f25321393780b0bc95ef248d30240d9c3e9c3f` |  |
+| `README.md` | 7.061 | 88 | Projekt | `a8b5693e90cccf42ae91fb3705281057e1f626b756dbc364ce948659ad569cab` |  |
 | `THIRD_PARTY_NOTICES.md` | 2.034 | 22 | Projekt | `ecfa3a3bb8cebe9218506c7da8e9cc42b756ed8c883dc474082d53431363e873` |  |
 | `contracts/map-project-v1.md` | 4.703 | 60 | Implementierter Formatvertrag | `2b885594c1c919fadad32539d16bf378a1a55e65a4bd7ffa6d5b316603d6ae9e` |  |
 | `contracts/net-protocol-v1.md` | 3.902 | 49 | Implementierter Formatvertrag | `ba5fc413137dc35a38d28f20260b72425e33c1a713767ef60e5d9a6bad3a4fa4` |  |
@@ -388,7 +388,7 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | `dist/globe/vendor/cesium/Workers/upsampleVerticesFromCesium3DTilesTerrain.js` | 2.241 | 26 | Drittanbieter (CesiumJS 1.138.0) | `1ecf29f1ac30d06ad82bb997a468d24e4629c20b06955e62648978e88d1d2453` |  |
 | `dist/index.html` | 14.354 | 80 | Layereditor / geteilte Styles | `16cd9e0ea4f9e19e4ed604d91218d455e4b80ec9bf265ee6e86daadc95785daf` | `dist/studio/index.html` |
 | `dist/kart/index.html` | 1.440 | 7 | Kart und Gelände | `6f3f75ec4a73f4baf059fdbff199f2adb4a516471fe4fb0cc96bc0dc618773e7` |  |
-| `dist/kart/insights.js` | 17.102 | 222 | Kart und Gelände | `2fa2901a3b04a041dcd622736a29f3ed22e8a3e7ab61a4a4f0ffbb34bb961ea7` |  |
+| `dist/kart/insights.js` | 17.187 | 223 | Kart und Gelände | `022b22ca4232b9cf51913fcfaf65b72508fa3558f49d0531f477fa4549ce0dee` |  |
 | `dist/kart/integration.html` | 3.781 | 45 | Kart und Gelände | `a3e887e1def219dd5c215b3418f9f9d833fe5a5b125fc64d1e311eefbaa9efe9` |  |
 | `dist/kart/kart.css` | 5.806 | 66 | Kart und Gelände | `dd6e9222c32b54c6334a8b0ebb55f0cfa12bcd1cd5efae0ff2a2a3b1a731d7bb` |  |
 | `dist/kart/kart.js` | 7.591 | 141 | Kart und Gelände | `b502f42e9aa9bc8c4b184f1c9720a01ccb23980fbf4c964804012297d2d81b36` |  |
@@ -465,12 +465,13 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | `docs/AUDIT_2026-10-06.md` | 5.376 | 28 | Dokumentation | `0f1e3411c6799be4085627a44f090aceccfde3349a4a17aa839b159899f021b5` |  |
 | `docs/FINDINGS.md` | 4.519 | 38 | Dokumentation | `e16030eb689aae342b0c50a1d4d9eeb1bd11e467e52ba4c876ac7b6c7cdb79cf` |  |
 | `docs/GETTING_STARTED.md` | 16.985 | 208 | Dokumentation | `7308ca6370cb3dd4db769ad96d7798d2d101b6507cf2f3a6faee705cef9cec3d` |  |
-| `docs/INTEGRATIONS.md` | 4.454 | 39 | Dokumentation | `afe9392182a497fa90b8bd6770545ee1f62f58c4688269bf997136380a6bbbbd` |  |
+| `docs/INTEGRATIONS.md` | 4.801 | 41 | Dokumentation | `04849174a4240c5a543d012d5c6ffe6a38e3bc3f06cc3d1805194f91ba7ddfa6` |  |
 | `docs/LIMITS.md` | 16.380 | 110 | Dokumentation | `cc428f2aa3d73174bd38e61a984696d366560f2b2960084d3d00f27eefe46283` |  |
 | `docs/MAP_STUDIO.md` | 3.175 | 41 | Dokumentation | `b73bd435abee6ced2d356abdf8dce964bde874b4ee1b5d69d4a1ab419d7f9264` |  |
 | `docs/RELEASE_STATUS.md` | 5.946 | 65 | Dokumentation | `b80a460e0b41b29ac6e2132d006764446e1d06d9ade2ca3f85dfeb7156f199c9` |  |
 | `docs/ROADMAP.md` | 1.353 | 11 | Dokumentation | `27ebd848a1d7300a2f8a446026ecc1073b025db21b89febc2b1a1fd102e66305` |  |
-| `docs/TECHNOLOGY_AND_USE_CASES.de.md` | 51.368 | 471 | Dokumentation | `6ec22940915e068d0d1498b2e0b3bc2efc6d054b64b96d6b27095ce68b166896` |  |
+| `docs/TECHNOLOGY_AND_USE_CASES.de.md` | 51.629 | 473 | Dokumentation | `775d48deec1e1e1daa2ab32d88dc65ddaefba60b9c17bdd6d8b245c871cb0bab` |  |
+| `docs/UPSTREAM_COMPARISON_2026-10-06.md` | 6.942 | 60 | Dokumentation | `dd62847b3e752704e25372f758584eca32f19a69a2e61415a971f536603953cd` |  |
 | `docs/VALUE_AND_VALIDATION.md` | 17.203 | 103 | Dokumentation | `2dc0425bfd9f0bf3c372ca8aa8f79f6d687c621ee450e717514bc9c3946f7b3c` |  |
 | `docs/architecture/README.md` | 16.190 | 172 | Dokumentation | `806875f4082424cbb946ee73778267176303fed593df9ab144d85ecb5b50241d` |  |
 | `docs/validation/RESULT_TEMPLATE.md` | 4.379 | 80 | Dokumentation | `0a019ec54a0d4369a7a7af6f72dbb412be9af0f6e4210d840e354384dfea40a8` |  |
@@ -507,7 +508,7 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | `sim/src/lib.rs` | 17.586 | — | Rust-Simulationskern | `cc0bb5618af324b5edf0dbfafc742e9b5488b4dd620a7f8eb943183d1e8e1cfd` |  |
 | `tests/broadphase.test.mjs` | 4.983 | 70 | Node-Test | `c03e270eb1ed3721146370ae04fb51a22e7c3c697eabad50e7b7ee0dbddb8225` |  |
 | `tests/browser/agent-check.mjs` | 2.952 | 42 | Browsertest | `ba3b1a81dc0cc57aa57717bba669c1c50ad87a425914e38a41b8d239f90e6450` |  |
-| `tests/browser/audit-regressions.browser.mjs` | 16.616 | 186 | Browsertest | `d20cc4005fd0b3a5e07171cefe771e29708c6a14c5b633d6b763f460cd157edc` |  |
+| `tests/browser/audit-regressions.browser.mjs` | 19.999 | 222 | Browsertest | `de85b328a15e52e40e4beb8f7b342a151442968a9f033ac0551eb394c46f30d2` |  |
 | `tests/browser/baseline.browser.mjs` | 18.285 | 218 | Browsertest | `0d1f6e78b5db051508640c490f9d6cd1fd547e1f217cde831ec75479866d652c` |  |
 | `tests/browser/city.browser.mjs` | 6.049 | 72 | Browsertest | `f6708cdd83c8d94cb0db773eda363845b75e0319c9944caecd5922ae0efbb502` |  |
 | `tests/browser/collision.browser.mjs` | 7.275 | 102 | Browsertest | `45f4054b51da0dc6697a7befd16732ddf6eca43f2c7935ad6eafe0e17173fca5` |  |

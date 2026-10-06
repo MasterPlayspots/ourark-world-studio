@@ -175,6 +175,42 @@ try{
     await page.screenshot({path:path.join(artifacts,'layer-edits.png')});return {x:edited.x,view:scene.view.mode,export:true,persistence:'Not implemented; documented limitation.'};
   });
 
+  await check('Kart insights requires opt-in while local measurements remain available','/kart/',async page=>{
+    const cases=[null,'0','1','invalid','unavailable'];
+    for(const preference of cases){
+      await page.reload({waitUntil:'networkidle'});
+      const initial=await page.evaluate(async preference=>{
+        localStorage.clear();
+        if(preference==='unavailable')Object.defineProperty(window,'localStorage',{configurable:true,get(){throw new Error('Storage unavailable');}});
+        else if(preference!==null)localStorage.setItem('ourark.kart.telemetry',preference);
+        const outgoing=[];const originalFetch=window.fetch.bind(window);
+        window.fetch=(url,options)=>{if(url==='/api/kart-telemetry'){outgoing.push({kind:'fetch',body:JSON.parse(options.body)});return Promise.resolve(new Response('{}',{status:201}));}return originalFetch(url,options);};
+        Object.defineProperty(navigator,'sendBeacon',{configurable:true,value:(url,body)=>{outgoing.push({kind:'beacon',url});return true;}});
+        const {KartInsights}=await import('/kart/insights.js');
+        const insights=new KartInsights({meta:{name:'Synthetic case',origin:{east:500000,north:5538630.7},terrain:{width:100,depth:100,offset:0}},mapName:'synthetic',image:null,
+          renderer:{info:{render:{calls:1,triangles:2},memory:{geometries:0,textures:0}},domElement:{width:440,height:440},getPixelRatio:()=>1,getContext:()=>null},
+          state:()=>({mode:'kart',x:0,y:0,z:0,speed:0,heading:0})});
+        const sample=()=>{insights.intervals.push(16,17,16);insights.lastCalls=1;insights.lastTris=2;insights.sample(performance.now());};
+        window.__telemetryCase={insights,outgoing,sample};
+        insights.setOpen(true);sample();insights.flush(false);sample();insights.flush(true);
+        return {enabled:insights.enabled,samples:insights.samples.length,calls:outgoing.map(x=>x.kind),queue:insights.queue.length};
+      },preference);
+      assert.equal(initial.enabled,preference==='1');assert.equal(initial.samples,2);assert.equal(initial.queue,0);
+      assert.deepEqual(initial.calls,preference==='1'?['fetch','beacon']:[]);
+      assert.match(await page.locator('.ki-perf').textContent(),/fps/);
+      const checkbox=page.locator('.ki-send input');
+      await checkbox.check();
+      const enabled=await page.evaluate(()=>{const c=window.__telemetryCase;c.outgoing.length=0;c.sample();c.insights.flush(false);return c.outgoing;});
+      assert.equal(enabled.length,1);assert.equal(enabled[0].body.samples.length,1);
+      await page.evaluate(()=>window.__telemetryCase.sample());
+      await checkbox.uncheck();
+      const disabled=await page.evaluate(()=>{const c=window.__telemetryCase;c.outgoing.length=0;c.sample();c.insights.flush(false);c.insights.flush(true);return {calls:c.outgoing.length,queue:c.insights.queue.length,samples:c.insights.samples.length,stored:(()=>{try{return localStorage.getItem('ourark.kart.telemetry');}catch{return null;}})()};});
+      assert.equal(disabled.calls,0);assert.equal(disabled.queue,0);assert.equal(disabled.samples,5);
+      assert.equal(disabled.stored,preference==='unavailable'?null:'0');
+    }
+    return {preferences:cases,localPanel:true,fetchAndBeacon:true,scope:'Real insights module and panel with synthetic renderer/state and intercepted outbound sinks; not a full kart or deployed transport test.'};
+  });
+
   evidence.ok=evidence.checks.every(c=>c.ok)&&evidence.errors.length===0;
 }catch(error){evidence.setupError=error.stack;console.error(error);}
 finally{

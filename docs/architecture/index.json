@@ -1,6 +1,6 @@
 {
  "generatedBy": "scripts/architecture-index.mjs",
- "commit": "024b057",
+ "commit": "fcc573c",
  "files": [
   {
    "file": ".gitattributes",
@@ -60,9 +60,9 @@
   },
   {
    "file": "README.md",
-   "bytes": 6897,
-   "sha256": "7d3533e07ccf4b4ff4b64c8563f25321393780b0bc95ef248d30240d9c3e9c3f",
-   "lines": 86,
+   "bytes": 7061,
+   "sha256": "a8b5693e90cccf42ae91fb3705281057e1f626b756dbc364ce948659ad569cab",
+   "lines": 88,
    "role": "Projekt"
   },
   {
@@ -3823,9 +3823,9 @@
   },
   {
    "file": "dist/kart/insights.js",
-   "bytes": 17102,
-   "sha256": "2fa2901a3b04a041dcd622736a29f3ed22e8a3e7ab61a4a4f0ffbb34bb961ea7",
-   "lines": 222,
+   "bytes": 17187,
+   "sha256": "022b22ca4232b9cf51913fcfaf65b72508fa3558f49d0531f477fa4549ce0dee",
+   "lines": 223,
    "role": "Kart und Gelände",
    "js": {
     "imports": [],
@@ -3972,14 +3972,14 @@
      {
       "kind": "function",
       "name": "gpuName",
-      "line": 206,
+      "line": 207,
       "exported": false,
       "signature": "(renderer)"
      },
      {
       "kind": "function",
       "name": "buildingCells",
-      "line": 210,
+      "line": 211,
       "exported": false,
       "signature": "(blockers)"
      }
@@ -4043,31 +4043,31 @@
        },
        {
         "name": "mark",
-        "line": 77,
+        "line": 78,
         "modifiers": [],
         "signature": "(name)"
        },
        {
         "name": "frame",
-        "line": 79,
+        "line": 80,
         "modifiers": [],
         "signature": "(now)"
        },
        {
         "name": "sample",
-        "line": 87,
+        "line": 88,
         "modifiers": [],
         "signature": "(now)"
        },
        {
         "name": "flush",
-        "line": 100,
+        "line": 101,
         "modifiers": [],
         "signature": "(leaving)"
        },
        {
         "name": "fetchServer",
-        "line": 110,
+        "line": 111,
         "modifiers": [
          "async"
         ],
@@ -4075,31 +4075,31 @@
        },
        {
         "name": "setOpen",
-        "line": 113,
+        "line": 114,
         "modifiers": [],
         "signature": "(open)"
        },
        {
         "name": "buildPanel",
-        "line": 118,
+        "line": 119,
         "modifiers": [],
         "signature": "()"
        },
        {
         "name": "paint",
-        "line": 137,
+        "line": 138,
         "modifiers": [],
         "signature": "(s,stats)"
        },
        {
         "name": "areaAround",
-        "line": 182,
+        "line": 183,
         "modifiers": [],
         "signature": "(x,z)"
        },
        {
         "name": "drawMap",
-        "line": 187,
+        "line": 188,
         "modifiers": [],
         "signature": "(st,server)"
        }
@@ -4222,42 +4222,42 @@
        },
        {
         "name": "enabled",
-        "line": 66,
-        "init": "localStorage.getItem(STORE_KEY)!==\"0\""
+        "line": 67,
+        "init": "localStorage.getItem(STORE_KEY)===\"1\""
        },
        {
         "name": "device",
-        "line": 67,
+        "line": 68,
         "init": "{gpu:gpuName(renderer),mobile:matchMedia(\"(pointer:coarse)\").matches,dpr:devicePixelRatio…"
        },
        {
         "name": "lastCalls",
-        "line": 82,
+        "line": 83,
         "init": "info.calls"
        },
        {
         "name": "lastTris",
-        "line": 82,
+        "line": 83,
         "init": "info.triangles"
        },
        {
         "name": "open",
-        "line": 114,
+        "line": 115,
         "init": "open"
        },
        {
         "name": "panel",
-        "line": 131,
+        "line": 132,
         "init": "p"
        },
        {
         "name": "map",
-        "line": 135,
+        "line": 136,
         "init": "p.querySelector(\".ki-map\")"
        },
        {
         "name": "ctx",
-        "line": 135,
+        "line": 136,
         "init": "this.map.getContext(\"2d\")"
        }
       ]
@@ -4267,17 +4267,17 @@
     "events": [
      {
       "event": "visibilitychange",
-      "line": 75,
+      "line": 76,
       "target": "document"
      },
      {
       "event": "click",
-      "line": 132,
+      "line": 133,
       "target": "p.querySelector(\".ki-close\")"
      },
      {
       "event": "change",
-      "line": 134,
+      "line": 135,
       "target": "box"
      }
     ],
@@ -4285,22 +4285,22 @@
      {
       "api": "localStorage.getItem",
       "key": "STORE_KEY (Konstante)",
-      "line": 66
+      "line": 67
      },
      {
       "api": "localStorage.getItem",
       "key": "OPEN_KEY (Konstante)",
-      "line": 70
+      "line": 71
      },
      {
       "api": "localStorage.setItem",
       "key": "OPEN_KEY (Konstante)",
-      "line": 115
+      "line": 116
      },
      {
       "api": "localStorage.setItem",
       "key": "STORE_KEY (Konstante)",
-      "line": 134
+      "line": 135
      }
     ]
    }
@@ -16499,9 +16499,9 @@
   },
   {
    "file": "docs/INTEGRATIONS.md",
-   "bytes": 4454,
-   "sha256": "afe9392182a497fa90b8bd6770545ee1f62f58c4688269bf997136380a6bbbbd",
-   "lines": 39,
+   "bytes": 4801,
+   "sha256": "04849174a4240c5a543d012d5c6ffe6a38e3bc3f06cc3d1805194f91ba7ddfa6",
+   "lines": 41,
    "role": "Dokumentation"
   },
   {
@@ -16534,9 +16534,16 @@
   },
   {
    "file": "docs/TECHNOLOGY_AND_USE_CASES.de.md",
-   "bytes": 51368,
-   "sha256": "6ec22940915e068d0d1498b2e0b3bc2efc6d054b64b96d6b27095ce68b166896",
-   "lines": 471,
+   "bytes": 51629,
+   "sha256": "775d48deec1e1e1daa2ab32d88dc65ddaefba60b9c17bdd6d8b245c871cb0bab",
+   "lines": 473,
+   "role": "Dokumentation"
+  },
+  {
+   "file": "docs/UPSTREAM_COMPARISON_2026-10-06.md",
+   "bytes": 6942,
+   "sha256": "dd62847b3e752704e25372f758584eca32f19a69a2e61415a971f536603953cd",
+   "lines": 60,
    "role": "Dokumentation"
   },
   {
@@ -19759,9 +19766,9 @@
   },
   {
    "file": "tests/browser/audit-regressions.browser.mjs",
-   "bytes": 16616,
-   "sha256": "d20cc4005fd0b3a5e07171cefe771e29708c6a14c5b633d6b763f460cd157edc",
-   "lines": 186,
+   "bytes": 19999,
+   "sha256": "de85b328a15e52e40e4beb8f7b342a151442968a9f033ac0551eb394c46f30d2",
+   "lines": 222,
    "role": "Browsertest",
    "js": {
     "imports": [
@@ -19827,6 +19834,14 @@
      {
       "line": 159,
       "from": "/worldport/osm.mjs",
+      "names": [
+       "(dynamisch)"
+      ],
+      "dynamic": true
+     },
+     {
+      "line": 189,
+      "from": "/kart/insights.js",
       "names": [
        "(dynamisch)"
       ],
@@ -20003,6 +20018,16 @@
       "api": "localStorage.setItem",
       "key": "ourark.perf",
       "line": 31
+     },
+     {
+      "api": "localStorage.setItem",
+      "key": "ourark.kart.telemetry",
+      "line": 185
+     },
+     {
+      "api": "localStorage.getItem",
+      "key": "ourark.kart.telemetry",
+      "line": 207
      }
     ]
    }
