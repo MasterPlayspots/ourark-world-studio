@@ -15,6 +15,7 @@ const evidence={suite:'public-audit-regressions',startedAt:new Date().toISOStrin
   commit:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),
   scope:'Chromium UI correctness only; no hardware FPS, full cross-browser or customer-value claim.',checks:[],errors:[]};
 let browser,server,origin,phase='setup',downloadCount=0;
+const lastExport=new WeakMap();
 const args=process.platform==='linux'?['--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist']:['--ignore-gpu-blocklist'];
 function playwright(){
   const failures=[];
@@ -53,6 +54,10 @@ async function check(name,route,fn){
   finally{await context?.close();}
 }
 async function exported(page){
+  // Keep repeated user downloads apart: Chromium throttles rapid download bursts.
+  const delay=1100-(Date.now()-(lastExport.get(page)??0));
+  if(delay>0)await new Promise(resolve=>setTimeout(resolve,delay));
+  lastExport.set(page,Date.now());
   const [download]=await Promise.all([page.waitForEvent('download'),page.locator('#export').click()]);
   const file=path.join(artifacts,`export-${++downloadCount}.json`);await download.saveAs(file);
   return JSON.parse(await readFile(file,'utf8'));
@@ -106,7 +111,7 @@ try{
     assert.equal(Number(await page.locator('#count').textContent()),count);
     assert.equal((await exported(page)).payload.points.some(p=>p.name==='Asynchronous audit point'),false);
     await page.setInputFiles('#points-file',{name:'retry-points.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(points))});
-    await page.waitForFunction(n=>Number(document.querySelector('#count').textContent())===n,count+1);
+    await page.waitForFunction(n=>Number(document.querySelector('#count').textContent)===n,count+1);
     assert.equal((await exported(page)).payload.points.some(p=>p.name==='Asynchronous audit point'),true);
     return {rejectedDuringDrag:true,retryAfterDrop:true};
   });

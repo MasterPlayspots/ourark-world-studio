@@ -1,7 +1,7 @@
 <!-- GENERIERT von scripts/architecture-index.mjs — nicht von Hand bearbeiten. Neu erzeugen: npm run docs:architecture -->
 # Symbolregister — jede Variable, Funktion, Klasse und Eigenschaft
 
-Basis: Commit `bd4850c` plus Arbeitsbaum. Ablageregel und Deutung: [README.md](README.md).
+Basis: Commit `8ea9e35` plus Arbeitsbaum. Ablageregel und Deutung: [README.md](README.md).
 
 Erfasst werden alle Deklarationen auf Modulebene (`const`/`let`/`var`/`function`/`class`, auch destrukturiert), jede Klassenmethode, jedes Instanzfeld (`this.x=`), alle Imports und Exporte, jede DOM-ID, die ein Skript anspricht, jede Event-Bindung sowie Speicher-Schlüssel. Lokale Variablen innerhalb von Funktionsrümpfen sind absichtlich nicht aufgeführt, weil sie nicht über die Funktion hinaus wirken.
 
@@ -3700,7 +3700,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 ## `tests/browser/audit-regressions.browser.mjs`
 
-16.341 Bytes · 181 Zeilen · Browsertest
+16.616 Bytes · 186 Zeilen · Browsertest
 
 **Imports**
 
@@ -3713,8 +3713,8 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | 7 | `node:path` | `path` |
 | 8 | `node:url` | `fileURLToPath` |
 | 9 | `../../scripts/serve.mjs` | `createDevServer` |
-| 154 | `/worldport/core.mjs` | `(dynamisch)` |
-| 154 | `/worldport/osm.mjs` | `(dynamisch)` |
+| 159 | `/worldport/core.mjs` | `(dynamisch)` |
+| 159 | `/worldport/osm.mjs` | `(dynamisch)` |
 
 **Modulebene**
 
@@ -3729,14 +3729,15 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 | 17 | let | `origin` |  |  |
 | 17 | let | `phase` |  | `"setup"` |
 | 17 | let | `downloadCount` |  | `0` |
-| 18 | const | `args` |  | `process.platform==="linux"?["--use-angle=swiftshader","--enable-unsafe-swiftshader","--ig…` |
-| 19 | function | `playwright` |  | `()` |
-| 27 | async function | `open` |  | `(route)` |
-| 49 | async function | `check` |  | `(name,route,fn)` |
-| 55 | async function | `exported` |  | `(page)` |
-| 60 | async function | `importMap` |  | `(page,data,name="audit.map.json")` |
-| 63 | async function | `waitName` |  | `(page,name)` |
-| 64 | async function | `saveMap` |  | `(page)` |
+| 18 | const | `lastExport` |  | `new WeakMap()` |
+| 19 | const | `args` |  | `process.platform==="linux"?["--use-angle=swiftshader","--enable-unsafe-swiftshader","--ig…` |
+| 20 | function | `playwright` |  | `()` |
+| 28 | async function | `open` |  | `(route)` |
+| 50 | async function | `check` |  | `(name,route,fn)` |
+| 56 | async function | `exported` |  | `(page)` |
+| 65 | async function | `importMap` |  | `(page,data,name="audit.map.json")` |
+| 68 | async function | `waitName` |  | `(page,name)` |
+| 69 | async function | `saveMap` |  | `(page)` |
 
 **DOM-IDs, die dieses Skript anspricht (8):** `project-name`, `save`, `status`, `notice`, `count`, `world-title`, `runtime-position`, `object-name`
 
@@ -3744,7 +3745,7 @@ Titel: 3D Worlds — Ourark World Studio · Skripte: `/world-studio/editor.js`, 
 
 | Zeile | API | Schlüssel |
 |---:|---|---|
-| 30 | `localStorage.setItem` | `ourark.perf` |
+| 31 | `localStorage.setItem` | `ourark.perf` |
 
 ## `tests/browser/baseline.browser.mjs`
 

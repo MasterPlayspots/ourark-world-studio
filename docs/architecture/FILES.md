@@ -1,9 +1,9 @@
 <!-- GENERIERT von scripts/architecture-index.mjs — nicht von Hand bearbeiten. Neu erzeugen: npm run docs:architecture -->
 # Dateiregister — jede Datei, Byte für Byte
 
-Basis: Commit `bd4850c` plus Arbeitsbaum. Ablageregel und Deutung: [README.md](README.md).
+Basis: Commit `8ea9e35` plus Arbeitsbaum. Ablageregel und Deutung: [README.md](README.md).
 
-535 Dateien, 16.360.314 Bytes gesamt. Davon Drittanbieter unter vendor/ 14.613.655 Bytes, übrige Dateien 1.746.659 Bytes.
+535 Dateien, 16.360.751 Bytes gesamt. Davon Drittanbieter unter vendor/ 14.613.655 Bytes, übrige Dateien 1.747.096 Bytes.
 Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen zwei Ständen überein, ist die Datei Byte für Byte gleich.
 
 ## Übersicht nach Rolle
@@ -19,18 +19,18 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | Drittanbieter (CesiumJS 1.138.0) | 326 | 12.367.580 |
 | Kart und Gelände | 10 | 115.634 |
 | Map Studio | 8 | 103.850 |
-| Runtime (Begehmodus) | 30 | 184.996 |
+| Runtime (Begehmodus) | 30 | 185.082 |
 | World Studio | 7 | 130.733 |
 | Datenimport | 3 | 35.392 |
 | Welt-Vorlagen (geteilt) | 7 | 30.105 |
 | Drittanbieter (Three.js 0.180.0) | 7 | 2.246.075 |
-| Dokumentation | 11 | 95.492 |
+| Dokumentation | 11 | 95.568 |
 | Edge-Worker (Auslieferung) | 9 | 50.709 |
 | Einstiegsbeispiel | 2 | 2.604 |
 | Werkzeug | 13 | 75.998 |
 | Rust-Simulationskern | 3 | 18.107 |
 | Node-Test | 49 | 307.777 |
-| Browsertest | 18 | 180.841 |
+| Browsertest | 18 | 181.116 |
 
 ## Alle Dateien
 
@@ -431,7 +431,7 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | `dist/runtime/scan/loader.js` | 10.209 | 137 | Runtime (Begehmodus) | `0f75634cadf8b93b6623a47f0ed0e97f1ec692769fdd3bd200219a6e56828733` |  |
 | `dist/runtime/session.js` | 2.821 | 49 | Runtime (Begehmodus) | `a919b4c6f1d794bf29dfc8633697d78583a61af7d7b1f262623ad2e7db9b1e87` |  |
 | `dist/runtime/sim/layout.js` | 2.834 | 62 | Runtime (Begehmodus) | `d7f58c5ba78d13deafe00b10f58677a1a9d9ba301cf9a0cb597cd2e161437966` |  |
-| `dist/runtime/sim/sim.wasm` | 29.162 | — | Runtime (Begehmodus) | `762547eab32ab569197c6b89f261b32edaa18a6b2a57561b54fb02e0032b11e0` |  |
+| `dist/runtime/sim/sim.wasm` | 29.248 | — | Runtime (Begehmodus) | `e641d0e61a87611db3c3a77d4b9da2b701fdfd05f4f34bf94c471c473fb4d5e0` |  |
 | `dist/runtime/sim/snapshot.js` | 2.534 | 54 | Runtime (Begehmodus) | `ddb2052b2b712a71fb9cddf7d3e964990b1d6578a742753bf9169505a7644410` |  |
 | `dist/runtime/sim/wasm.js` | 4.478 | 64 | Runtime (Begehmodus) | `ef2336f9d6d1438781a99ecbc5a90fa4d611d555fcd4b9626814e6fedc3a9dd3` |  |
 | `dist/runtime/walk-host.js` | 16.781 | 198 | Runtime (Begehmodus) | `9005e199cafdb1b61666e9bbd51cdcc07b056723bab1ce75aa44be05f3525a44` |  |
@@ -462,7 +462,7 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | `dist/worlds/vendor/three.core.js` | 1.403.455 | 58773 | Drittanbieter (Three.js 0.180.0) | `eb077d2417f61d3e6d9264c317cabc4ea35769ed6b0ab533067292a550784c20` |  |
 | `dist/worlds/vendor/three.module.js` | 603.113 | 18251 | Drittanbieter (Three.js 0.180.0) | `c8211c69345d2e9949dc7a8ac969380497aa0600a5a8ac6a459c8cd02dd9cb8a` |  |
 | `dist/worlds/vendor/utils/BufferGeometryUtils.js` | 35.552 | 1435 | Drittanbieter (Three.js 0.180.0) | `7ce3f7739d1e459c3a093c89ef9833313a5bb3ef32cff195ef2cfa29a9ce66a9` |  |
-| `docs/AUDIT_2026-10-06.md` | 5.300 | 28 | Dokumentation | `9ab5a741fe1fcf138244348e3bb5b2b701c7cb6edb1e1dfea3cffad1597ed3ef` |  |
+| `docs/AUDIT_2026-10-06.md` | 5.376 | 28 | Dokumentation | `0f1e3411c6799be4085627a44f090aceccfde3349a4a17aa839b159899f021b5` |  |
 | `docs/FINDINGS.md` | 4.519 | 38 | Dokumentation | `e16030eb689aae342b0c50a1d4d9eeb1bd11e467e52ba4c876ac7b6c7cdb79cf` |  |
 | `docs/GETTING_STARTED.md` | 16.985 | 208 | Dokumentation | `7308ca6370cb3dd4db769ad96d7798d2d101b6507cf2f3a6faee705cef9cec3d` |  |
 | `docs/INTEGRATIONS.md` | 4.454 | 39 | Dokumentation | `afe9392182a497fa90b8bd6770545ee1f62f58c4688269bf997136380a6bbbbd` |  |
@@ -506,7 +506,7 @@ Der SHA-256 ist der Fingerabdruck des exakten Byte-Inhalts. Stimmt er zwischen z
 | `sim/src/lib.rs` | 17.586 | — | Rust-Simulationskern | `cc0bb5618af324b5edf0dbfafc742e9b5488b4dd620a7f8eb943183d1e8e1cfd` |  |
 | `tests/broadphase.test.mjs` | 4.983 | 70 | Node-Test | `c03e270eb1ed3721146370ae04fb51a22e7c3c697eabad50e7b7ee0dbddb8225` |  |
 | `tests/browser/agent-check.mjs` | 2.952 | 42 | Browsertest | `ba3b1a81dc0cc57aa57717bba669c1c50ad87a425914e38a41b8d239f90e6450` |  |
-| `tests/browser/audit-regressions.browser.mjs` | 16.341 | 181 | Browsertest | `cb08b67fe0503f2799bd027bbceeb7ec9c6fcda7d2baae82df1700b6b29e7b9a` |  |
+| `tests/browser/audit-regressions.browser.mjs` | 16.616 | 186 | Browsertest | `d20cc4005fd0b3a5e07171cefe771e29708c6a14c5b633d6b763f460cd157edc` |  |
 | `tests/browser/baseline.browser.mjs` | 18.285 | 218 | Browsertest | `0d1f6e78b5db051508640c490f9d6cd1fd547e1f217cde831ec75479866d652c` |  |
 | `tests/browser/city.browser.mjs` | 6.049 | 72 | Browsertest | `f6708cdd83c8d94cb0db773eda363845b75e0319c9944caecd5922ae0efbb502` |  |
 | `tests/browser/collision.browser.mjs` | 7.275 | 102 | Browsertest | `45f4054b51da0dc6697a7befd16732ddf6eca43f2c7935ad6eafe0e17173fca5` |  |

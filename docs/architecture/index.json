@@ -1,6 +1,6 @@
 {
  "generatedBy": "scripts/architecture-index.mjs",
- "commit": "bd4850c",
+ "commit": "8ea9e35",
  "files": [
   {
    "file": ".gitattributes",
@@ -12028,8 +12028,8 @@
   },
   {
    "file": "dist/runtime/sim/sim.wasm",
-   "bytes": 29162,
-   "sha256": "762547eab32ab569197c6b89f261b32edaa18a6b2a57561b54fb02e0032b11e0",
+   "bytes": 29248,
+   "sha256": "e641d0e61a87611db3c3a77d4b9da2b701fdfd05f4f34bf94c471c473fb4d5e0",
    "lines": null,
    "role": "Runtime (Begehmodus)"
   },
@@ -16478,8 +16478,8 @@
   },
   {
    "file": "docs/AUDIT_2026-10-06.md",
-   "bytes": 5300,
-   "sha256": "9ab5a741fe1fcf138244348e3bb5b2b701c7cb6edb1e1dfea3cffad1597ed3ef",
+   "bytes": 5376,
+   "sha256": "0f1e3411c6799be4085627a44f090aceccfde3349a4a17aa839b159899f021b5",
    "lines": 28,
    "role": "Dokumentation"
   },
@@ -19752,9 +19752,9 @@
   },
   {
    "file": "tests/browser/audit-regressions.browser.mjs",
-   "bytes": 16341,
-   "sha256": "cb08b67fe0503f2799bd027bbceeb7ec9c6fcda7d2baae82df1700b6b29e7b9a",
-   "lines": 181,
+   "bytes": 16616,
+   "sha256": "d20cc4005fd0b3a5e07171cefe771e29708c6a14c5b633d6b763f460cd157edc",
+   "lines": 186,
    "role": "Browsertest",
    "js": {
     "imports": [
@@ -19810,7 +19810,7 @@
       ]
      },
      {
-      "line": 154,
+      "line": 159,
       "from": "/worldport/core.mjs",
       "names": [
        "(dynamisch)"
@@ -19818,7 +19818,7 @@
       "dynamic": true
      },
      {
-      "line": 154,
+      "line": 159,
       "from": "/worldport/osm.mjs",
       "names": [
        "(dynamisch)"
@@ -19893,57 +19893,64 @@
      },
      {
       "kind": "const",
-      "name": "args",
+      "name": "lastExport",
       "line": 18,
+      "exported": false,
+      "init": "new WeakMap()"
+     },
+     {
+      "kind": "const",
+      "name": "args",
+      "line": 19,
       "exported": false,
       "init": "process.platform===\"linux\"?[\"--use-angle=swiftshader\",\"--enable-unsafe-swiftshader\",\"--ig…"
      },
      {
       "kind": "function",
       "name": "playwright",
-      "line": 19,
+      "line": 20,
       "exported": false,
       "signature": "()"
      },
      {
       "kind": "async function",
       "name": "open",
-      "line": 27,
+      "line": 28,
       "exported": false,
       "signature": "(route)"
      },
      {
       "kind": "async function",
       "name": "check",
-      "line": 49,
+      "line": 50,
       "exported": false,
       "signature": "(name,route,fn)"
      },
      {
       "kind": "async function",
       "name": "exported",
-      "line": 55,
+      "line": 56,
       "exported": false,
       "signature": "(page)"
      },
      {
       "kind": "async function",
       "name": "importMap",
-      "line": 60,
+      "line": 65,
       "exported": false,
       "signature": "(page,data,name=\"audit.map.json\")"
      },
      {
       "kind": "async function",
       "name": "waitName",
-      "line": 63,
+      "line": 68,
       "exported": false,
       "signature": "(page,name)"
      },
      {
       "kind": "async function",
       "name": "saveMap",
-      "line": 64,
+      "line": 69,
       "exported": false,
       "signature": "(page)"
      }
@@ -19952,35 +19959,35 @@
     "domIds": [
      {
       "id": "project-name",
-      "line": 63
+      "line": 68
      },
      {
       "id": "save",
-      "line": 64
+      "line": 69
      },
      {
       "id": "status",
-      "line": 64
+      "line": 69
      },
      {
       "id": "notice",
-      "line": 103
+      "line": 108
      },
      {
       "id": "count",
-      "line": 109
+      "line": 114
      },
      {
       "id": "world-title",
-      "line": 120
+      "line": 125
      },
      {
       "id": "runtime-position",
-      "line": 127
+      "line": 132
      },
      {
       "id": "object-name",
-      "line": 140
+      "line": 145
      }
     ],
     "events": [],
@@ -19988,7 +19995,7 @@
      {
       "api": "localStorage.setItem",
       "key": "ourark.perf",
-      "line": 30
+      "line": 31
      }
     ]
    }
